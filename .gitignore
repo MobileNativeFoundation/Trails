@@ -3,7 +3,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+*.hprof
 ### IntelliJ IDEA ###
 .idea/compiler.xml
 .idea
