@@ -36,7 +36,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.core)
-    implementation(libs.jetbrains.compose.material)
+    implementation(libs.compose.material3)
     implementation(libs.jetbrains.compose.ui)
     implementation(libs.jetbrains.compose.ui.tooling.preview)
     debugImplementation(libs.jetbrains.compose.ui.tooling)
@@ -45,5 +45,6 @@ dependencies {
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
 
+    implementation(project(":android:common:pig"))
     implementation(project(":android:common:scoping"))
 }

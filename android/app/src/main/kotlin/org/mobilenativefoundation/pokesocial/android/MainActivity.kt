@@ -1,17 +1,16 @@
 package org.mobilenativefoundation.pokesocial.android
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
+import org.mobilenativefoundation.pokesocial.android.common.pig.PIG
+import org.mobilenativefoundation.pokesocial.android.common.pig.PigTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -20,8 +19,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Column(modifier = Modifier.fillMaxSize()) {
-                Text("Pokesocial")
+            PigTheme {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Text("Pokésocial", color = PIG.ColorScheme.onBackground, style = PIG.Typography.displayMedium)
+                }
             }
         }
     }

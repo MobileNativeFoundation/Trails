@@ -18,5 +18,6 @@ pluginManagement {
 rootProject.name = "pokesocial"
 
 include(":android:app")
+include(":android:common:pig")
 include(":android:common:scoping")
 include(":common")
