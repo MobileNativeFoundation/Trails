@@ -1,10 +1,10 @@
-package org.mobilenativefoundation.pokesocial.android.common.pig.typography
+package org.mobilenativefoundation.pokesocial.shared.pig.theme.typography
 
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import org.mobilenativefoundation.pokesocial.android.common.pig.R
+import org.mobilenativefoundation.pokesocial.shared.pig.R
 
 
 @Stable

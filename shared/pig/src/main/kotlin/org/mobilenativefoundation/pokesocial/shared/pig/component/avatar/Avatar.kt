@@ -26,7 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.mobilenativefoundation.pokesocial.android.common.pig.R
+import org.mobilenativefoundation.pokesocial.shared.pig.R
 import org.mobilenativefoundation.pokesocial.shared.pig.theme.PigTheme
 import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.PokesocialColors
 import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.darkColorScheme
@@ -50,7 +50,7 @@ fun Avatar(
             contentColor = MaterialTheme.colorScheme.onSurface,
             border = BorderStroke(
                 1.dp,
-                PokesocialColors(isSystemInDarkTheme()).white
+                PokesocialColors().white
             ),
         ) {
             Box {
@@ -153,12 +153,12 @@ private fun OnlineStatusCircle(
     }
 
     val backgroundColor =
-        if (isOnline) MaterialTheme.colorScheme.primary else PokesocialColors(isSystemInDarkTheme()).gray400
+        if (isOnline) MaterialTheme.colorScheme.primary else PokesocialColors().gray400
 
     Box(
         modifier = modifier.clip(CircleShape).size(size.value / 3)
             .border(
-                BorderStroke(borderStrokeWidth.dp, PokesocialColors(isSystemInDarkTheme()).white),
+                BorderStroke(borderStrokeWidth.dp, PokesocialColors().white),
                 shape = CircleShape
             )
             .background(
