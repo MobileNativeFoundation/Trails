@@ -20,3 +20,4 @@ rootProject.name = "pokesocial"
 include(":android:app")
 include(":android:common:scoping")
 include(":shared:pig")
+include(":shared:navigation")

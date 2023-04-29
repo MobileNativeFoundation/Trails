@@ -46,5 +46,6 @@ dependencies {
     kapt(libs.dagger.compiler)
 
     implementation(project(":shared:pig"))
+    implementation(project(":shared:navigation"))
     implementation(project(":android:common:scoping"))
 }

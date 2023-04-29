@@ -1,10 +1,15 @@
 package org.mobilenativefoundation.pokesocial.shared.pig.theme.color
 
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 
-fun PokesocialColors(isLight: Boolean) = Colors(
+@ReadOnlyComposable
+@Composable
+fun PokesocialColors(isLight: Boolean = !isSystemInDarkTheme()) = Colors(
     primary500 = Color(0xffFF4D67),
     primary400 = Color(0xffFF7185),
     primary300 = Color(0xffFF94A4),
