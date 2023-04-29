@@ -45,6 +45,6 @@ dependencies {
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
 
-    implementation(project(":android:common:pig"))
+    implementation(project(":shared:pig"))
     implementation(project(":android:common:scoping"))
 }

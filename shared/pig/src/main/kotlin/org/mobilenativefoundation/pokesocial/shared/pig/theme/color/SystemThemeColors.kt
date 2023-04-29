@@ -1,11 +1,9 @@
-package org.mobilenativefoundation.pokesocial.android.common.pig.color
+package org.mobilenativefoundation.pokesocial.shared.pig.theme.color
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
-import org.mobilenativefoundation.pokesocial.android.common.pig.color.PokesocialColors
-import org.mobilenativefoundation.pokesocial.android.common.pig.color.asColorScheme
 
 @ReadOnlyComposable
 @Composable

@@ -1,12 +1,12 @@
-package org.mobilenativefoundation.pokesocial.android.common.pig
+package org.mobilenativefoundation.pokesocial.shared.pig.theme
 
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
-import org.mobilenativefoundation.pokesocial.android.common.pig.color.LocalColorScheme
-import org.mobilenativefoundation.pokesocial.android.common.pig.typography.LocalTypography
+import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.LocalColorScheme
+import org.mobilenativefoundation.pokesocial.shared.pig.theme.typography.LocalTypography
 
 
 object PIG {
