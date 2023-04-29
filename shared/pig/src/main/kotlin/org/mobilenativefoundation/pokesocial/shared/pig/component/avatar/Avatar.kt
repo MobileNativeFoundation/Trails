@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -115,6 +116,18 @@ fun AvatarWithOfflineCircle(
 
 
 @Composable
+fun AvatarWithEditIcon(
+    modifier: Modifier = Modifier,
+    painter: Painter,
+    size: AvatarSize = AvatarSize.Standard,
+    contentDescription: String? = null
+) {
+    Avatar(modifier, painter, size, contentDescription) {
+        EditIcon(size = size)
+    }
+}
+
+@Composable
 private fun OfflineCircle(
     modifier: Modifier = Modifier,
     size: AvatarSize = AvatarSize.Standard
@@ -151,6 +164,19 @@ private fun OnlineStatusCircle(
             .background(
                 backgroundColor
             )
+    )
+}
+
+@Composable
+private fun EditIcon(
+    modifier: Modifier = Modifier,
+    size: AvatarSize = AvatarSize.Standard
+) {
+    Icon(
+        painter = painterResource(R.drawable.edit_square),
+        contentDescription = "Edit",
+        tint = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.size(size.value / 3)
     )
 }
 
@@ -226,6 +252,29 @@ private fun StandardPreview() {
                             size = AvatarSize.Large,
                         )
                         AvatarWithOfflineCircle(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.Prominent,
+                        )
+                    }
+
+                    Row(modifier = Modifier.padding(8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        AvatarWithEditIcon(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.ExtraSmall
+                        )
+                        AvatarWithEditIcon(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.Small,
+                        )
+                        AvatarWithEditIcon(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.Standard,
+                        )
+                        AvatarWithEditIcon(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.Large,
+                        )
+                        AvatarWithEditIcon(
                             painter = painterResource(R.drawable.misty),
                             size = AvatarSize.Prominent,
                         )
@@ -308,6 +357,29 @@ private fun InversePreview() {
                             size = AvatarSize.Large,
                         )
                         AvatarWithOfflineCircle(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.Prominent,
+                        )
+                    }
+
+                    Row(modifier = Modifier.padding(8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        AvatarWithEditIcon(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.ExtraSmall
+                        )
+                        AvatarWithEditIcon(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.Small,
+                        )
+                        AvatarWithEditIcon(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.Standard,
+                        )
+                        AvatarWithEditIcon(
+                            painter = painterResource(R.drawable.misty),
+                            size = AvatarSize.Large,
+                        )
+                        AvatarWithEditIcon(
                             painter = painterResource(R.drawable.misty),
                             size = AvatarSize.Prominent,
                         )
