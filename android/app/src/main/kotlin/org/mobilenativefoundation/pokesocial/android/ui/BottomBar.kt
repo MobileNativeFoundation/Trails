@@ -26,16 +26,15 @@ import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.lightColorSc
 import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.systemColorScheme
 
 @Composable
-fun BottomBar(navController: NavHostController, create: () -> Unit) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+fun BottomBar(navHostController: NavHostController) {
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     fun isSelected(tab: Screen) = currentDestination?.hierarchy?.any { it.route == tab.route } == true
 
     BottomBarUI(
         isSelected = ::isSelected,
-        navigate = navController::navigate,
-        create = create
+        navigate = navHostController::navigate
     )
 }
 
@@ -43,8 +42,7 @@ fun BottomBar(navController: NavHostController, create: () -> Unit) {
 @Composable
 private fun BottomBarUI(
     isSelected: (tab: Screen) -> Boolean,
-    navigate: (route: String) -> Unit,
-    create: () -> Unit
+    navigate: (route: String) -> Unit
 ) {
 
     val colorScheme = systemColorScheme()
@@ -73,9 +71,6 @@ private fun BottomBarUI(
                     }
                 }
             }
-        },
-        floatingActionButton = {
-            FAB(onClick = create)
         }
     )
 }
@@ -90,8 +85,7 @@ private fun StandardPreview() {
                 Column {
                     BottomBarUI(
                         isSelected = { tab -> tab.route == Screen.Discover.route },
-                        navigate = { _ -> },
-                        create = {}
+                        navigate = { _ -> }
                     )
                 }
             }
@@ -108,8 +102,7 @@ private fun InversePreview() {
                 Column {
                     BottomBarUI(
                         isSelected = { tab -> tab.route == Screen.Discover.route },
-                        navigate = { _ -> },
-                        create = {}
+                        navigate = { _ -> }
                     )
                 }
             }

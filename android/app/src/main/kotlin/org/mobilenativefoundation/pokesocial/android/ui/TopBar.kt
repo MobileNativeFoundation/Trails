@@ -29,7 +29,7 @@ import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.lightColorSc
 
 @Composable
 fun TopBar(
-    title: String,
+    title: String? = null,
     navigationIcon: (@Composable () -> Unit)? = null,
     actions: (@Composable() (RowScope.() -> Unit))? = null,
 ) {
@@ -63,7 +63,7 @@ fun SearchIcon(size: Int = 32) {
 
 @Composable
 private fun TopBarUI(
-    title: String,
+    title: String? = null,
     navigationIcon: (@Composable () -> Unit)? = null,
     actions: (@Composable() (RowScope.() -> Unit))? = null
 ) {
@@ -72,7 +72,13 @@ private fun TopBarUI(
 
     TopAppBar(
         title = {
-            Text(text = title, style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(horizontal = 8.dp))
+            if (title != null) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+            }
         },
         modifier = Modifier,
         navigationIcon = navigationIcon ?: {},
