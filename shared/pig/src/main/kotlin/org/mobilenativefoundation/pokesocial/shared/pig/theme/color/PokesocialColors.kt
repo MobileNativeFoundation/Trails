@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.pokesocial.android.common.pig.color
+package org.mobilenativefoundation.pokesocial.shared.pig.theme.color
 
 
 import androidx.compose.material3.ColorScheme
@@ -95,7 +95,7 @@ internal fun Colors.asColorScheme(): ColorScheme = ColorScheme(
     background = if (isLight) white else dark2,
     onBackground = if (isLight) gray800 else gray100,
     surface = if (isLight) gray50 else dark3,
-    onSurface = if (isLight) gray800 else gray50,
+    onSurface = if (isLight) dark1 else white,
     surfaceVariant = if (isLight) gray100 else dark3,
     onSurfaceVariant = if (isLight) gray800 else gray50,
     surfaceTint = if (isLight) gray800 else gray50,

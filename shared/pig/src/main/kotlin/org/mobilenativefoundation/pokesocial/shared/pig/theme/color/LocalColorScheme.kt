@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.pokesocial.android.common.pig.color
+package org.mobilenativefoundation.pokesocial.shared.pig.theme.color
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable

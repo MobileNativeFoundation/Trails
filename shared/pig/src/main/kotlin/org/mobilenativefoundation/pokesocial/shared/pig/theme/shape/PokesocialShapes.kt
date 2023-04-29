@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.pokesocial.android.common.pig.shape
+package org.mobilenativefoundation.pokesocial.shared.pig.theme.shape
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes

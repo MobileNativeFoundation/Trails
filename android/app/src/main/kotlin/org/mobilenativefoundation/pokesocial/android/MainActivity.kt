@@ -9,8 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
-import org.mobilenativefoundation.pokesocial.android.common.pig.PIG
-import org.mobilenativefoundation.pokesocial.android.common.pig.PigTheme
+import org.mobilenativefoundation.pokesocial.shared.pig.theme.PIG
+import org.mobilenativefoundation.pokesocial.shared.pig.theme.PigTheme
 
 class MainActivity : ComponentActivity() {
 
