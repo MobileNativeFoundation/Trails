@@ -26,7 +26,7 @@ import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.lightColorSc
 import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.systemColorScheme
 
 @Composable
-fun BottomBar(navHostController: NavHostController) {
+fun BottomBar(navHostController: NavHostController, create: () -> Unit) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
@@ -34,7 +34,8 @@ fun BottomBar(navHostController: NavHostController) {
 
     BottomBarUI(
         isSelected = ::isSelected,
-        navigate = navHostController::navigate
+        navigate = navHostController::navigate,
+        create = create
     )
 }
 
@@ -42,7 +43,8 @@ fun BottomBar(navHostController: NavHostController) {
 @Composable
 private fun BottomBarUI(
     isSelected: (tab: Screen) -> Boolean,
-    navigate: (route: String) -> Unit
+    navigate: (route: String) -> Unit,
+    create: () -> Unit
 ) {
 
     val colorScheme = systemColorScheme()
@@ -71,6 +73,9 @@ private fun BottomBarUI(
                     }
                 }
             }
+        },
+        floatingActionButton = {
+            FAB(create)
         }
     )
 }
@@ -85,7 +90,8 @@ private fun StandardPreview() {
                 Column {
                     BottomBarUI(
                         isSelected = { tab -> tab.route == Screen.Discover.route },
-                        navigate = { _ -> }
+                        navigate = { _ -> },
+                        create = {}
                     )
                 }
             }
@@ -102,7 +108,8 @@ private fun InversePreview() {
                 Column {
                     BottomBarUI(
                         isSelected = { tab -> tab.route == Screen.Discover.route },
-                        navigate = { _ -> }
+                        navigate = { _ -> },
+                        create = {}
                     )
                 }
             }
