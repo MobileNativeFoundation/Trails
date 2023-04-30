@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "org.mobilenativefoundation.pokesocial.android"
+    namespace = "org.mobilenativefoundation.trails.android"
 
     buildFeatures {
         compose = true
@@ -45,7 +45,7 @@ dependencies {
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
 
-    implementation(project(":shared:pig"))
+    implementation(project(":shared:tig"))
     implementation(project(":shared:navigation"))
     implementation(project(":android:common:scoping"))
 }
