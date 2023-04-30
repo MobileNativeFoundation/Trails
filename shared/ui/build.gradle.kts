@@ -15,7 +15,7 @@ kotlin {
                 implementation(libs.jetbrains.compose.ui.tooling.preview)
                 implementation(libs.jetbrains.compose.ui.tooling)
 
-                implementation(project(":shared:pig"))
+                implementation(project(":shared:tig"))
                 implementation(libs.kotlinx.datetime)
             }
         }
@@ -38,6 +38,6 @@ android {
     compileSdk = 33
     compileSdkVersion = "android-33"
 
-    namespace = "org.mobilenativefoundation.pokesocial.shared.ui"
+    namespace = "org.mobilenativefoundation.trails.shared.ui"
 }
 

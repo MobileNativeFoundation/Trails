@@ -11,7 +11,7 @@ kotlin {
             dependencies {
                 implementation(libs.jetbrains.compose.ui)
                 implementation(libs.jetbrains.compose.material3)
-                implementation(project(":shared:pig"))
+                implementation(project(":shared:tig"))
             }
         }
     }
@@ -33,6 +33,6 @@ android {
     compileSdk = 33
     compileSdkVersion = "android-33"
 
-    namespace = "org.mobilenativefoundation.pokesocial.shared.navigation"
+    namespace = "org.mobilenativefoundation.trails.shared.navigation"
 }
 

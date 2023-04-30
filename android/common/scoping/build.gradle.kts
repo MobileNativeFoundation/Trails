@@ -14,7 +14,7 @@ android {
     compileSdk = 33
     compileSdkVersion = "android-33"
 
-    namespace = "org.mobilenativefoundation.pokesocial.android.common.scoping"
+    namespace = "org.mobilenativefoundation.trails.android.common.scoping"
 }
 
 dependencies {

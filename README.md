@@ -1,8 +1,8 @@
-<img src=".github/pokesocial.svg" width="100">
+<img src=".github/trails.png" height="250" alt="Trails logo"/>
 
-# Pokésocial
+# Trails
 
-A social media platform for Pokémon trainers.
+An offline-first companion. Roam freely. Explore more.
 
-<img src="https://user-images.githubusercontent.com/59468153/235325285-d11cdda8-f01b-42b8-bd13-38cf8758bc5a.png" height="650"/>
+<img src=".github/home.png" height="650" alt="Trails Home Tab"/>
 
