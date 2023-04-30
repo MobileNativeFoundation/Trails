@@ -169,6 +169,43 @@ private fun StandardPreview() {
 
 @Preview
 @Composable
+private fun StandardImagePostPreview() {
+    val pokesocialColors = PokesocialColors()
+
+
+    Column {
+        PigTheme(lightColorScheme()) {
+            Surface {
+                Post(
+                    userName = "Misty",
+                    avatar = {
+                        Avatar(
+                            painter = painterResource(R.drawable.misty),
+                            contentDescription = "Misty"
+                        )
+                    },
+                    content = {
+                        Image(
+                            painter = painterResource(R.drawable.misty_ash),
+                            contentDescription = "Misty and Ash",
+                            modifier = Modifier.width(380.dp).height(300.dp).clip(
+                                RoundedCornerShape(16.dp)
+                            )
+                        )
+                    },
+                    timeAgo = "2 minutes ago",
+                    likeCount = "1.5K",
+                    commentCount = "700",
+                    showMoreInfo = {},
+                    navigateToPostDetailView = {}
+                )
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
 private fun InversePreview() {
     val pokesocialColors = PokesocialColors()
 
@@ -201,6 +238,44 @@ private fun InversePreview() {
                                 )
                             }
                         }
+                    },
+                    timeAgo = "2 minutes ago",
+                    likeCount = "1.5K",
+                    commentCount = "700",
+                    showMoreInfo = {},
+                    navigateToPostDetailView = {}
+                )
+            }
+        }
+    }
+}
+
+
+@Preview
+@Composable
+private fun InverseImagePostPreview() {
+    val pokesocialColors = PokesocialColors()
+
+
+    Column {
+        PigTheme(darkColorScheme()) {
+            Surface {
+                Post(
+                    userName = "Misty",
+                    avatar = {
+                        Avatar(
+                            painter = painterResource(R.drawable.misty),
+                            contentDescription = "Misty"
+                        )
+                    },
+                    content = {
+                        Image(
+                            painter = painterResource(R.drawable.misty_ash),
+                            contentDescription = "Misty and Ash",
+                            modifier = Modifier.width(380.dp).height(300.dp).clip(
+                                RoundedCornerShape(16.dp)
+                            )
+                        )
                     },
                     timeAgo = "2 minutes ago",
                     likeCount = "1.5K",
