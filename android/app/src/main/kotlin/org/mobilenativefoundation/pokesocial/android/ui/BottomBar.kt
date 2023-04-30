@@ -26,15 +26,15 @@ import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.lightColorSc
 import org.mobilenativefoundation.pokesocial.shared.pig.theme.color.systemColorScheme
 
 @Composable
-fun BottomBar(navController: NavHostController, create: () -> Unit) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+fun BottomBar(navHostController: NavHostController, create: () -> Unit) {
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     fun isSelected(tab: Screen) = currentDestination?.hierarchy?.any { it.route == tab.route } == true
 
     BottomBarUI(
         isSelected = ::isSelected,
-        navigate = navController::navigate,
+        navigate = navHostController::navigate,
         create = create
     )
 }
@@ -75,7 +75,7 @@ private fun BottomBarUI(
             }
         },
         floatingActionButton = {
-            FAB(onClick = create)
+            FAB(create)
         }
     )
 }
