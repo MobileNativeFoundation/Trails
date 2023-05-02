@@ -1,14 +1,15 @@
 package org.mobilenativefoundation.trails.shared.data.entity
 
 import kotlinx.serialization.Serializable
-import org.bson.codecs.pojo.annotations.BsonId
-import org.litote.kmongo.Id
 
 @Serializable
 data class Post(
-    @BsonId val id: Id<Post>,
-    @BsonId val userId: Id<User>,
-    @BsonId val hikeId: Id<Hike>,
+    val id: String,
+    val user: User,
+    val hike: Hike,
     val title: String,
     val body: String,
+    val images: List<Image>,
+    val likedBy: List<User>,
+    val comments: List<PostComment>,
 )

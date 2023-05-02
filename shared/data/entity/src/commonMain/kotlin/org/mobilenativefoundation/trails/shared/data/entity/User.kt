@@ -1,12 +1,15 @@
 package org.mobilenativefoundation.trails.shared.data.entity
 
 import kotlinx.serialization.Serializable
-import org.bson.codecs.pojo.annotations.BsonId
-import org.litote.kmongo.Id
 
 @Serializable
 data class User(
-    @BsonId val id: Id<User>,
+    val id: String,
     val name: String,
     val avatarUrl: String,
+    val following: List<User>,
+    val followedBy: List<User>,
+    val completedTrails: List<CompletedTrail>,
+    val savedTrails: List<Trail>,
+    val hikes: List<Hike>,
 )
