@@ -1,4 +1,4 @@
-<img src=".github/trails_outline_inverse.png" height="250" alt="Trails logo"/>
+<img src=".github/trails.png" height="250" alt="Trails logo"/>
 
 # Trails
 
