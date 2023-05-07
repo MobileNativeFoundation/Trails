@@ -20,4 +20,6 @@ android {
 dependencies {
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
+    implementation(libs.androidx.appCompat)
+    implementation(libs.androidx.viewmodel)
 }

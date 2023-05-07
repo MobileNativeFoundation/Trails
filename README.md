@@ -4,5 +4,11 @@
 
 An offline-first companion. Roam freely. Explore more.
 
-<img src=".github/home.png" height="650" alt="Trails Home Tab"/>
+
+<div style="display: flex;flex-direction: row">
+<img src=".github/home_dark.png" height="650" alt="Trails Home Tab"/>
+
+<img src=".github/hike_light.png" height="650" alt="Trails Home Tab"/>
+</div>
+
 
