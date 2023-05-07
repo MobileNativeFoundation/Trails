@@ -1,6 +1,5 @@
 package org.mobilenativefoundation.trails.shared.tig.theme.color
 
-
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
@@ -66,6 +65,7 @@ fun TrailsColors(isLight: Boolean = !isSystemInDarkTheme()) = Colors(
     orangeBackground = Color(0xffFFF8ED),
     pinkBackground = Color(0xffFFF5F5),
     yellowBackground = Color(0xffFFFEE0),
+    lightAlertBackground = Color(0xffffffff).copy(alpha = 0.35f),
     redTransparent = Color(0xffFF4D67).copy(alpha = 0.08f),
     purpleTransparent = Color(0xff7210FF).copy(alpha = 0.08f),
     blueTransparent = Color(0xff335EF7).copy(alpha = 0.08f),
@@ -81,7 +81,6 @@ fun TrailsColors(isLight: Boolean = !isSystemInDarkTheme()) = Colors(
     orangeGradient = Colors.Gradient(Color(0xffFB9400), Color(0xffFFAB38), Colors.Gradient.Direction.Linear),
     isLight = isLight
 )
-
 
 internal fun Colors.asColorScheme(): ColorScheme = ColorScheme(
     primary = primary500,

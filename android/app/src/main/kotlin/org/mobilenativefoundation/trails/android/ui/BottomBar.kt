@@ -39,7 +39,6 @@ fun BottomBar(navHostController: NavHostController, create: () -> Unit) {
     )
 }
 
-
 @Composable
 private fun BottomBarUI(
     isSelected: (tab: Screen) -> Boolean,
@@ -65,7 +64,7 @@ private fun BottomBarUI(
                         navigate(tab.route)
                     }) {
                         Icon(
-                            painter = painterResource(id = icon),
+                            painter = painterResource(id = icon!!),
                             contentDescription = null,
                             modifier = Modifier.size(32.dp),
                             tint = if (selected) colorScheme.primary else trailsColors.gray500
@@ -79,7 +78,6 @@ private fun BottomBarUI(
         }
     )
 }
-
 
 @Preview
 @Composable

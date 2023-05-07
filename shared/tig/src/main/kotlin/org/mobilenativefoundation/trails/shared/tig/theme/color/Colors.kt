@@ -64,6 +64,7 @@ data class Colors(
     val orangeBackground: Color,
     val pinkBackground: Color,
     val yellowBackground: Color,
+    val lightAlertBackground: Color,
 
     val redTransparent: Color,
     val purpleTransparent: Color,

@@ -48,4 +48,5 @@ dependencies {
     implementation(project(":shared:tig"))
     implementation(project(":shared:navigation"))
     implementation(project(":android:common:scoping"))
+    implementation(project(":android:feat:hike"))
 }

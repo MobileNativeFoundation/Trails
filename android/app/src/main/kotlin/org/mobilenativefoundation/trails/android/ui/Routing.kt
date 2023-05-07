@@ -9,18 +9,22 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import org.mobilenativefoundation.trails.android.feat.hike.HikeCoordinator
 import org.mobilenativefoundation.trails.shared.navigation.Screen
 
 @Composable
 fun Routing(
     navController: NavHostController,
     innerPadding: PaddingValues,
+    showBottomBar: () -> Unit,
+    hideBottomBar: () -> Unit,
 ) {
     NavHost(
         navController = navController, startDestination = Screen.Home.route, modifier = Modifier
             .padding(innerPadding)
     ) {
         composable(Screen.Home.route) {
+            showBottomBar()
             // TODO(#4)
             Text(
                 "Home",
@@ -30,6 +34,7 @@ fun Routing(
         }
 
         composable(Screen.Saved.route) {
+            showBottomBar()
             // TODO(#42)
             Text(
                 "Saved",
@@ -39,6 +44,7 @@ fun Routing(
         }
 
         composable(Screen.Activity.route) {
+            showBottomBar()
             // TODO(#43)
             Text(
                 "Activity",
@@ -48,12 +54,18 @@ fun Routing(
         }
 
         composable(Screen.Profile.route) {
+            showBottomBar()
             // TODO(#49)
             Text(
                 "Profile",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.displayMedium
             )
+        }
+
+        composable(Screen.Hike.route) {
+            hideBottomBar()
+            HikeCoordinator()
         }
     }
 }
