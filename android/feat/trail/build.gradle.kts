@@ -21,7 +21,7 @@ android {
     compileSdk = 33
     compileSdkVersion = "android-33"
 
-    namespace = "org.mobilenativefoundation.trails.android.feat.hike"
+    namespace = "org.mobilenativefoundation.trails.android.feat.trail"
 }
 
 dependencies {
@@ -40,7 +40,6 @@ dependencies {
     implementation(project(":shared:data:api"))
     implementation(project(":android:common:scoping"))
     implementation(project(":shared:tig"))
-    implementation(project(":android:feat:trail"))
     implementation(libs.jetbrains.compose.ui.tooling.preview)
     implementation(libs.store)
     implementation(libs.ktor.client.core)
