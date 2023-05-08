@@ -22,6 +22,7 @@ rootProject.name = "trails"
 include(":android:app")
 include(":android:common:scoping")
 include(":android:feat:hike")
+include(":android:feat:trail")
 include(":shared:tig")
 include(":shared:navigation")
 include(":shared:ui")

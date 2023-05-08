@@ -5,10 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Hike(
     val id: String,
+    val trail: Trail,
     val user: User,
-    val location: Location,
+    val path: List<LatLng>,
     val start: Long,
     val end: Long?,
-    val eta: Long?,
-    val trails: List<Trail>,
 )
