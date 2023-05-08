@@ -49,4 +49,6 @@ dependencies {
     implementation(project(":shared:navigation"))
     implementation(project(":android:common:scoping"))
     implementation(project(":android:feat:hike"))
+    implementation(project(":android:feat:trail"))
+    implementation(project(":android:feat:following"))
 }
