@@ -23,7 +23,7 @@ class PagingStoreTests {
 
     private val factory = FakePostFactory()
     private val testScope = TestScope()
-    private lateinit var store: PagingStore<String, PostOverview, Post>
+    private lateinit var store: PagingRepository<String, PostOverview, Post>
 
     @BeforeTest
     fun setUp() {
@@ -48,7 +48,7 @@ class PagingStoreTests {
             backendService.detail(it) ?: throw Exception()
         }
 
-        store = PagingStore(
+        store = PagingRepository(
             pagingFetcher = pagingFetcher,
             detailFetcher = detailFetcher,
             pagingSourceOfTruth = postOverviewSourceOfTruth,
@@ -60,14 +60,14 @@ class PagingStoreTests {
 
     @Test
     fun happyPath() = testScope.runTest {
-        val requests: MutableSharedFlow<PagingStoreRequest.Page<String>> = MutableSharedFlow(replay = 10)
+        val requests: MutableSharedFlow<PagingRepositoryRequest.Page<String>> = MutableSharedFlow(replay = 10)
 
         val responses = store.flow(requests)
 
 
         val params1 = PagingParams<String>(limit = 10, after = null)
         val key1 = PagingKey.Page(params1)
-        val request1 = PagingStoreRequest.Page(key1)
+        val request1 = PagingRepositoryRequest.Page(key1)
         requests.emit(request1)
 
 
