@@ -22,7 +22,7 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class PagingStoreTests {
+class PagingRepositoryTests {
 
     private val factory = FakePostFactory()
     private val testScope = TestScope()
@@ -66,7 +66,6 @@ class PagingStoreTests {
         val requests: MutableSharedFlow<PagingRepositoryRequest.Page<String>> = MutableSharedFlow(replay = 10)
 
         val responses = repository.flow(requests)
-
 
         val params1 = PagingParams<String>(limit = 10, after = null)
         val key1 = PagingKey.Page(params1)
