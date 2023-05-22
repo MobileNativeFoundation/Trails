@@ -3,6 +3,8 @@ package org.mobilenativefoundation.trails.shared.paging.core
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.mobilenativefoundation.store.cache5.CacheBuilder
@@ -17,13 +19,14 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PagingStoreTests {
 
     private val factory = FakePostFactory()
     private val testScope = TestScope()
-    private lateinit var store: PagingRepository<String, PostOverview, Post>
+    private lateinit var repository: PagingRepository<String, PostOverview, Post>
 
     @BeforeTest
     fun setUp() {
@@ -48,7 +51,7 @@ class PagingStoreTests {
             backendService.detail(it) ?: throw Exception()
         }
 
-        store = PagingRepository(
+        repository = PagingRepository(
             pagingFetcher = pagingFetcher,
             detailFetcher = detailFetcher,
             pagingSourceOfTruth = postOverviewSourceOfTruth,
@@ -62,7 +65,7 @@ class PagingStoreTests {
     fun happyPath() = testScope.runTest {
         val requests: MutableSharedFlow<PagingRepositoryRequest.Page<String>> = MutableSharedFlow(replay = 10)
 
-        val responses = store.flow(requests)
+        val responses = repository.flow(requests)
 
 
         val params1 = PagingParams<String>(limit = 10, after = null)
@@ -70,10 +73,8 @@ class PagingStoreTests {
         val request1 = PagingRepositoryRequest.Page(key1)
         requests.emit(request1)
 
-
         val first = responses.first()
         assertIs<PagingData.Page<String, PostOverview>>(first.data)
-
         assertEquals(
             PagingData.Page(
                 params = params1,
@@ -81,5 +82,38 @@ class PagingStoreTests {
                 next = PagingParams(limit = 10, after = "11")
             ), first.data
         )
+
+        val params2 = first.data.next
+        assertNotNull(params2)
+        assertEquals(PagingParams(limit = 10, after = "11"), params2)
+        val key2 = PagingKey.Page(params2)
+        val request2 = PagingRepositoryRequest.Page(key2)
+        requests.emit(request2)
+
+        val second = responses.take(2).last()
+        assertIs<PagingData.Page<String, PostOverview>>(second.data)
+
+        assertEquals(
+            PagingData.Page(
+                params = params2,
+                items = (11..20).map { factory.create(it).let { PostOverview(it.id, it.title, it.authorName) } },
+                next = PagingParams(limit = 10, after = "21")
+            ), second.data
+        )
+
+        val postId = "18"
+        val request3 = PagingRepositoryRequest.PagedItem(PagingKey.Item(postId))
+        val item = repository.fetch(request3)
+        assertEquals(
+            PagingRepositoryResponse.PagedItem(
+                data = PagingData.Item(
+                    postId,
+                    factory.create(18).let { PostOverview(it.id, it.title, it.authorName) })
+            ), item
+        )
+
+        val request4 = PagingRepositoryRequest.DetailedItem(postId)
+        val detail = repository.fetch(request4)
+        assertEquals(PagingRepositoryResponse.DetailedItem(factory.create(18)), detail)
     }
 }
