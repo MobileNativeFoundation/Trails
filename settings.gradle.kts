@@ -14,6 +14,7 @@ pluginManagement {
         id("com.android.library").version(extra["agp.version"] as String)
         id("org.jetbrains.compose").version(extra["compose.version"] as String)
         id("io.ktor.plugin").version(extra["ktor.version"] as String)
+        id("app.cash.sqldelight").version("2.0.0-alpha05")
     }
 }
 
@@ -23,12 +24,14 @@ include(":android:app")
 include(":android:common:scoping")
 include(":android:feat:hike")
 include(":android:feat:trail")
-include(":android:feat:following")
+include(":android:feat:timeline:home")
+include(":android:feat:timeline:trails")
 include(":shared:tig")
 include(":shared:navigation")
 include(":shared:paging:core")
 include(":shared:timeline")
 include(":shared:ui")
 include(":shared:data:api")
+include(":shared:data:db")
 include(":shared:data:entity")
 include(":server")

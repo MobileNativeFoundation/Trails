@@ -20,12 +20,6 @@ class FakeBackendService {
             PostOverview(id = it.id, title = it.title, authorName = it.authorName)
         }
 
-        println("""
-            start = $start
-            end = $end
-            items = $items
-        """.trimIndent())
-
         val after = if (end <= timeline.lastIndex) {
             timeline[end].id
         } else {

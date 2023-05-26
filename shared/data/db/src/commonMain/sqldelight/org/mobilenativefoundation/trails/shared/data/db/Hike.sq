@@ -1,0 +1,5 @@
+
+
+CREATE TABLE hikeSq(
+    id TEXT NOT NULL PRIMARY KEY
+);

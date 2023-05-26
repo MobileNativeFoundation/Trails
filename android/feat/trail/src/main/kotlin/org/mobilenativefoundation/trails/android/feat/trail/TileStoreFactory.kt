@@ -139,7 +139,7 @@ class BitmapStoreFactory @Inject constructor(
         deleteAll = null
     )
 
-    private val store = StoreBuilder.from<BitmapKey, Bitmap, Bitmap, Bitmap>(
+    private val store = StoreBuilder.from<BitmapKey, Bitmap, Bitmap>(
         fetcher = fetcher,
         sourceOfTruth = sourceOfTruth
     ).build()

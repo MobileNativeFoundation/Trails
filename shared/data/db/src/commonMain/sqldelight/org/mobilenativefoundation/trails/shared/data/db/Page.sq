@@ -1,0 +1,22 @@
+import kotlin.collections.List;
+import kotlin.String;
+import kotlin.Int;
+import org.mobilenativefoundation.trails.shared.data.db.PostOverviewSq;
+import org.mobilenativefoundation.trails.shared.paging.core.PagingParams;
+
+CREATE TABLE pageSq(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    params TEXT AS PagingParams<String> NOT NULL,
+    userId TEXT NOT NULL,
+    itemLimit INTEGER AS Int NOT NULL,
+    after TEXT,
+    itemIds TEXT AS List<String> NOT NULL,
+    next TEXT AS PagingParams<String>
+);
+
+findOne:
+SELECT * FROM pageSq WHERE userId = ? AND itemLimit = ? AND after = ? LIMIT 1;
+
+insert:
+INSERT INTO pageSq(id, params, userId, itemLimit, after, itemIds, next)
+VALUES (?, ?, ?, ?, ?, ?, ?);

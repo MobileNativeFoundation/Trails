@@ -20,7 +20,6 @@ class FakePostSourceOfTruth : SourceOfTruth<String, Post> {
     }
 
     override fun reader(key: String): Flow<Post?> = flow {
-        println("SOT")
         emit(items[key])
     }
 
