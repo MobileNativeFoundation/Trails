@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.squareup.anvil")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -44,11 +45,22 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
+    implementation(libs.store)
+    implementation(libs.store.cache)
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation("app.cash.sqldelight:android-driver:2.0.0-alpha05")
 
     implementation(project(":shared:tig"))
     implementation(project(":shared:navigation"))
+    implementation(project(":shared:timeline"))
     implementation(project(":android:common:scoping"))
     implementation(project(":android:feat:hike"))
     implementation(project(":android:feat:trail"))
-    implementation(project(":android:feat:following"))
+    implementation(project(":android:feat:timeline:home"))
+    implementation(project(":android:feat:timeline:trails"))
+    implementation(project(":shared:paging:core"))
+    implementation(project(":shared:data:entity"))
+    implementation(project(":shared:data:api"))
+    implementation(project(":shared:data:db"))
 }

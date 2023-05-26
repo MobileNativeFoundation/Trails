@@ -22,4 +22,5 @@ dependencies {
     kapt(libs.dagger.compiler)
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.viewmodel)
+    implementation(project(":shared:data:entity"))
 }

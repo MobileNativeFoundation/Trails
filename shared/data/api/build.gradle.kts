@@ -6,7 +6,6 @@ plugins {
 
 kotlin {
     android()
-    jvm()
 
     sourceSets {
         val commonMain by getting {
@@ -15,6 +14,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.datetime)
                 implementation(project(":shared:data:entity"))
+                implementation(project(":shared:paging:core"))
             }
         }
     }

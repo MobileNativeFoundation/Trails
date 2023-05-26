@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import org.mobilenativefoundation.store.store5.Bookkeeper
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.MutableStore
+import org.mobilenativefoundation.store.store5.MutableStoreBuilder
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.StoreBuilder
 import org.mobilenativefoundation.store.store5.Updater
@@ -54,7 +55,7 @@ class HikeMutableStoreFactory @Inject constructor(
     }
 
 
-    private val store = StoreBuilder
+    private val store = MutableStoreBuilder
         .from<String, Hike, Hike, Hike>(
             fetcher = fetcher,
             sourceOfTruth = sourceOfTruth

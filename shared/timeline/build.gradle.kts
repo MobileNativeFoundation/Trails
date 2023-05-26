@@ -17,8 +17,15 @@ kotlin {
                 implementation(project(":shared:paging:core"))
                 implementation(project(":shared:data:entity"))
                 implementation(project(":shared:data:api"))
+                implementation(project(":shared:data:db"))
                 implementation(libs.compose.material3)
                 implementation(libs.jetbrains.compose.ui)
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.viewmodel)
             }
         }
 

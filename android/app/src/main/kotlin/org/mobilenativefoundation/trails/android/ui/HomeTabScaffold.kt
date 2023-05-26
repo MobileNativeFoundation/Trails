@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,23 +29,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mobilenativefoundation.trails.android.R
-import org.mobilenativefoundation.trails.android.feat.following.ui.composable.FollowingFeed
+import org.mobilenativefoundation.trails.android.feat.timeline.home.HomeTimelineView
 import org.mobilenativefoundation.trails.android.feat.trail.ui.composable.TrailsFeed
 import org.mobilenativefoundation.trails.shared.tig.theme.TigTheme
 import org.mobilenativefoundation.trails.shared.tig.theme.color.darkColorScheme
 
 @Composable
 fun HomeTabScaffold(
-    followingFeed: @Composable () -> Unit = { FollowingFeed() },
+    followingFeed: @Composable () -> Unit = { HomeTimelineView() },
     trailsFeed: @Composable () -> Unit = { TrailsFeed() },
 ) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.background(MaterialTheme.colorScheme.background)
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .padding(start = 24.dp, end = 24.dp, top = 24.dp)
+            .fillMaxSize()
     ) {
-        Text("Trails", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onBackground)
+        Text(
+            "Trails",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground
+        )
 
         val activeTab = remember { mutableStateOf(Tab.Following) }
 
@@ -94,14 +101,22 @@ fun HomeTabScaffold(
 
 @Composable
 fun Tab(text: String, isActive: Boolean, onSelect: () -> Unit) {
-    val color = if (isActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
+    val color =
+        if (isActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
     val fontWeight = if (isActive) FontWeight.Bold else FontWeight.Light
     val thickness = if (isActive) 4.dp else 0.dp
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.widthIn(max = 80.dp).clickable { onSelect() }) {
-        Text(text, color = color, fontWeight = fontWeight, style = MaterialTheme.typography.titleMedium)
+        modifier = Modifier
+            .widthIn(max = 80.dp)
+            .clickable { onSelect() }) {
+        Text(
+            text,
+            color = color,
+            fontWeight = fontWeight,
+            style = MaterialTheme.typography.titleMedium
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
         Box(
@@ -149,7 +164,12 @@ private fun InversePreview() {
 private fun FakeFeed(color: Color = MaterialTheme.colorScheme.onBackground) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         items(5) {
-            Box(modifier = Modifier.fillMaxWidth().height(200.dp).background(color.copy(alpha = 0.4f)))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .background(color.copy(alpha = 0.4f))
+            )
         }
     }
 }

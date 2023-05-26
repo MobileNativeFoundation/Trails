@@ -13,11 +13,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.mobilenativefoundation.trails.android.wiring.AppComponent
+import org.mobilenativefoundation.trails.android.wiring.UserComponent
 import org.mobilenativefoundation.trails.shared.navigation.Screen
 import androidx.compose.material3.Scaffold as MaterialScaffold
 
 @Composable
-fun Scaffold(modifier: Modifier = Modifier, navHostController: NavHostController) {
+fun Scaffold(
+    modifier: Modifier = Modifier,
+    navHostController: NavHostController,
+    userComponent: UserComponent,
+    appComponent: AppComponent
+) {
 
     val topBarTitleState = remember { MutableStateFlow<String?>(null) }
     val topBarNavigationIconState = remember { MutableStateFlow<(@Composable () -> Unit)?>(null) }
@@ -71,7 +78,13 @@ fun Scaffold(modifier: Modifier = Modifier, navHostController: NavHostController
         floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
         Box {
-            Routing(navHostController, innerPadding, { showBottomBar() }, { hideBottomBar() })
+            Routing(
+                navHostController,
+                innerPadding,
+                appComponent,
+                userComponent,
+                { showBottomBar() },
+                { hideBottomBar() })
         }
     }
 }

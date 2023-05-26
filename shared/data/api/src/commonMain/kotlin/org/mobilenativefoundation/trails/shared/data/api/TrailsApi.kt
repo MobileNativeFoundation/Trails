@@ -4,8 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import org.mobilenativefoundation.trails.shared.data.entity.Feed
 import org.mobilenativefoundation.trails.shared.data.entity.Hike
 import org.mobilenativefoundation.trails.shared.data.entity.Notification
+import org.mobilenativefoundation.trails.shared.data.entity.Post
+import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.Trail
 import org.mobilenativefoundation.trails.shared.data.entity.User
+import org.mobilenativefoundation.trails.shared.paging.core.PagingData
 
 // TODO(): Support Paging
 interface TrailsApi {
@@ -24,4 +27,14 @@ interface TrailsApi {
     fun syncHike(updates: Flow<Hike>): Flow<Hike>
 
     suspend fun startHike(userId: String, trailId: String): Hike
+
+    suspend fun getHomeTimeline(
+        userId: String,
+        limit: Int,
+        after: String?
+    ): PagingData.Page<String, PostOverview>
+
+    suspend fun getPost(postId: String): Post
+
+    suspend fun getPostOverview(postId: String): PostOverview
 }
