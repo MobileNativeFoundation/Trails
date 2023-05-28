@@ -9,8 +9,8 @@ import org.mobilenativefoundation.trails.shared.data.entity.Post
 import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.Trail
 import org.mobilenativefoundation.trails.shared.data.entity.User
-import org.mobilenativefoundation.trails.shared.paging.core.PagingData
-import org.mobilenativefoundation.trails.shared.paging.core.PagingParams
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingData
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingParams
 
 class RealTrailsApi : TrailsApi {
     override suspend fun getFeed(userId: String): Feed {

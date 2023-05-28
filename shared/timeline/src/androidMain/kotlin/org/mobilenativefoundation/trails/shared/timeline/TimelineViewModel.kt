@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
-import org.mobilenativefoundation.trails.shared.paging.core.Feed
-import org.mobilenativefoundation.trails.shared.paging.core.Pager
-import org.mobilenativefoundation.trails.shared.paging.core.PagingData
-import org.mobilenativefoundation.trails.shared.paging.core.PagingKey
-import org.mobilenativefoundation.trails.shared.paging.core.PagingParams
-import org.mobilenativefoundation.trails.shared.paging.core.PagingRepositoryRequest
+import org.mobilenativefoundation.trails.shared.paging.core0.Feed
+import org.mobilenativefoundation.trails.shared.paging.core0.Pager
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingData
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingKey
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingParams
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingRepositoryRequest
 
 actual class TimelineViewModel(
     private val coroutineScope: CoroutineScope,

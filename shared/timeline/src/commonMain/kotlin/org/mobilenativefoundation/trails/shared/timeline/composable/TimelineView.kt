@@ -5,8 +5,6 @@ import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import org.mobilenativefoundation.trails.shared.paging.core.LazyPagingItems
 import org.mobilenativefoundation.trails.shared.paging.core.collectAsLazyPagingItems
 import org.mobilenativefoundation.trails.shared.paging.core.items
 import org.mobilenativefoundation.trails.shared.timeline.TimelineViewModel

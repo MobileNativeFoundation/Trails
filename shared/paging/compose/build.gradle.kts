@@ -18,6 +18,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.compose.material3)
                 implementation(libs.jetbrains.compose.ui)
+                implementation(project(":shared:paging:core"))
             }
         }
 
@@ -48,6 +49,6 @@ android {
     compileSdk = 33
     compileSdkVersion = "android-33"
 
-    namespace = "org.mobilenativefoundation.trails.shared.paging.core"
+    namespace = "org.mobilenativefoundation.trails.shared.paging.compose"
 }
 

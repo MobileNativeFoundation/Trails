@@ -8,7 +8,7 @@ import org.mobilenativefoundation.trails.shared.data.entity.Post
 import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.Trail
 import org.mobilenativefoundation.trails.shared.data.entity.User
-import org.mobilenativefoundation.trails.shared.paging.core.PagingData
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingData
 
 // TODO(): Support Paging
 interface TrailsApi {

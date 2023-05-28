@@ -11,10 +11,10 @@ import org.mobilenativefoundation.trails.shared.data.db.PostOverviewSq
 import org.mobilenativefoundation.trails.shared.data.db.PostQueries
 import org.mobilenativefoundation.trails.shared.data.entity.Post
 import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
-import org.mobilenativefoundation.trails.shared.paging.core.PagingCacheBuilder
-import org.mobilenativefoundation.trails.shared.paging.core.PagingData
-import org.mobilenativefoundation.trails.shared.paging.core.PagingKey
-import org.mobilenativefoundation.trails.shared.paging.core.PagingRepository
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingCacheBuilder
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingData
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingKey
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingRepository
 
 class TimelineRepositoryBuilder(
     private val userId: String,

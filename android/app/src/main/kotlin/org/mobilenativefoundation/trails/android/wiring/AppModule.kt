@@ -17,7 +17,7 @@ import org.mobilenativefoundation.trails.shared.data.db.PageQueries
 import org.mobilenativefoundation.trails.shared.data.db.PageSq
 import org.mobilenativefoundation.trails.shared.data.db.PostOverviewQueries
 import org.mobilenativefoundation.trails.shared.data.db.PostQueries
-import org.mobilenativefoundation.trails.shared.paging.core.PagingParams
+import org.mobilenativefoundation.trails.shared.paging.core0.PagingParams
 
 @Module
 @ContributesTo(AppScope::class)
