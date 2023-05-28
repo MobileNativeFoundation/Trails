@@ -1,5 +1,5 @@
-
+import kotlin.Int;
 
 CREATE TABLE hikeSq(
-    id TEXT NOT NULL PRIMARY KEY
+    id INTEGER AS Int NOT NULL PRIMARY KEY
 );

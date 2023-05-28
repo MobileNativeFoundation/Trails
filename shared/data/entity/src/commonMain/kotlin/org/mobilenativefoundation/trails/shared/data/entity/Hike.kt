@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Hike(
-    val id: String,
+    val id: Int,
     val trail: Trail,
     val user: User,
     val path: List<LatLng>,

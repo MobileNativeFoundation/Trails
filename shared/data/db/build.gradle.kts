@@ -6,6 +6,7 @@ plugins {
 
 kotlin {
     android()
+    jvm()
 
     sourceSets {
         val commonMain by getting {
@@ -15,7 +16,8 @@ kotlin {
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project(":shared:paging:core"))
+                implementation(project(":lib:paging:core"))
+                implementation(project(":shared:data:entity"))
             }
         }
 

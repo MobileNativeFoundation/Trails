@@ -22,13 +22,14 @@ class TrailsApp @Inject constructor() : Application(), ComponentHolder {
         super.onCreate()
 
 
-        val driver: SqlDriver = AndroidSqliteDriver(TrailsDb.Schema, applicationContext, "trails.db")
+        val driver: SqlDriver =
+            AndroidSqliteDriver(TrailsDb.Schema, applicationContext, "trails.db")
 
         component = DaggerAppComponent.factory().create(
             applicationContext,
             driver,
             User(
-                "id",
+                1,
                 "name",
                 "avatarUrl",
                 listOf(),

@@ -82,7 +82,9 @@ fun Gallery() {
     Image(
         painter = painterResource(R.drawable.brooklyn_bridge_via_manhattan),
         contentDescription = "Brooklyn Bridge via Manhattan",
-        modifier = Modifier.height(300.dp).fillMaxWidth(),
+        modifier = Modifier
+            .height(300.dp)
+            .fillMaxWidth(),
         contentScale = ContentScale.Crop
     )
 }
@@ -166,7 +168,8 @@ fun lengthOfHike(lengthInFeet: Int): String = lengthInFeet.toString()// TODO()
 /**
  * Returns estimated time to finish in TODO() most appropriate unit
  */
-fun estimatedTimeToFinish(estimatedMinToFinish: Int): String = estimatedMinToFinish.toString() // TODO()
+fun estimatedTimeToFinish(estimatedMinToFinish: Int): String =
+    estimatedMinToFinish.toString() // TODO()
 
 
 @Composable
@@ -188,7 +191,10 @@ fun Actions(
 
 @Composable
 fun Action(action: Action, onClick: () -> Unit) {
-    Row(modifier = Modifier.clickable { onClick() }, verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Icon(
             painter = painterResource(action.icon),
             contentDescription = action.label,
@@ -196,7 +202,11 @@ fun Action(action: Action, onClick: () -> Unit) {
             tint = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.width(4.dp))
-        Text(action.name, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onBackground)
+        Text(
+            action.name,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
     }
 }
 
@@ -210,15 +220,15 @@ enum class Action(
 }
 
 private val FakeReview = Review(
-    id = "",
-    trailId = "",
-    userId = "",
+    id = 1,
+    trailId = 1,
+    userId = 1,
     rating = 5.0,
     content = ""
 )
 
 private val FakeTrail = Trail(
-    id = "",
+    id = 1,
     name = "Brooklyn Bridge Walk via Manhattan",
     route = listOf(),
     bounds = LatLngBounds(

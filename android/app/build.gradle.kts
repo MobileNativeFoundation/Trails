@@ -59,8 +59,9 @@ dependencies {
     implementation(project(":android:feat:trail"))
     implementation(project(":android:feat:timeline:home"))
     implementation(project(":android:feat:timeline:trails"))
-    implementation(project(":shared:paging:core"))
+    implementation(project(":lib:paging:core"))
     implementation(project(":shared:data:entity"))
     implementation(project(":shared:data:api"))
     implementation(project(":shared:data:db"))
+    implementation(project(":shared:mock"))
 }

@@ -1,0 +1,48 @@
+import kotlin.Int;
+import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams;
+
+CREATE TABLE timelinePagingDataSq(
+    id INTEGER AS Int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    paramsId INTEGER AS Int NOT NULL,
+    next TEXT AS TimelinePagingParams,
+    FOREIGN KEY (paramsId) REFERENCES timelinePagingParamsSq(id)
+);
+
+findById:
+SELECT *
+FROM timelinePagingDataSq
+WHERE id = ?
+LIMIT 1;
+
+insert:
+INSERT INTO timelinePagingDataSq(id, paramsId, next)
+VALUES (?, ?, ?);
+
+findByParamsAndPopulate:
+SELECT
+timelinePagingDataSq.id AS "id",
+timelinePagingDataSq.paramsId AS "paramsId",
+timelinePagingDataSq.next AS "next",
+postOverview.id AS "postOverviewId",
+postOverview.userId AS "postOverviewUserId",
+postOverview.userName AS "postOverviewUserName",
+postOverview.userAvatarUrl AS "postOverviewUserAvatarUrl",
+postOverview.hikeId AS "postOverviewHikeId",
+postOverview.title AS "postOverviewTitle",
+postOverview.body AS "postOverviewBody",
+postOverview.coverImageUrl AS "postOverviewCoverImageUrl",
+params.id AS "paramsId",
+params.loadSize AS "paramsLoadSize",
+params.after AS "paramsAfter",
+params.type AS "paramsType"
+FROM timelinePagingDataSq
+LEFT JOIN timelinePostOverview
+ON timelinePostOverview.pageId = timelinePagingDataSq.id
+LEFT JOIN postOverviewSq postOverview
+ON postOverview.id = timelinePostOverview.postOverviewId
+LEFT JOIN timelinePagingParamsSq params
+ON params.id = timelinePagingDataSq.paramsId
+WHERE paramsId = ?;
+
+lastInsertedRowId:
+SELECT last_insert_rowid();

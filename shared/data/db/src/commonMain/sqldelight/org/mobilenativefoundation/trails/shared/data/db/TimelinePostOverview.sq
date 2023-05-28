@@ -1,0 +1,24 @@
+import kotlin.Int;
+
+CREATE TABLE timelinePostOverview(
+    id INTEGER  AS Int NOT NULL PRIMARY KEY AUTOINCREMENT ,
+    pageId INTEGER AS Int NOT NULL,
+    postOverviewId INTEGER AS Int NOT NULL,
+    FOREIGN KEY (pageId) REFERENCES timelinePagingDataSq(id),
+    FOREIGN KEY (postOverviewId) REFERENCES postOverviewSq(id)
+);
+
+findOne:
+SELECT *
+FROM timelinePostOverview
+WHERE pageId = ? AND postOverviewId = ?
+LIMIT 1;
+
+findByPage:
+SELECT *
+FROM timelinePostOverview
+WHERE pageId = ?;
+
+insert:
+INSERT INTO timelinePostOverview(id, pageId, postOverviewId)
+VALUES (?, ?, ?);

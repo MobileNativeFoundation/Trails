@@ -7,13 +7,12 @@ import org.mobilenativefoundation.trails.android.RealTrailsUser
 import org.mobilenativefoundation.trails.android.common.wiring.SingleIn
 import org.mobilenativefoundation.trails.android.common.wiring.TrailsUser
 import org.mobilenativefoundation.trails.android.common.wiring.UserScope
+import org.mobilenativefoundation.trails.db.TrailsDb
 import org.mobilenativefoundation.trails.shared.data.api.TrailsApi
-import org.mobilenativefoundation.trails.shared.data.db.PageQueries
-import org.mobilenativefoundation.trails.shared.data.db.PostOverviewQueries
-import org.mobilenativefoundation.trails.shared.data.db.PostQueries
+import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.User
-import org.mobilenativefoundation.trails.shared.timeline.TimelineRepository
-import org.mobilenativefoundation.trails.shared.timeline.TimelineRepositoryBuilder
+import org.mobilenativefoundation.trails.shared.paging.core.Pager
+import org.mobilenativefoundation.trails.shared.timeline.TimelinePagerFactory
 
 @Module
 @ContributesTo(UserScope::class)
@@ -22,20 +21,20 @@ object UserModule {
     @Provides
     @SingleIn(UserScope::class)
     fun provideTrailsUser(user: User): TrailsUser = RealTrailsUser(user)
-    @Provides
+
     @SingleIn(UserScope::class)
-    fun provideTimelineRepository(
-        user: TrailsUser,
+    @Provides
+    fun provideTimelinePager(
+        user: User,
         api: TrailsApi,
-        pageQueries: PageQueries,
-        postQueries: PostQueries,
-        postOverviewQueries: PostOverviewQueries
-    ): TimelineRepository = TimelineRepositoryBuilder(
+        trailsDb: TrailsDb
+    ): Pager<Int, PostOverview, PostOverview> = TimelinePagerFactory(
         userId = user.id,
         api = api,
-        pageQueries = pageQueries,
-        postOverviewQueries = postOverviewQueries,
-        postQueries = postQueries
-    ).build()
+        paramsQueries = trailsDb.timelinePagingParamsQueries,
+        pageQueries = trailsDb.timelinePagingDataQueries,
+        postOverviewQueries = trailsDb.postOverviewQueries,
+        timelinePostOverviewQueries = trailsDb.timelinePostOverviewQueries
+    ).create()
 }
 

@@ -18,7 +18,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "trails"
+rootProject.name = "Trails"
 
 include(":android:app")
 include(":android:common:scoping")
@@ -28,10 +28,12 @@ include(":android:feat:timeline:home")
 include(":android:feat:timeline:trails")
 include(":shared:tig")
 include(":shared:navigation")
-include(":shared:paging:core")
+include(":lib:paging:core")
+include(":lib:paging:compose")
 include(":shared:timeline")
 include(":shared:ui")
 include(":shared:data:api")
 include(":shared:data:db")
 include(":shared:data:entity")
+include(":shared:mock")
 include(":server")

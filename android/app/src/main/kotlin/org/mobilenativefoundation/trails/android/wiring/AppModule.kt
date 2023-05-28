@@ -5,18 +5,18 @@ import app.cash.sqldelight.db.SqlDriver
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.mobilenativefoundation.trails.android.api.RealTrailsApi
+import org.mobilenativefoundation.trails.android.api.MockTrailsApi
 import org.mobilenativefoundation.trails.android.common.wiring.AppScope
 import org.mobilenativefoundation.trails.db.TrailsDb
 import org.mobilenativefoundation.trails.shared.data.api.TrailsApi
-import org.mobilenativefoundation.trails.shared.data.db.PageQueries
-import org.mobilenativefoundation.trails.shared.data.db.PageSq
-import org.mobilenativefoundation.trails.shared.data.db.PostOverviewQueries
-import org.mobilenativefoundation.trails.shared.data.db.PostQueries
+import org.mobilenativefoundation.trails.shared.data.db.PostOverviewSq
+import org.mobilenativefoundation.trails.shared.data.db.TimelinePagingDataSq
+import org.mobilenativefoundation.trails.shared.data.db.TimelinePagingParamsSq
+import org.mobilenativefoundation.trails.shared.data.db.TimelinePostOverview
+import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
 import org.mobilenativefoundation.trails.shared.paging.core.PagingParams
 
 @Module
@@ -32,63 +32,64 @@ object AppModule {
         driver: SqlDriver
     ): TrailsDb {
 
-        val paramsAdapter = object : ColumnAdapter<PagingParams<String>, String> {
-            override fun decode(databaseValue: String): PagingParams<String> {
-                return serializer.decodeFromString(PagingParams.serializer(String.serializer()), databaseValue)
-            }
+        val paramsAdapter = object : ColumnAdapter<TimelinePagingParams, String> {
+            override fun decode(databaseValue: String): TimelinePagingParams =
+                serializer.decodeFromString(databaseValue)
 
-            override fun encode(value: PagingParams<String>): String {
-                return serializer.encodeToString(PagingParams.serializer(String.serializer()), value)
-            }
-        }
-
-        val itemListAdapter = object : ColumnAdapter<Int, Long> {
-            override fun decode(databaseValue: Long): Int {
-                return databaseValue.toInt()
-            }
-
-            override fun encode(value: Int): Long {
-                return value.toLong()
-            }
-        }
-
-        val itemIdsAdapter = object : ColumnAdapter<List<String>, String> {
-            override fun decode(databaseValue: String): List<String> {
-                return serializer.decodeFromString(databaseValue)
-            }
-
-            override fun encode(value: List<String>): String {
-                return serializer.encodeToString(value)
-            }
+            override fun encode(value: TimelinePagingParams): String =
+                serializer.encodeToString(value)
 
         }
+
+        val intAdapter = object : ColumnAdapter<Int, Long> {
+            override fun decode(databaseValue: Long): Int = databaseValue.toInt()
+
+            override fun encode(value: Int): Long = value.toLong()
+        }
+
+        val typeAdapter = object : ColumnAdapter<PagingParams.Type, String> {
+            override fun decode(databaseValue: String): PagingParams.Type =
+                PagingParams.Type.lookup(databaseValue)
+
+            override fun encode(value: PagingParams.Type): String = value.name
+
+        }
+
+        val timelinePagingDataSqAdapter = TimelinePagingDataSq.Adapter(
+            idAdapter = intAdapter,
+            paramsIdAdapter = intAdapter,
+            nextAdapter = paramsAdapter
+        )
+
+        val postOverviewSqAdapter = PostOverviewSq.Adapter(
+            idAdapter = intAdapter,
+            userIdAdapter = intAdapter,
+            hikeIdAdapter = intAdapter
+        )
+
+        val timelinePagingParamsSqAdapter = TimelinePagingParamsSq.Adapter(
+            idAdapter = intAdapter,
+            userIdAdapter = intAdapter,
+            loadSizeAdapter = intAdapter,
+            afterAdapter = intAdapter,
+            typeAdapter = typeAdapter
+        )
+
+        val timelinePostOverviewAdapter = TimelinePostOverview.Adapter(
+            idAdapter = intAdapter,
+            pageIdAdapter = intAdapter,
+            postOverviewIdAdapter = intAdapter
+        )
 
         return TrailsDb.invoke(
             driver = driver,
-            pageSqAdapter = PageSq.Adapter(
-                paramsAdapter = paramsAdapter,
-                itemLimitAdapter = itemListAdapter,
-                itemIdsAdapter = itemIdsAdapter,
-                nextAdapter = paramsAdapter
-            )
+            postOverviewSqAdapter = postOverviewSqAdapter,
+            timelinePagingDataSqAdapter = timelinePagingDataSqAdapter,
+            timelinePagingParamsSqAdapter = timelinePagingParamsSqAdapter,
+            timelinePostOverviewAdapter = timelinePostOverviewAdapter
         )
     }
 
     @Provides
-    fun providePageQueries(
-        db: TrailsDb
-    ): PageQueries = db.pageQueries
-
-    @Provides
-    fun providePostQueries(
-        db: TrailsDb
-    ): PostQueries = db.postQueries
-
-    @Provides
-    fun providePostOverviewQueries(
-        db: TrailsDb
-    ): PostOverviewQueries = db.postOverviewQueries
-
-    @Provides
-    fun provideTrailsApi(): TrailsApi = RealTrailsApi()
+    fun provideTrailsApi(): TrailsApi = MockTrailsApi()
 }

@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CompletedTrail(
-    val id: String,
+    val id: Int,
     val user: User,
     val trail: Trail,
 )
