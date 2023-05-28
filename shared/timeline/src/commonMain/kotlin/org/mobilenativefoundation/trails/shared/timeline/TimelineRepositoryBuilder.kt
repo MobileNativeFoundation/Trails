@@ -51,7 +51,7 @@ class TimelineRepositoryBuilder(
                                 params = pageSq.params,
                                 items = pageSq.itemIds.map {
                                     PostOverview(
-                                        id = "id_$it",
+                                        id = it,
                                         "userName_$it",
                                         "userAvatarUrl_$it",
                                         "hikeId_$it",
