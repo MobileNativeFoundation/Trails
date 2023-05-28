@@ -37,7 +37,7 @@ fun Routing(
     val scope = rememberCoroutineScope()
 
     val timelineViewModel = viewModel<TimelineViewModel> {
-        TimelineViewModelFactory(scope, userDependencies.timelineRepository)
+        TimelineViewModelFactory(scope, userDependencies.timelinePager)
             .create(TimelineViewModel::class.java, this)
     }
 
@@ -48,7 +48,9 @@ fun Routing(
         composable(Screen.Home.route) {
             showBottomBar()
             // TODO(#4)
-            TimelineView(viewModel = timelineViewModel)
+            TimelineView(viewModel = timelineViewModel) {
+                Text(text = "${it.title}_${it.id}")
+            }
         }
 
         composable(Screen.Saved.route) {

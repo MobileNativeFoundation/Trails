@@ -13,6 +13,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.datetime)
+                implementation(project(":lib:paging:core"))
             }
         }
     }

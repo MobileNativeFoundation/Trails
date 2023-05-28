@@ -1,0 +1,24 @@
+import kotlin.Int;
+import org.mobilenativefoundation.trails.shared.paging.core.PagingParams.Type;
+
+CREATE TABLE timelinePagingParamsSq(
+    id INTEGER  AS Int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    userId INTEGER AS Int NOT NULL,
+    loadSize INTEGER AS Int NOT NULL,
+    after INTEGER AS Int,
+    type TEXT AS Type,
+    FOREIGN KEY (userId) REFERENCES userSq(id)
+);
+
+findOne:
+SELECT *
+FROM timelinePagingParamsSq
+WHERE userId = ? AND loadSize = ? AND after = ? AND type = ?
+LIMIT 1;
+
+insert:
+INSERT INTO timelinePagingParamsSq(id, userId, loadSize, after, type)
+VALUES (?,?, ?, ?, ?);
+
+lastInsertedRowId:
+SELECT last_insert_rowid();

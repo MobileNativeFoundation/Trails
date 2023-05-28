@@ -6,7 +6,7 @@ import org.mobilenativefoundation.trails.shared.data.entity.Trail
 import org.mobilenativefoundation.trails.shared.data.entity.User
 
 interface TrailsUser {
-    val id: String
+    val id: Int
     val name: String
     val avatarUrl: String
     val following: List<User>

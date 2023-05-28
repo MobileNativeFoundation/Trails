@@ -1,9 +1,11 @@
+import kotlin.Int;
+
 CREATE TABLE postOverviewSq(
-    id TEXT NOT NULL PRIMARY KEY,
-    userId TEXT NOT NULL,
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    userId INTEGER AS Int NOT NULL,
     userName TEXT NOT NULL,
     userAvatarUrl TEXT NOT NULL,
-    hikeId TEXT NOT NULL,
+    hikeId INTEGER AS Int NOT NULL,
     title TEXT NOT NULL,
     body TEXT NOT NULL,
     coverImageUrl TEXT NOT NULL,
@@ -15,5 +17,8 @@ findById:
 SELECT * FROM postOverviewSq WHERE id = ? LIMIT 1;
 
 insert:
-INSERT INTO postOverviewSq(id, userId, userName, userAvatarUrl, hikeId, title, body, coverImageUrl)
+INSERT OR REPLACE INTO postOverviewSq(id, userId, userName, userAvatarUrl, hikeId, title, body, coverImageUrl)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+lastInsertedRowId:
+SELECT last_insert_rowid();

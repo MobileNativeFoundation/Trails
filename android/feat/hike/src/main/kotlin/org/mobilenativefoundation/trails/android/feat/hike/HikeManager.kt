@@ -48,11 +48,11 @@ interface HikeManager {
 class RealHikeManager @AssistedInject constructor(
     scope: CoroutineScope,
     private val api: TrailsApi,
-    private val mutableStore: MutableStore<String, Hike>,
+    private val mutableStore: MutableStore<Int, Hike>,
     private val locationManager: LocationManager,
     private val mapManager: MapManager,
     private val user: User,
-    @Assisted private val trailId: String
+    @Assisted private val trailId: Int
 ) : HikeManager {
 
     private val hikeStateFlow: MutableStateFlow<Hike?> = MutableStateFlow(null)
@@ -81,7 +81,7 @@ class RealHikeManager @AssistedInject constructor(
         val mapUpdates = mapManager.live(locationUpdates)
 
         combine(locationUpdates, mapUpdates) { location, map ->
-            val writeRequest = StoreWriteRequest.of<String, Hike, Hike>(
+            val writeRequest = StoreWriteRequest.of<Int, Hike, Hike>(
                 key = trailId,
                 value = hikeStateFlow.value!!.copy(path = hikeStateFlow.value!!.path + location)
             )
@@ -115,5 +115,6 @@ class RealHikeManager @AssistedInject constructor(
     private fun findNextWaypoint(latestLocation: LatLng): Waypoint = TODO()
     private fun getDirections(latestLocation: LatLng, nextWaypoint: LatLng): Directions = TODO()
     private fun calculateEta(latestLocation: LatLng, nextWaypoint: LatLng): Long = TODO()
-    private fun calculateDistanceAway(latestLocation: LatLng, nextWaypoint: LatLng): DistanceAway = TODO()
+    private fun calculateDistanceAway(latestLocation: LatLng, nextWaypoint: LatLng): DistanceAway =
+        TODO()
 }

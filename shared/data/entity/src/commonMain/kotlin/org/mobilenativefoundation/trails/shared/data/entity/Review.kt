@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Review(
-    val id: String,
-    val trailId: String,
-    val userId: String,
+    val id: Int,
+    val trailId: Int,
+    val userId: Int,
     val rating: Double,
     val content: String
 )

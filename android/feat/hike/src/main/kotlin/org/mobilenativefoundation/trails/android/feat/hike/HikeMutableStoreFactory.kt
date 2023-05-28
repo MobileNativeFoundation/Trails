@@ -6,7 +6,6 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.MutableStore
 import org.mobilenativefoundation.store.store5.MutableStoreBuilder
 import org.mobilenativefoundation.store.store5.SourceOfTruth
-import org.mobilenativefoundation.store.store5.StoreBuilder
 import org.mobilenativefoundation.store.store5.Updater
 import org.mobilenativefoundation.store.store5.UpdaterResult
 import org.mobilenativefoundation.store.store5.Validator
@@ -21,11 +20,11 @@ class HikeMutableStoreFactory @Inject constructor(
     private val bookkeepingDatabase: BookkeepingDatabase
 ) {
 
-    private val fetcher = Fetcher.of<String, Hike> { hikeId ->
+    private val fetcher = Fetcher.of<Int, Hike> { hikeId ->
         api.getHike(hikeId)
     }
 
-    private val updater = Updater.by<String, Hike, Hike>(
+    private val updater = Updater.by<Int, Hike, Hike>(
         post = { _, hike ->
             try {
                 val latest = api.updateHike(hike)
@@ -36,14 +35,14 @@ class HikeMutableStoreFactory @Inject constructor(
         },
     )
 
-    private val sourceOfTruth = SourceOfTruth.of<String, Hike>(
+    private val sourceOfTruth = SourceOfTruth.of<Int, Hike>(
         reader = { hikeId -> hikeDatabase.stream(hikeId) },
         writer = { _, hike -> hikeDatabase.write(hike) },
         delete = { hikeId -> hikeDatabase.clear(hikeId) },
         deleteAll = { hikeDatabase.clearAll() }
     )
 
-    private val bookkeeper = Bookkeeper.by<String>(
+    private val bookkeeper = Bookkeeper.by<Int>(
         getLastFailedSync = { hikeId -> bookkeepingDatabase.get(hikeId) },
         setLastFailedSync = { hikeId, timestamp -> bookkeepingDatabase.update(hikeId, timestamp) },
         clear = { hikeId -> bookkeepingDatabase.clear(hikeId) },
@@ -56,7 +55,7 @@ class HikeMutableStoreFactory @Inject constructor(
 
 
     private val store = MutableStoreBuilder
-        .from<String, Hike, Hike, Hike>(
+        .from<Int, Hike, Hike, Hike>(
             fetcher = fetcher,
             sourceOfTruth = sourceOfTruth
         )
@@ -67,21 +66,21 @@ class HikeMutableStoreFactory @Inject constructor(
         )
 
 
-    fun create(): MutableStore<String, Hike> = store
+    fun create(): MutableStore<Int, Hike> = store
 }
 
 
 interface HikeDatabase {
-    fun stream(hikeId: String): Flow<Hike>
+    fun stream(hikeId: Int): Flow<Hike>
     fun write(hike: Hike)
-    fun clear(hikeId: String)
+    fun clear(hikeId: Int)
     fun clearAll()
 }
 
 
 interface BookkeepingDatabase {
-    fun update(hikeId: String, timestamp: Long): Boolean
-    fun get(hikeId: String): Long?
-    fun clear(hikeId: String): Boolean
+    fun update(hikeId: Int, timestamp: Long): Boolean
+    fun get(hikeId: Int): Long?
+    fun clear(hikeId: Int): Boolean
     fun clearAll(): Boolean
 }
