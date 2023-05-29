@@ -18,8 +18,6 @@ class MockFeatureFlagStatuses(flags: List<FeatureFlag>) {
             userId to featureFlagStatusesList.associateBy { featureFlagStatus -> featureFlagStatus.key }
         }
 
-    private val variations = MockVariations().data
-
     private fun generateFeatureFlagStatus(featureFlag: FeatureFlag): FeatureFlagStatus {
         val lastRequested = System.currentTimeMillis() - Random.nextLong(1_000_000, 1_000_000_000)
         return if (featureFlag.kind == FeatureFlag.Kind.Boolean) {
@@ -32,7 +30,7 @@ class MockFeatureFlagStatuses(flags: List<FeatureFlag>) {
         } else {
             FeatureFlagStatus.Multivariate(
                 key = featureFlag.key,
-                value = variations.random(),
+                value = MockVariations().data.random(),
                 lastRequested = lastRequested,
                 links = generateLinks(featureFlag.id)
             )
