@@ -1,5 +1,6 @@
 package org.mobilenativefoundation.trails.android.api
 
+import android.content.res.Resources.NotFoundException
 import kotlinx.coroutines.flow.Flow
 import org.mobilenativefoundation.trails.shared.data.api.TrailsApi
 import org.mobilenativefoundation.trails.shared.data.entity.Feed
@@ -9,6 +10,7 @@ import org.mobilenativefoundation.trails.shared.data.entity.Post
 import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.Trail
 import org.mobilenativefoundation.trails.shared.data.entity.User
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlag
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingData
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
 import org.mobilenativefoundation.trails.shared.mock.server.MockServer
@@ -60,4 +62,6 @@ class MockTrailsApi : TrailsApi {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getFeatureFlag(key: String): FeatureFlag =
+        server.featureFlag(key) ?: throw NotFoundException()
 }

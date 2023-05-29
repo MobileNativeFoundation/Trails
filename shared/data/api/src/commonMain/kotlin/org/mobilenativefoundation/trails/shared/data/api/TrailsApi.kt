@@ -8,6 +8,7 @@ import org.mobilenativefoundation.trails.shared.data.entity.Post
 import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.Trail
 import org.mobilenativefoundation.trails.shared.data.entity.User
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlag
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingData
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
 
@@ -36,4 +37,6 @@ interface TrailsApi {
     suspend fun getPost(postId: Int): Post
 
     suspend fun getPostOverview(postId: Int): PostOverview
+
+    suspend fun getFeatureFlag(key: String): FeatureFlag
 }

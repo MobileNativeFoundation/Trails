@@ -12,9 +12,13 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlinx.serialization.core)
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.datetime)
-                implementation(project(":lib:paging:core"))
+                implementation(libs.store)
                 implementation(libs.store.cache)
+                implementation(project(":shared:data:api"))
+                implementation(project(":shared:data:entity"))
+                implementation(project(":shared:data:db"))
             }
         }
     }
@@ -30,6 +34,6 @@ android {
     compileSdk = 33
     compileSdkVersion = "android-33"
 
-    namespace = "org.mobilenativefoundation.trails.shared.data.entity"
+    namespace = "org.mobilenativefoundation.trails.shared.data.flag"
 }
 
