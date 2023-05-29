@@ -1,33 +1,22 @@
 package org.mobilenativefoundation.trails.shared.mock.server
 
-import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
-import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingData
-import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
+import org.mobilenativefoundation.trails.shared.mock.server.dao.FeatureFlagDao
+import org.mobilenativefoundation.trails.shared.mock.server.dao.FeatureFlagStatusDao
+import org.mobilenativefoundation.trails.shared.mock.server.db.MockDb
+import org.mobilenativefoundation.trails.shared.mock.server.services.FeatureFlagServices
+import org.mobilenativefoundation.trails.shared.mock.server.services.FeatureFlagStatusServices
+import org.mobilenativefoundation.trails.shared.mock.server.services.TimelineServices
 
 class MockServer {
-    fun timeline(params: TimelinePagingParams): TimelinePagingData.Page {
-        val start = params.offset?.plus(1) ?: 1
-        val end = start + params.loadSize
-        val next =
-            TimelinePagingParams(loadSize = params.loadSize, offset = end, type = params.type)
-        return TimelinePagingData.Page(
-            params = params,
-            data = (start..end).map { id ->
-                PostOverview(
-                    id = id,
-                    userId = Math.random().toInt(),
-                    userName = "Tag",
-                    userAvatarUrl = "",
-                    hikeId = Math.random().toInt(),
-                    title = "$id",
-                    body = "Awesome day!",
-                    coverImageUrl = "",
-                    likeIds = listOf(),
-                    commentIds = listOf()
-                )
+    // Db
+    private val db = MockDb()
 
-            },
-            next = next
-        )
-    }
+    // DAO
+    private val featureFlagDao = FeatureFlagDao(db.featureFlags)
+    private val featureFlagStatusDao = FeatureFlagStatusDao(db.featureFlagStatuses)
+
+    // Services
+    val featureFlagServices = FeatureFlagServices(featureFlagDao)
+    val featureFlagStatusServices = FeatureFlagStatusServices(featureFlagStatusDao)
+    val timelineServices = TimelineServices()
 }

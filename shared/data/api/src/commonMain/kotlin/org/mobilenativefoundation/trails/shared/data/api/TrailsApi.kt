@@ -8,10 +8,12 @@ import org.mobilenativefoundation.trails.shared.data.entity.Post
 import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.Trail
 import org.mobilenativefoundation.trails.shared.data.entity.User
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlag
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatus
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatuses
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingData
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
 
-// TODO(): Support Paging
 interface TrailsApi {
     suspend fun getFeed(userId: Int): Feed
     suspend fun getSavedTrails(userId: Int): List<Trail>
@@ -19,7 +21,6 @@ interface TrailsApi {
     suspend fun getUser(userId: Int): User
 
     // TODO(): Log In
-    // TODO(): Get Feature Flags
     // TODO(): Validate Token
     // TODO(): Switch Account
 
@@ -36,4 +37,18 @@ interface TrailsApi {
     suspend fun getPost(postId: Int): Post
 
     suspend fun getPostOverview(postId: Int): PostOverview
+
+    suspend fun getFeatureFlag(key: String): FeatureFlag
+
+    suspend fun updateFeatureFlag(key: String, featureFlag: FeatureFlag): Boolean
+
+    suspend fun updateFeatureFlagStatus(
+        userId: Int,
+        key: String,
+        featureFlagStatus: FeatureFlagStatus
+    ): Boolean
+
+    suspend fun getFeatureFlagStatuses(userId: Int): FeatureFlagStatuses
+
+    suspend fun getFeatureFlagStatus(userId: Int, key: String): FeatureFlagStatus
 }

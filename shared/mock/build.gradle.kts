@@ -13,6 +13,7 @@ kotlin {
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.store.cache)
                 implementation(project(":shared:data:entity"))
                 implementation(project(":lib:paging:core"))
             }

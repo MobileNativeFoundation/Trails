@@ -1,0 +1,31 @@
+import kotlin.Long;
+import kotlin.Int;
+import org.mobilenativefoundation.trails.shared.data.entity.flag.Links;
+
+
+CREATE TABLE featureFlagStatusSq(
+    key TEXT NOT NULL,
+    userId INTEGER AS Int NOT NULL,
+    lastRequested INTEGER AS Long NOT NULL,
+    links TEXT AS Links NOT NULL,
+    type TEXT NOT NULL,
+    value TEXT NOT NULL,
+    PRIMARY KEY (key, userId),
+    FOREIGN KEY (userId) REFERENCES userSq(id)
+);
+
+findOne:
+SELECT *
+FROM featureFlagStatusSq
+WHERE key = ? AND userId = ?
+LIMIT 1;
+
+insert:
+INSERT INTO featureFlagStatusSq(key, userId, lastRequested, links, type, value)
+VALUES (?, ?, ?, ?, ?, ?);
+
+
+findByUser:
+SELECT *
+FROM featureFlagStatusSq
+WHERE userId = ?;

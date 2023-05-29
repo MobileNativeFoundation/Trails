@@ -64,4 +64,5 @@ dependencies {
     implementation(project(":shared:data:api"))
     implementation(project(":shared:data:db"))
     implementation(project(":shared:mock"))
+    implementation(project(":shared:data:flag"))
 }
