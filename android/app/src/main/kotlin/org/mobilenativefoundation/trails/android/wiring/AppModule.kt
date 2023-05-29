@@ -11,6 +11,7 @@ import kotlinx.serialization.json.Json
 import org.mobilenativefoundation.store.store5.MutableStore
 import org.mobilenativefoundation.trails.android.api.MockTrailsApi
 import org.mobilenativefoundation.trails.android.common.wiring.AppScope
+import org.mobilenativefoundation.trails.android.common.wiring.Names.FEATURE_FLAG_STATUS_STORE
 import org.mobilenativefoundation.trails.android.common.wiring.Names.FEATURE_FLAG_STORE
 import org.mobilenativefoundation.trails.db.TrailsDb
 import org.mobilenativefoundation.trails.shared.data.api.TrailsApi
@@ -21,9 +22,12 @@ import org.mobilenativefoundation.trails.shared.data.db.TimelinePagingDataSq
 import org.mobilenativefoundation.trails.shared.data.db.TimelinePagingParamsSq
 import org.mobilenativefoundation.trails.shared.data.db.TimelinePostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlag
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatusData
 import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagVariation
 import org.mobilenativefoundation.trails.shared.data.entity.flag.Links
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
+import org.mobilenativefoundation.trails.shared.data.flag.FeatureFlagStatusKey
+import org.mobilenativefoundation.trails.shared.data.flag.FeatureFlagStatusStoreFactory
 import org.mobilenativefoundation.trails.shared.data.flag.FeatureFlagStoreFactory
 import org.mobilenativefoundation.trails.shared.paging.core.PagingParams
 import javax.inject.Named
@@ -164,6 +168,16 @@ object AppModule {
     ): MutableStore<String, FeatureFlag> {
         val featureFlagQueries = db.featureFlagQueries
         val factory = FeatureFlagStoreFactory(api, featureFlagQueries)
+        return factory.create()
+    }
+
+    @Provides
+    @Named(FEATURE_FLAG_STATUS_STORE)
+    fun provideFeatureFlagStatusStore(
+        api: TrailsApi,
+        db: TrailsDb
+    ): MutableStore<FeatureFlagStatusKey, FeatureFlagStatusData> {
+        val factory = FeatureFlagStatusStoreFactory(api)
         return factory.create()
     }
 }

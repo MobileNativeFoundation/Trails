@@ -1,46 +1,22 @@
 package org.mobilenativefoundation.trails.shared.mock.server
 
-import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
-import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlag
-import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatuses
-import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingData
-import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
+import org.mobilenativefoundation.trails.shared.mock.server.dao.FeatureFlagDao
+import org.mobilenativefoundation.trails.shared.mock.server.dao.FeatureFlagStatusDao
+import org.mobilenativefoundation.trails.shared.mock.server.db.MockDb
+import org.mobilenativefoundation.trails.shared.mock.server.services.FeatureFlagServices
+import org.mobilenativefoundation.trails.shared.mock.server.services.FeatureFlagStatusServices
+import org.mobilenativefoundation.trails.shared.mock.server.services.TimelineServices
 
 class MockServer {
+    // Db
+    private val db = MockDb()
 
-    private val featureFlags = MockFeatureFlags()
+    // DAO
+    private val featureFlagDao = FeatureFlagDao(db.featureFlags)
+    private val featureFlagStatusDao = FeatureFlagStatusDao(db.featureFlagStatuses)
 
-    fun featureFlagStatuses(userId: Int, platform: Platform) =
-        FeatureFlagStatuses(
-            items = featureFlags.statuses.values.toList()
-        )
-
-    fun featureFlag(key: String): FeatureFlag? =
-        featureFlags.flags[key]
-
-    fun timeline(params: TimelinePagingParams): TimelinePagingData.Page {
-        val start = params.offset?.plus(1) ?: 1
-        val end = start + params.loadSize
-        val next =
-            TimelinePagingParams(loadSize = params.loadSize, offset = end, type = params.type)
-        return TimelinePagingData.Page(
-            params = params,
-            data = (start..end).map { id ->
-                PostOverview(
-                    id = id,
-                    userId = Math.random().toInt(),
-                    userName = "Tag",
-                    userAvatarUrl = "",
-                    hikeId = Math.random().toInt(),
-                    title = "$id",
-                    body = "Awesome day!",
-                    coverImageUrl = "",
-                    likeIds = listOf(),
-                    commentIds = listOf()
-                )
-
-            },
-            next = next
-        )
-    }
+    // Services
+    val featureFlagServices = FeatureFlagServices(featureFlagDao)
+    val featureFlagStatusServices = FeatureFlagStatusServices(featureFlagStatusDao)
+    val timelineServices = TimelineServices()
 }

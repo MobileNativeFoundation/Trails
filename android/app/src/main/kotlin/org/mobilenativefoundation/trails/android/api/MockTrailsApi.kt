@@ -52,7 +52,7 @@ class MockTrailsApi : TrailsApi {
     }
 
     override suspend fun getPostOverviewPage(params: TimelinePagingParams):
-            TimelinePagingData.Page = server.timeline(params)
+            TimelinePagingData.Page = server.timelineServices.get(params)
 
     override suspend fun getPost(postId: Int): Post {
         TODO("Not yet implemented")
@@ -63,5 +63,8 @@ class MockTrailsApi : TrailsApi {
     }
 
     override suspend fun getFeatureFlag(key: String): FeatureFlag =
-        server.featureFlag(key) ?: throw NotFoundException()
+        server.featureFlagServices.get(key) ?: throw NotFoundException()
+
+    override suspend fun updateFeatureFlag(key: String, featureFlag: FeatureFlag): Boolean =
+        server.featureFlagServices.put(key, featureFlag)
 }
