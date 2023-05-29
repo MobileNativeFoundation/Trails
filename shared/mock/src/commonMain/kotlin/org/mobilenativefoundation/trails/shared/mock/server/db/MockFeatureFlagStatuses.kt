@@ -8,8 +8,15 @@ import kotlin.random.Random
 
 class MockFeatureFlagStatuses(flags: List<FeatureFlag>) {
 
-    val data = flags.map { generateFeatureFlagStatus(it) }.toMutableList()
-    val map: MutableMap<String, FeatureFlagStatus> = data.associateBy { it.key }.toMutableMap()
+    val data = mutableMapOf<Int, MutableList<FeatureFlagStatus>>().apply {
+        (1..5).forEach { userId ->
+            this[userId] = flags.map { generateFeatureFlagStatus(it) }.toMutableList()
+        }
+    }
+    val map: Map<Int, Map<String, FeatureFlagStatus>>
+        get() = data.entries.associate { (userId, featureFlagStatusesList) ->
+            userId to featureFlagStatusesList.associateBy { featureFlagStatus -> featureFlagStatus.key }
+        }
 
     private val variations = MockVariations().data
 

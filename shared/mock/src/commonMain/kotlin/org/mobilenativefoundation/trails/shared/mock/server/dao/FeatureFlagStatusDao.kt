@@ -6,18 +6,29 @@ import org.mobilenativefoundation.trails.shared.mock.server.db.MockFeatureFlagSt
 class FeatureFlagStatusDao(
     private val db: MockFeatureFlagStatuses
 ) {
-    fun findByKey(key: String): FeatureFlagStatus? = db.map[key]
-    fun findAll(): List<FeatureFlagStatus> = db.data
+    fun findByKey(userId: Int, key: String): FeatureFlagStatus? = db.map[userId]?.get(key)
+    fun findAll(userId: Int): List<FeatureFlagStatus> = db.data[userId] ?: listOf()
 
-    fun upsert(key: String, featureFlagStatus: FeatureFlagStatus): Boolean {
-        val index = db.data.indexOfFirst { it.key == key }
-        if (index >= 0) {
-            db.data[index] = featureFlagStatus
-        } else {
-            db.data.add(featureFlagStatus)
+    fun upsert(userId: Int, key: String, featureFlagStatus: FeatureFlagStatus): Boolean {
+        val index = db.data[userId]?.indexOfFirst { it.key == key }
+
+        when {
+            index != null && index >= 0 -> {
+                db.data[userId]?.let {
+                    it[index] = featureFlagStatus
+                }
+            }
+
+            index != null && index < 0 -> {
+                db.data[userId]?.let {
+                    it.add(featureFlagStatus)
+                }
+            }
+
+            else -> {
+                db.data[userId] = mutableListOf(featureFlagStatus)
+            }
         }
-        db.map[key] = featureFlagStatus
-
         return true
     }
 }

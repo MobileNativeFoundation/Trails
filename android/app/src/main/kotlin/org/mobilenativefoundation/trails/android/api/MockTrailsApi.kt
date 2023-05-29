@@ -11,6 +11,8 @@ import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
 import org.mobilenativefoundation.trails.shared.data.entity.Trail
 import org.mobilenativefoundation.trails.shared.data.entity.User
 import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlag
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatus
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatuses
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingData
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
 import org.mobilenativefoundation.trails.shared.mock.server.MockServer
@@ -67,4 +69,18 @@ class MockTrailsApi : TrailsApi {
 
     override suspend fun updateFeatureFlag(key: String, featureFlag: FeatureFlag): Boolean =
         server.featureFlagServices.put(key, featureFlag)
+
+    override suspend fun updateFeatureFlagStatus(
+        userId: Int,
+        key: String,
+        featureFlagStatus: FeatureFlagStatus
+    ): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getFeatureFlagStatuses(userId: Int): FeatureFlagStatuses =
+        server.featureFlagStatusServices.get(userId)
+
+    override suspend fun getFeatureFlagStatus(userId: Int, key: String): FeatureFlagStatus =
+        server.featureFlagStatusServices.get(userId, key) ?: throw NotFoundException()
 }
