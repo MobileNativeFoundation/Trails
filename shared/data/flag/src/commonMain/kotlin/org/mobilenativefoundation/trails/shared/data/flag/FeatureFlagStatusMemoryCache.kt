@@ -10,11 +10,6 @@ class FeatureFlagStatusMemoryCache : Cache<FeatureFlagStatusKey, FeatureFlagStat
 
     private val delegate = MultiCache<String, FeatureFlagStatus>(CacheBuilder())
 
-    private fun FeatureFlagStatusKey.local() = when (this) {
-        is FeatureFlagStatusKey.Collection -> "$userId"
-        is FeatureFlagStatusKey.Single -> "${userId}_$key"
-    }
-
     override fun getAllPresent(keys: List<*>): Map<FeatureFlagStatusKey, FeatureFlagStatusData> =
         mutableMapOf<FeatureFlagStatusKey, FeatureFlagStatusData>().apply {
             keys.filterIsInstance<FeatureFlagStatusKey>().forEach { key ->

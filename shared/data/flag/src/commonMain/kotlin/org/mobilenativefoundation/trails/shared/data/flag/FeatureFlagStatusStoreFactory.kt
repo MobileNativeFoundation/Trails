@@ -11,8 +11,8 @@ import org.mobilenativefoundation.store.store5.StoreBuilder
 import org.mobilenativefoundation.store.store5.Updater
 import org.mobilenativefoundation.store.store5.UpdaterResult
 import org.mobilenativefoundation.trails.shared.data.api.TrailsApi
-import org.mobilenativefoundation.trails.shared.data.db.FeatureFlagQueries
 import org.mobilenativefoundation.trails.shared.data.db.FeatureFlagStatusQueries
+import org.mobilenativefoundation.trails.shared.data.db.bookkeeper.FeatureFlagStatusHistoryQueries
 import org.mobilenativefoundation.trails.shared.data.db.translations.local
 import org.mobilenativefoundation.trails.shared.data.db.translations.output
 import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatus
@@ -21,6 +21,7 @@ import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStat
 class FeatureFlagStatusStoreFactory(
     private val api: TrailsApi,
     private val featureFlagStatusQueries: FeatureFlagStatusQueries,
+    private val featureFlagStatusHistoryQueries: FeatureFlagStatusHistoryQueries,
     private val serializer: Json
 ) {
     fun create(): MutableStore<FeatureFlagStatusKey, FeatureFlagStatusData> =
@@ -143,8 +144,6 @@ class FeatureFlagStatusStoreFactory(
     private fun createMemoryCache(): Cache<FeatureFlagStatusKey, FeatureFlagStatusData> =
         FeatureFlagStatusMemoryCache()
 
-    private fun createBookkeeper(): Bookkeeper<FeatureFlagStatusKey> {
-        TODO()
-    }
-
+    private fun createBookkeeper(): Bookkeeper<FeatureFlagStatusKey> =
+        FeatureFlagStatusBookkeeper(featureFlagStatusHistoryQueries)
 }

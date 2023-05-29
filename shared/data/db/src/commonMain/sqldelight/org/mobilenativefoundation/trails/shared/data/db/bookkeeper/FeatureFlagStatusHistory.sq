@@ -1,0 +1,27 @@
+import kotlin.Int;
+import kotlin.Long;
+
+
+CREATE TABLE featureFlagStatusHistory(
+    key TEXT NOT NULL,
+    userId INTEGER AS Int NOT NULL,
+    timestamp INTEGER AS Long
+);
+
+findOne:
+SELECT *
+FROM featureFlagStatusHistory
+WHERE key = ? AND userId = ?
+LIMIT 1;
+
+insert:
+INSERT INTO featureFlagStatusHistory(key, userId, timestamp)
+VALUES (?, ?, ?);
+
+
+removeKeyForUser:
+DELETE FROM featureFlagStatusHistory
+WHERE key = ? AND userId = ?;
+
+clearAll:
+DELETE FROM featureFlagStatusHistory;
