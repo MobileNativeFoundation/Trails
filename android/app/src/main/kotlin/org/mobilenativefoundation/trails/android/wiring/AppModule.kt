@@ -21,6 +21,7 @@ import org.mobilenativefoundation.trails.shared.data.db.PostOverviewSq
 import org.mobilenativefoundation.trails.shared.data.db.TimelinePagingDataSq
 import org.mobilenativefoundation.trails.shared.data.db.TimelinePagingParamsSq
 import org.mobilenativefoundation.trails.shared.data.db.TimelinePostOverview
+import org.mobilenativefoundation.trails.shared.data.db.bookkeeper.FeatureFlagStatusHistory
 import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlag
 import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatusData
 import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagVariation
@@ -146,6 +147,10 @@ object AppModule {
             linksAdapter = linksAdapter
         )
 
+        val featureFlagStatusHistoryAdapter = FeatureFlagStatusHistory.Adapter(
+            userIdAdapter = intAdapter
+        )
+
         return TrailsDb.invoke(
             driver = driver,
             postOverviewSqAdapter = postOverviewSqAdapter,
@@ -153,7 +158,8 @@ object AppModule {
             timelinePagingParamsSqAdapter = timelinePagingParamsSqAdapter,
             timelinePostOverviewAdapter = timelinePostOverviewAdapter,
             featureFlagSqAdapter = featureFlagSqAdapter,
-            featureFlagStatusSqAdapter = featureFlagStatusSqAdapter
+            featureFlagStatusSqAdapter = featureFlagStatusSqAdapter,
+            featureFlagStatusHistoryAdapter = featureFlagStatusHistoryAdapter
         )
     }
 
@@ -175,9 +181,15 @@ object AppModule {
     @Named(FEATURE_FLAG_STATUS_STORE)
     fun provideFeatureFlagStatusStore(
         api: TrailsApi,
-        db: TrailsDb
+        db: TrailsDb,
+        serializer: Json,
     ): MutableStore<FeatureFlagStatusKey, FeatureFlagStatusData> {
-        val factory = FeatureFlagStatusStoreFactory(api)
+        val factory = FeatureFlagStatusStoreFactory(
+            api = api,
+            featureFlagStatusQueries = db.featureFlagStatusQueries,
+            featureFlagStatusHistoryQueries = db.featureFlagStatusHistoryQueries,
+            serializer = serializer,
+        )
         return factory.create()
     }
 }
