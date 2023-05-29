@@ -1,10 +1,23 @@
 package org.mobilenativefoundation.trails.shared.mock.server
 
 import org.mobilenativefoundation.trails.shared.data.entity.PostOverview
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlag
+import org.mobilenativefoundation.trails.shared.data.entity.flag.FeatureFlagStatuses
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingData
 import org.mobilenativefoundation.trails.shared.data.entity.paging.TimelinePagingParams
 
 class MockServer {
+
+    private val featureFlags = MockFeatureFlags()
+
+    fun featureFlagStatuses(userId: Int, platform: Platform) =
+        FeatureFlagStatuses(
+            items = featureFlags.statuses.values.toList()
+        )
+
+    fun featureFlag(key: String): FeatureFlag? =
+        featureFlags.flags[key]
+
     fun timeline(params: TimelinePagingParams): TimelinePagingData.Page {
         val start = params.offset?.plus(1) ?: 1
         val end = start + params.loadSize
