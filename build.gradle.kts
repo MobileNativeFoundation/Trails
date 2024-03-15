@@ -7,9 +7,9 @@ buildscript {
 
     }
     dependencies {
-        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.kotlin.gradlePlugin)
         classpath(libs.jetbrains.compose.gradle.plugin)
-        classpath(libs.android.gradle.plugin)
+        classpath(libs.android.gradlePlugin)
         classpath(libs.kotlin.serialization.plugin)
         classpath(libs.anvil.gradle.plugin)
     }

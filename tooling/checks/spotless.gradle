@@ -1,0 +1,19 @@
+ktlintVersion = "0.48.1"
+
+initscript {
+
+}
+
+initscript {
+    val spotlessVersion = "6.17.0"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.diffplug.spotless:spotless-plugin-gradle:$spotlessVersion")
+    }
+}
+
+rootProject {}
