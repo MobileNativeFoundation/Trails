@@ -1,4 +1,6 @@
 pluginManagement {
+    includeBuild("tooling")
+
     repositories {
         google()
         gradlePluginPortal()
