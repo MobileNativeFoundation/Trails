@@ -1,5 +1,0 @@
-import kotlin.Int;
-
-CREATE TABLE userSq(
-    id INTEGER AS Int NOT NULL PRIMARY KEY
-);

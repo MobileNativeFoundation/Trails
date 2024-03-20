@@ -1,44 +1,29 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    kotlin("plugin.serialization")
+    id("plugin.trails.android.library")
+    id("plugin.trails.kotlin.multiplatform")
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
-    jvm()
-    android()
-
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
-                implementation(libs.store)
-                implementation(libs.store.cache)
-                implementation(libs.kotlinx.serialization.core)
-                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlin.stdlib)
+                implementation(libs.store.core)
+                implementation(libs.touchlab.kermit)
                 implementation(libs.kotlinx.coroutines.core)
             }
         }
-
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.turbine)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(kotlin("test"))
-            }
-        }
     }
+}
 
+dependencies {
+    add("kspAndroid", libs.kotlinInject.compiler)
+    add("kspIosX64", libs.kotlinInject.compiler)
+    add("kspIosArm64", libs.kotlinInject.compiler)
 }
 
 android {
-
-    defaultConfig {
-        minSdk = 27
-    }
-
-    compileSdk = 33
-    compileSdkVersion = "android-33"
-
-    namespace = "org.mobilenativefoundation.trails.shared.paging.core"
+    namespace = "org.mobilenativefoundation.trails.lib.paging.core"
 }
-

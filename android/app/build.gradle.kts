@@ -1,68 +1,42 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("com.squareup.anvil")
-    kotlin("plugin.serialization")
+    id("plugin.trails.android.application")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.compose)
 }
 
 android {
-    namespace = "org.mobilenativefoundation.trails.android"
-
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
-    }
+    namespace = "org.mobilenativefoundation.trails.android.app"
 
     defaultConfig {
-        minSdk = 27
-        multiDexEnabled = true
+        applicationId = "org.mobilenativefoundation.trails"
+        versionCode = 1
+        versionName = "1.0"
     }
 
-    compileSdk = 33
-    compileSdkVersion = "android-33"
-
-    dexOptions {
-        javaMaxHeapSize = "4g"
+    packaging {
+        resources {
+            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+            excludes.add("/META-INF/versions/9/previous-compilation-data.bin")
+        }
     }
 }
 
 dependencies {
-    implementation(libs.coil.compose)
-    implementation(libs.coil.svg)
-    implementation(libs.google.material)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.core)
-    implementation(libs.compose.material3)
-    implementation(libs.jetbrains.compose.ui)
-    implementation(libs.jetbrains.compose.ui.tooling.preview)
-    debugImplementation(libs.jetbrains.compose.ui.tooling)
-    implementation(libs.androidx.compose.navigation)
-    implementation(libs.compose.material3)
-    implementation(libs.dagger.dagger)
-    kapt(libs.dagger.compiler)
-    implementation(libs.store)
-    implementation(libs.store.cache)
-    implementation(libs.kotlinx.serialization.core)
-    implementation(libs.kotlinx.serialization.json)
-    implementation("app.cash.sqldelight:android-driver:2.0.0-alpha05")
 
-    implementation(project(":shared:tig"))
-    implementation(project(":shared:navigation"))
-    implementation(project(":shared:timeline"))
-    implementation(project(":android:common:scoping"))
-    implementation(project(":android:feat:hike"))
-    implementation(project(":android:feat:trail"))
-    implementation(project(":android:feat:timeline:home"))
-    implementation(project(":android:feat:timeline:trails"))
-    implementation(project(":lib:paging:core"))
-    implementation(project(":shared:data:entity"))
-    implementation(project(":shared:data:api"))
-    implementation(project(":shared:data:db"))
-    implementation(project(":shared:mock"))
-    implementation(project(":shared:data:flag"))
+    implementation(compose.runtime)
+    implementation(compose.material3)
+    implementation(libs.androidx.appCompat)
+    implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.core)
+    implementation(libs.coroutines.android)
+    implementation(libs.kotlinInject.runtime)
+    implementation(libs.serialization.core)
+    implementation(libs.serialization.json)
+    implementation(libs.voyager.navigator)
+
+    ksp(libs.kotlinInject.compiler)
+}
+
+ksp {
+    arg("me.tatarka.inject.generateCompanionExtensions", "true")
 }
