@@ -26,13 +26,15 @@ jetbrains-compose = "1.6.0"
 kotlin = "1.9.22"
 kotlininject = "0.6.3"
 ktor = "2.3.7"
-ksp = "1.9.21-1.0.15"
+ksp = "1.9.22-1.0.17"
 lint = "1.2.0"
 scoop = "1.0.0-alpha03"
 serialization = "1.6.3"
 store = "5.1.0-alpha02"
 voyager = "1.0.0"
 trails = "1.0.0"
+kermit = "1.2.2"
+sqldelight = "2.0.0-alpha05"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
@@ -82,6 +84,7 @@ jetbrains-compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-t
 kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-serialization-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -113,6 +116,7 @@ store = { module = "org.mobilenativefoundation.store:store5", version.ref = "sto
 store-cache = { module = "org.mobilenativefoundation.store:cache5", version.ref = "store" }
 store-core = { module = "org.mobilenativefoundation.store:core5", version.ref = "store" }
 store-paging = { module = "org.mobilenativefoundation.store:paging5", version.ref = "store" }
+touchlab-kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 turbine = { module = "app.cash.turbine:turbine", version = "1.0.0" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
@@ -135,3 +139,5 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+sqldelight = {id = "app.cash.sqldelight", version.ref = "sqldelight"}
