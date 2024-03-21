@@ -18,7 +18,7 @@ buildkonfig = "0.15.1"
 coil = "2.3.0"
 compose-bom = "2024.02.02"
 compose-constraintlayout = "1.0.1"
-compose-compiler = "1.5.6"
+compose-compiler = "1.5.11"
 compose-runtime = "1.6.3"
 coroutines = "1.8.0"
 desugar = "2.0.4"
@@ -35,6 +35,7 @@ voyager = "1.0.0"
 trails = "1.0.0"
 kermit = "1.2.2"
 sqldelight = "2.0.0-alpha05"
+paparazzi = "1.3.3"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
@@ -72,7 +73,7 @@ google-maps-sdk = { module = "com.google.android.gms:play-services-maps", versio
 google-location-sdk = { module = "com.google.android.gms:play-services-location", version = "21.2.0" }
 google-maps-compose-utils = { module = "com.google.maps.android:maps-compose-utils", version.ref = "google-maps-compose" }
 google-maps-compose-widgets = { module = "com.google.maps.android:maps-compose-widgets", version.ref = "google-maps-compose" }
-jetbrains-compose-compiler = { module = "org.jetbrains.compose.compiler:compiler", version = "1.5.8.1" }
+jetbrains-compose-compiler = { module = "org.jetbrains.compose.compiler:compiler", version = "1.5.11" }
 jetbrains-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "jetbrains-compose" }
 jetbrains-compose-gradle-plugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jetbrains-compose" }
 jetbrains-compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "jetbrains-compose" }
@@ -129,6 +130,7 @@ android-desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", versio
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 buildkonfig-gradlePlugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildkonfig" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+paparazzi-gradlePlugin = { module = "app.cash.paparazzi:paparazzi-gradle-plugin", version.ref = "paparazzi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -140,4 +142,5 @@ multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotl
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
-sqldelight = {id = "app.cash.sqldelight", version.ref = "sqldelight"}
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }

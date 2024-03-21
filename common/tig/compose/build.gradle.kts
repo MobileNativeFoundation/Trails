@@ -5,11 +5,22 @@ plugins {
 }
 
 kotlin {
+    android {
+        plugins.apply(libs.plugins.paparazzi.get().pluginId)
+    }
+
     sourceSets {
-        commonMain {
+        val commonMain by getting {
             dependencies {
                 api(compose.material3)
-                implementation(projects.common.res)
+                implementation(compose.components.uiToolingPreview)
+                implementation(compose.components.resources)
+            }
+        }
+
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
             }
         }
     }
