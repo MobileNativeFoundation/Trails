@@ -5,7 +5,7 @@ plugins {
 }
 
 kotlin {
-    android {
+    androidTarget {
         plugins.apply(libs.plugins.paparazzi.get().pluginId)
     }
 

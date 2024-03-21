@@ -32,7 +32,6 @@ dependencies {
     implementation(libs.kotlinInject.runtime)
     implementation(libs.serialization.core)
     implementation(libs.serialization.json)
-    implementation(libs.voyager.navigator)
 
     ksp(libs.kotlinInject.compiler)
 }
