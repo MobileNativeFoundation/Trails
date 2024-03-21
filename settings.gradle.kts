@@ -33,3 +33,5 @@ include(":lib:paging:compose")
 // Common
 include(":common:networking:api")
 include(":common:networking:impl")
+include(":common:res")
+include(":common:tig:compose")
