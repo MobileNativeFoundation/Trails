@@ -26,6 +26,7 @@ kotlin {
                 implementation(projects.common.profileTab.api)
                 implementation(projects.common.searchTab.api)
                 implementation(projects.common.tig.compose)
+                api(projects.common.core.api)
             }   
         }
         
@@ -45,5 +46,5 @@ dependencies {
 }
 
 android {
-    namespace = "org.mobilenativefoundation.trails.common.ui"
+    namespace = "org.mobilenativefoundation.trails.common.core.impl"
 }

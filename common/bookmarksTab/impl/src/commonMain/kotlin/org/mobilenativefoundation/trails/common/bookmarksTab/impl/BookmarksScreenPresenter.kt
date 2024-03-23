@@ -1,14 +1,13 @@
 package org.mobilenativefoundation.trails.common.bookmarksTab.impl
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.common.bookmarksTab.api.BookmarksScreen
 
 @Inject
-class BookmarksScreenUi : BookmarksScreen.Ui {
+class BookmarksScreenPresenter: BookmarksScreen.Presenter {
     @Composable
-    override fun Content(state: BookmarksScreen.State, modifier: Modifier) {
+    override fun invoke(): BookmarksScreen.State {
         TODO("Not yet implemented")
     }
 }

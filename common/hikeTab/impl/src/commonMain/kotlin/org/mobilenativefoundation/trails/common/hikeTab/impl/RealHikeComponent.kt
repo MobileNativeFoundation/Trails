@@ -10,5 +10,8 @@ abstract class RealHikeComponent : HikeComponent {
     @Provides
     fun bindHikeScreenUi(impl: HikeScreenUi): HikeScreen.Ui = impl
 
+    @Provides
+    fun bindHikeScreenPresenter(impl: HikeScreenPresenter): HikeScreen.Presenter = impl
+
     companion object
 }

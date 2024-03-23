@@ -10,5 +10,8 @@ abstract class RealBookmarksComponent : BookmarksComponent {
     @Provides
     fun bindBookmarksScreenUi(impl: BookmarksScreenUi): BookmarksScreen.Ui = impl
 
+    @Provides
+    fun bindBookmarksScreenPresenter(impl: BookmarksScreenPresenter): BookmarksScreen.Presenter = impl
+
     companion object
 }

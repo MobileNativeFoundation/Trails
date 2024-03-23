@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.trails.common.ui
+package org.mobilenativefoundation.trails.common.core.impl
 
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.screen.Screen
