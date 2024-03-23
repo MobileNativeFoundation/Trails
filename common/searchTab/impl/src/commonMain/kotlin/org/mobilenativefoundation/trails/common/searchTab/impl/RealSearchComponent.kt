@@ -10,5 +10,8 @@ abstract class RealSearchComponent : SearchComponent {
     @Provides
     fun bindSearchScreenUi(impl: SearchScreenUi): SearchScreen.Ui = impl
 
+    @Provides
+    fun bindSearchScreenPresenter(impl: SearchScreenPresenter): SearchScreen.Presenter = impl
+
     companion object
 }

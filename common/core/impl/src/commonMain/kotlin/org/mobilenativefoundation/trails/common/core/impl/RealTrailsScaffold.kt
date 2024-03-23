@@ -1,3 +1,5 @@
+package org.mobilenativefoundation.trails.common.core.impl
+
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -11,14 +13,15 @@ import com.slack.circuit.runtime.screen.Screen
 import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.common.homeTab.api.HomeScreen
 import org.mobilenativefoundation.trails.common.navigation.api.BottomNavBar
+import org.mobilenativefoundation.trails.common.core.api.TrailsScaffold
 
 @Inject
-class TrailsScaffold(
+class RealTrailsScaffold(
     private val bottomNavBar: BottomNavBar
-) {
+) : TrailsScaffold {
 
     @Composable
-    fun Content(modifier: Modifier = Modifier) {
+    override fun Content(modifier: Modifier) {
         val selectedIndex = remember { mutableIntStateOf(0) }
         val activeScreen = remember { mutableStateOf<Screen>(HomeScreen) }
 

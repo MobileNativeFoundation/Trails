@@ -17,4 +17,9 @@ data object SearchScreen : Screen {
         @Composable
         fun Content(state: State, modifier: Modifier)
     }
+
+    interface Presenter {
+        @Composable
+        operator fun invoke(): State
+    }
 }

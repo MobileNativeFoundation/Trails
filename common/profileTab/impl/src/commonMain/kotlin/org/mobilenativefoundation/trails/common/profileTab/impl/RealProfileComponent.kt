@@ -10,5 +10,8 @@ abstract class RealProfileComponent : ProfileComponent {
     @Provides
     fun bindProfileScreenUi(impl: ProfileScreenUi): ProfileScreen.Ui = impl
 
+    @Provides
+    fun bindProfileScreenPresenter(impl: ProfileScreenPresenter): ProfileScreen.Presenter = impl
+
     companion object
 }

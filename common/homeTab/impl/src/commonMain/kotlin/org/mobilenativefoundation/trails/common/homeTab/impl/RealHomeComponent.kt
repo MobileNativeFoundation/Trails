@@ -11,5 +11,8 @@ abstract class RealHomeComponent : HomeComponent {
     @Provides
     fun bindHomeScreenUi(impl: HomeScreenUi): HomeScreen.Ui = impl
 
+    @Provides
+    fun bindHomeScreenPresenter(impl: HomeScreenPresenter): HomeScreen.Presenter = impl
+
     companion object
 }
