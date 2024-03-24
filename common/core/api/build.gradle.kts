@@ -12,6 +12,11 @@ kotlin {
                 implementation(compose.runtime)
                 api(compose.components.resources)
                 api(libs.circuit.foundation)
+                api(projects.common.bookmarksTab.api)
+                api(projects.common.hikeTab.api)
+                api(projects.common.homeTab.api)
+                api(projects.common.profileTab.api)
+                api(projects.common.searchTab.api)
             }
         }
     }

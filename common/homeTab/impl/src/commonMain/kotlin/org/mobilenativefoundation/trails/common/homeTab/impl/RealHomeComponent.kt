@@ -14,5 +14,7 @@ abstract class RealHomeComponent : HomeComponent {
     @Provides
     fun bindHomeScreenPresenter(impl: HomeScreenPresenter): HomeScreen.Presenter = impl
 
+    override val homeScreen: HomeScreen = RealHomeScreen
+
     companion object
 }

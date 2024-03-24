@@ -32,6 +32,20 @@ dependencies {
     implementation(libs.kotlinInject.runtime)
     implementation(libs.serialization.core)
     implementation(libs.serialization.json)
+    implementation(libs.circuit.foundation)
+
+
+    with(projects.common) {
+        implementation(bookmarksTab.impl)
+        implementation(core.impl)
+        implementation(hikeTab.impl)
+        implementation(homeTab.impl)
+        implementation(navigation.impl)
+        implementation(networking.impl)
+        implementation(profileTab.impl)
+        implementation(searchTab.impl)
+        implementation(tig.compose)
+    }
 
     ksp(libs.kotlinInject.compiler)
 }

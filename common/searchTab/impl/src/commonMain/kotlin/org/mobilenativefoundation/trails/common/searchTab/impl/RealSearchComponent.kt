@@ -13,5 +13,7 @@ abstract class RealSearchComponent : SearchComponent {
     @Provides
     fun bindSearchScreenPresenter(impl: SearchScreenPresenter): SearchScreen.Presenter = impl
 
+    override val searchScreen: SearchScreen = RealSearchScreen
+
     companion object
 }

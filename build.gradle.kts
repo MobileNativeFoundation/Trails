@@ -21,6 +21,7 @@ plugins {
     alias(libs.plugins.compose) apply false
     alias(libs.plugins.buildkonfig) apply false
     alias(libs.plugins.sqldelight) apply false
+    alias(libs.plugins.kotlin.plugin.parcelize) apply false
 }
 
 subprojects {

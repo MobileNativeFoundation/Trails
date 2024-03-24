@@ -2,12 +2,6 @@ package org.mobilenativefoundation.trails.common.navigation.impl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
-import com.slack.circuit.runtime.screen.Screen
-import org.mobilenativefoundation.trails.common.bookmarksTab.api.BookmarksScreen
-import org.mobilenativefoundation.trails.common.hikeTab.api.HikeScreen
-import org.mobilenativefoundation.trails.common.homeTab.api.HomeScreen
-import org.mobilenativefoundation.trails.common.profileTab.api.ProfileScreen
-import org.mobilenativefoundation.trails.common.searchTab.api.SearchScreen
 import org.mobilenativefoundation.trails.common.tig.compose.drawable.*
 
 
@@ -25,8 +19,6 @@ sealed class BottomNavItem(val title: String) {
     abstract val unselectedIcon: Painter
         @Composable get
 
-    abstract val screen: Screen
-
 
     data object Home : BottomNavItem(HOME_TAB) {
         override val selectedIcon: Painter
@@ -34,8 +26,6 @@ sealed class BottomNavItem(val title: String) {
 
         override val unselectedIcon: Painter
             @Composable get() = homeIcon
-
-        override val screen: Screen = HomeScreen
     }
 
     data object Search : BottomNavItem(SEARCH_TAB) {
@@ -44,8 +34,6 @@ sealed class BottomNavItem(val title: String) {
 
         override val unselectedIcon: Painter
             @Composable get() = searchIcon
-
-        override val screen: Screen = SearchScreen
     }
 
     data object Profile : BottomNavItem(PROFILE_TAB) {
@@ -54,8 +42,6 @@ sealed class BottomNavItem(val title: String) {
 
         override val unselectedIcon: Painter
             @Composable get() = profileIcon
-
-        override val screen: Screen = ProfileScreen
     }
 
     data object Bookmarks : BottomNavItem(BOOKMARKS_TAB) {
@@ -64,8 +50,6 @@ sealed class BottomNavItem(val title: String) {
 
         override val unselectedIcon: Painter
             @Composable get() = heartIcon
-
-        override val screen: Screen = BookmarksScreen
     }
 
     data object Hike : BottomNavItem(HIKE_TAB) {
@@ -74,7 +58,5 @@ sealed class BottomNavItem(val title: String) {
 
         override val unselectedIcon: Painter
             @Composable get() = activityIcon
-
-        override val screen: Screen = HikeScreen
     }
 }

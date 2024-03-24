@@ -140,3 +140,4 @@ compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
+kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }

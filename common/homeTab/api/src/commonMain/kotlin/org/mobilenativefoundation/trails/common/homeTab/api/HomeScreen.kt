@@ -6,7 +6,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
 
-data object HomeScreen : Screen {
+interface HomeScreen : Screen {
     object State : CircuitUiState
 
     sealed interface Event : CircuitUiEvent {

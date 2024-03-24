@@ -5,7 +5,7 @@ import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.common.searchTab.api.SearchScreen
 
 @Inject
-class SearchScreenPresenter: SearchScreen.Presenter {
+class SearchScreenPresenter constructor() : SearchScreen.Presenter {
     @Composable
     override fun invoke(): SearchScreen.State {
         TODO("Not yet implemented")

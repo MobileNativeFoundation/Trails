@@ -10,9 +10,18 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
-                implementation(libs.store.core)
+                api(libs.store)
+                api(libs.store.core)
                 implementation(libs.touchlab.kermit)
                 implementation(libs.kotlinx.coroutines.core)
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(libs.turbine)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
     }

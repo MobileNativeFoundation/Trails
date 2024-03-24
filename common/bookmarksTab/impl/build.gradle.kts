@@ -5,9 +5,11 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.plugin.parcelize)
 }
 
 kotlin {
+
     sourceSets {
         commonMain {
             dependencies {
@@ -19,7 +21,7 @@ kotlin {
                 implementation(libs.store.core)
                 implementation(libs.store.paging)
 
-                api(projects.common.navigation.api)
+                implementation(projects.common.navigation.api)
                 api(projects.common.bookmarksTab.api)
                 implementation(projects.common.networking.api)
                 implementation(projects.common.tig.compose)

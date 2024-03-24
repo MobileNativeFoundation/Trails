@@ -26,6 +26,7 @@ kotlin {
                 implementation(projects.common.profileTab.api)
                 implementation(projects.common.searchTab.api)
                 implementation(projects.common.tig.compose)
+                implementation(projects.common.core.api)
             }   
         }
         

@@ -13,5 +13,7 @@ abstract class RealProfileComponent : ProfileComponent {
     @Provides
     fun bindProfileScreenPresenter(impl: ProfileScreenPresenter): ProfileScreen.Presenter = impl
 
+    override val profileScreen: ProfileScreen = RealProfileScreen
+
     companion object
 }

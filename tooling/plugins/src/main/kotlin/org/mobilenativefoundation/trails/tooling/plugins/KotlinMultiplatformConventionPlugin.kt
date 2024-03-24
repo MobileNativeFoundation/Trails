@@ -30,11 +30,17 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
 
             jvm()
 
-            listOf(
-                iosX64(),
-                iosArm64(),
-                iosSimulatorArm64(),
-            )
+            iosX64()
+            iosArm64()
+            iosSimulatorArm64()
+
+            targets.all {
+                compilations.all {
+                    compilerOptions.configure {
+                        freeCompilerArgs.add("-Xexpect-actual-classes")
+                    }
+                }
+            }
 
             targets.withType<KotlinNativeTarget>().configureEach {
                 compilations.configureEach {
