@@ -13,7 +13,8 @@ abstract class RealBookmarksComponent : BookmarksComponent {
     @Provides
     fun bindBookmarksScreenPresenter(impl: BookmarksScreenPresenter): BookmarksScreen.Presenter = impl
 
-    override val bookmarksScreen: BookmarksScreen = RealBookmarksScreen
+    @Provides
+    fun provideBookmarksScreen(): BookmarksScreen = RealBookmarksScreen
 
     companion object
 }

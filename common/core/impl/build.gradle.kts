@@ -11,16 +11,16 @@ kotlin {
     androidTarget {
         plugins.apply(libs.plugins.paparazzi.get().pluginId)
     }
-    
+
     sourceSets {
-        
-        val commonMain by getting {
+
+        commonMain {
             dependencies {
                 implementation(compose.material3)
                 implementation(libs.coroutines.core)
                 implementation(libs.kotlinInject.runtime)
 
-                api(projects.common.navigation.api)
+                implementation(projects.common.navigation.api)
                 implementation(projects.common.bookmarksTab.api)
                 implementation(projects.common.hikeTab.api)
                 implementation(projects.common.homeTab.api)
@@ -28,12 +28,11 @@ kotlin {
                 implementation(projects.common.searchTab.api)
                 implementation(projects.common.tig.compose)
                 api(projects.common.core.api)
-            }   
+            }
         }
-        
+
         androidUnitTest {
             dependencies {
-                dependsOn(commonMain)
                 implementation(kotlin("test"))
             }
         }

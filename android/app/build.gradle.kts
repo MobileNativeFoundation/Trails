@@ -1,3 +1,5 @@
+import org.mobilenativefoundation.trails.tooling.extensions.configureAndroidCompose
+
 plugins {
     id("plugin.trails.android.application")
     alias(libs.plugins.ksp)
@@ -21,6 +23,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation(compose.runtime)
@@ -32,19 +35,19 @@ dependencies {
     implementation(libs.kotlinInject.runtime)
     implementation(libs.serialization.core)
     implementation(libs.serialization.json)
-    implementation(libs.circuit.foundation)
+    api(libs.circuit.foundation)
 
 
     with(projects.common) {
-        implementation(bookmarksTab.impl)
-        implementation(core.impl)
-        implementation(hikeTab.impl)
-        implementation(homeTab.impl)
-        implementation(navigation.impl)
-        implementation(networking.impl)
-        implementation(profileTab.impl)
-        implementation(searchTab.impl)
-        implementation(tig.compose)
+        api(bookmarksTab.impl)
+        api(core.impl)
+        api(hikeTab.impl)
+        api(homeTab.impl)
+        api(navigation.impl)
+        api(networking.impl)
+        api(profileTab.impl)
+        api(searchTab.impl)
+        api(tig.compose)
     }
 
     ksp(libs.kotlinInject.compiler)

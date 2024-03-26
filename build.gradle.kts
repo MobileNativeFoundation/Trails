@@ -1,4 +1,5 @@
 buildscript {
+    val kotlin_version by extra("1.9.23")
     repositories {
         gradlePluginPortal()
         google()

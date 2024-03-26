@@ -9,7 +9,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(compose.runtime)
+                api(compose.runtime)
                 api(compose.components.resources)
                 api(libs.circuit.foundation)
                 api(projects.common.bookmarksTab.api)

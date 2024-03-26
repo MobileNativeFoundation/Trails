@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.trails.common.core.impl
+package org.mobilenativefoundation.trails.android.app
 
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
@@ -8,9 +8,11 @@ import org.mobilenativefoundation.trails.common.bookmarksTab.api.BookmarksCompon
 import org.mobilenativefoundation.trails.common.core.api.CoreComponent
 import org.mobilenativefoundation.trails.common.core.api.ScreenFactory
 import org.mobilenativefoundation.trails.common.core.api.TrailsScaffold
+import org.mobilenativefoundation.trails.common.core.impl.RealScreenFactory
+import org.mobilenativefoundation.trails.common.core.impl.TrailsPresenterFactory
+import org.mobilenativefoundation.trails.common.core.impl.TrailsUiFactory
 import org.mobilenativefoundation.trails.common.hikeTab.api.HikeComponent
 import org.mobilenativefoundation.trails.common.homeTab.api.HomeComponent
-import org.mobilenativefoundation.trails.common.navigation.api.NavigationComponent
 import org.mobilenativefoundation.trails.common.profileTab.api.ProfileComponent
 import org.mobilenativefoundation.trails.common.searchTab.api.SearchComponent
 
@@ -21,8 +23,8 @@ abstract class RealCoreComponent(
     @Component val homeComponent: HomeComponent,
     @Component val profileComponent: ProfileComponent,
     @Component val searchComponent: SearchComponent,
-    @Component val navigationComponent: NavigationComponent
 ) : CoreComponent {
+
     @Provides
     fun bindPresenterFactory(impl: TrailsPresenterFactory): Presenter.Factory = impl
 
@@ -30,8 +32,7 @@ abstract class RealCoreComponent(
     fun bindUiFactory(impl: TrailsUiFactory): Ui.Factory = impl
 
     @Provides
-    fun bindTrailsScaffold(impl: RealTrailsScaffold): TrailsScaffold = impl
-
-    @Provides
     fun bindScreenFactory(impl: RealScreenFactory): ScreenFactory = impl
+
+    companion object
 }

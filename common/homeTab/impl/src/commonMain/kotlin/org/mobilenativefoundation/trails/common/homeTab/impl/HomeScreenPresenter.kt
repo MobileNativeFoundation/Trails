@@ -5,9 +5,9 @@ import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.common.homeTab.api.HomeScreen
 
 @Inject
-class HomeScreenPresenter constructor() : HomeScreen.Presenter {
+class HomeScreenPresenter : HomeScreen.Presenter {
     @Composable
-    override operator fun invoke(): HomeScreen.State {
-        TODO("Not yet implemented")
+    override fun invoke(): HomeScreen.State {
+        return HomeScreen.State
     }
 }

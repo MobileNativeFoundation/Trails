@@ -20,11 +20,6 @@ kotlin {
                 implementation(libs.kotlinInject.runtime)
 
                 api(projects.common.navigation.api)
-                implementation(projects.common.bookmarksTab.api)
-                implementation(projects.common.hikeTab.api)
-                implementation(projects.common.homeTab.api)
-                implementation(projects.common.profileTab.api)
-                implementation(projects.common.searchTab.api)
                 implementation(projects.common.tig.compose)
                 implementation(projects.common.core.api)
             }   

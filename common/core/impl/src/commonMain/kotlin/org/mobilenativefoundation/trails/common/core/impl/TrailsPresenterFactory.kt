@@ -20,7 +20,11 @@ class TrailsPresenterFactory(
     private val profileScreenPresenter: ProfileScreen.Presenter,
     private val searchScreenPresenter: SearchScreen.Presenter
 ) : Presenter.Factory {
-    override fun create(screen: Screen, navigator: Navigator, context: CircuitContext): Presenter<*>? {
+    override fun create(
+        screen: Screen,
+        navigator: Navigator,
+        context: CircuitContext
+    ): Presenter<*>? {
         return when (screen) {
             is BookmarksScreen -> presenterOf { bookmarksScreenPresenter() }
             is HomeScreen -> presenterOf { homeScreenPresenter() }
