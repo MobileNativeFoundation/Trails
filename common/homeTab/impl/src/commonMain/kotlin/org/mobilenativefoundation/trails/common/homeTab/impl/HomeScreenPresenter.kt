@@ -6,8 +6,10 @@ import org.mobilenativefoundation.trails.common.homeTab.api.HomeScreen
 
 @Inject
 class HomeScreenPresenter : HomeScreen.Presenter {
+
     @Composable
-    override fun invoke(): HomeScreen.State {
+    override fun present(): HomeScreen.State {
         return HomeScreen.State
     }
+
 }

@@ -5,9 +5,9 @@ import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.common.bookmarksTab.api.BookmarksScreen
 
 @Inject
-class BookmarksScreenPresenter constructor() : BookmarksScreen.Presenter {
+class BookmarksScreenPresenter : BookmarksScreen.Presenter {
     @Composable
-    override fun invoke(): BookmarksScreen.State {
-        TODO("Not yet implemented")
+    override fun present(): BookmarksScreen.State {
+        return BookmarksScreen.State
     }
 }

@@ -3,7 +3,6 @@ package org.mobilenativefoundation.trails.common.navigation.impl
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.slack.circuit.runtime.screen.Screen
@@ -18,7 +17,10 @@ class RealBottomNavBar(
 ) : BottomNavBar {
 
     @Composable
-    override fun Content(selectedIndex: Int, onSelectedIndex: (index: Int, screen: Screen) -> Unit) {
+    override fun Content(
+        selectedIndex: Int,
+        onSelectedIndex: (index: Int, screen: Screen) -> Unit
+    ) {
         val items = remember {
             listOf(
                 BottomNavItem.Home,
@@ -39,8 +41,8 @@ class RealBottomNavBar(
                         val painter = if (isSelected) item.selectedIcon else item.unselectedIcon
                         Icon(painter, contentDescription = item.title)
                     },
-                    label = { Text(text = item.title) },
-                    alwaysShowLabel = false,
+                    label = { },
+                    alwaysShowLabel = true,
                     selected = selectedIndex == index,
                     onClick = {
                         val screen = when (item) {

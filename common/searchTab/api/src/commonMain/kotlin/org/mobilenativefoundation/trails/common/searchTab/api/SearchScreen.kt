@@ -1,11 +1,10 @@
 package org.mobilenativefoundation.trails.common.searchTab.api
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
-
+import com.slack.circuit.runtime.presenter.Presenter as CircuitPresenter
+import com.slack.circuit.runtime.ui.Ui as CircuitUi
 
 interface SearchScreen : Screen {
     object State : CircuitUiState
@@ -13,13 +12,7 @@ interface SearchScreen : Screen {
     sealed interface Event : CircuitUiEvent {
     }
 
-    interface Ui {
-        @Composable
-        fun Content(state: State, modifier: Modifier)
-    }
+    interface Ui : CircuitUi<State>
 
-    interface Presenter {
-        @Composable
-        operator fun invoke(): State
-    }
+    interface Presenter : CircuitPresenter<State>
 }

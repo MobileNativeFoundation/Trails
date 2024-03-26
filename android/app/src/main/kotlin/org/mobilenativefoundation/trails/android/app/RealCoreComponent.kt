@@ -7,7 +7,6 @@ import me.tatarka.inject.annotations.Provides
 import org.mobilenativefoundation.trails.common.bookmarksTab.api.BookmarksComponent
 import org.mobilenativefoundation.trails.common.core.api.CoreComponent
 import org.mobilenativefoundation.trails.common.core.api.ScreenFactory
-import org.mobilenativefoundation.trails.common.core.api.TrailsScaffold
 import org.mobilenativefoundation.trails.common.core.impl.RealScreenFactory
 import org.mobilenativefoundation.trails.common.core.impl.TrailsPresenterFactory
 import org.mobilenativefoundation.trails.common.core.impl.TrailsUiFactory

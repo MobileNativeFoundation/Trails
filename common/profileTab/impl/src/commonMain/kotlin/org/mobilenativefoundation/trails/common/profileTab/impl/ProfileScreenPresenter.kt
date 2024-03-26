@@ -5,9 +5,9 @@ import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.common.profileTab.api.ProfileScreen
 
 @Inject
-class ProfileScreenPresenter constructor() : ProfileScreen.Presenter {
+class ProfileScreenPresenter : ProfileScreen.Presenter {
     @Composable
-    override fun invoke(): ProfileScreen.State {
-        TODO("Not yet implemented")
+    override fun present(): ProfileScreen.State {
+        return ProfileScreen.State
     }
 }

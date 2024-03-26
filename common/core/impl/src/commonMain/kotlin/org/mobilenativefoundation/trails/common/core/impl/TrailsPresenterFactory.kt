@@ -3,7 +3,6 @@ package org.mobilenativefoundation.trails.common.core.impl
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import com.slack.circuit.runtime.presenter.presenterOf
 import com.slack.circuit.runtime.screen.Screen
 import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.common.bookmarksTab.api.BookmarksScreen
@@ -26,11 +25,11 @@ class TrailsPresenterFactory(
         context: CircuitContext
     ): Presenter<*>? {
         return when (screen) {
-            is BookmarksScreen -> presenterOf { bookmarksScreenPresenter() }
-            is HomeScreen -> presenterOf { homeScreenPresenter() }
-            is HikeScreen -> presenterOf { hikeScreenPresenter() }
-            is ProfileScreen -> presenterOf { profileScreenPresenter() }
-            is SearchScreen -> presenterOf { searchScreenPresenter() }
+            is BookmarksScreen -> bookmarksScreenPresenter
+            is HomeScreen -> homeScreenPresenter
+            is HikeScreen -> hikeScreenPresenter
+            is ProfileScreen -> profileScreenPresenter
+            is SearchScreen -> searchScreenPresenter
             else -> null
         }
     }

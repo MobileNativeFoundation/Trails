@@ -5,9 +5,9 @@ import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.common.hikeTab.api.HikeScreen
 
 @Inject
-class HikeScreenPresenter: HikeScreen.Presenter {
+class HikeScreenPresenter : HikeScreen.Presenter {
     @Composable
-    override fun invoke(): HikeScreen.State {
-        TODO("Not yet implemented")
+    override fun present(): HikeScreen.State {
+        return HikeScreen.State
     }
 }
