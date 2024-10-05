@@ -4,6 +4,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 *.hprof
+/local.properties
+
 ### IntelliJ IDEA ###
 .idea/compiler.xml
 .idea
