@@ -1,9 +1,8 @@
-import org.mobilenativefoundation.trails.tooling.extensions.configureAndroidCompose
-
 plugins {
     id("plugin.trails.android.application")
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -25,34 +24,17 @@ android {
 
 
 dependencies {
+    implementation(projects.xplat.lib.carve)
+    implementation(projects.xplat.core.circuit.impl)
+    implementation(projects.xplat.feat.homeScreen.impl)
+    implementation(projects.xplat.feat.bottomNav.impl)
 
+    // 3P
     implementation(compose.runtime)
     implementation(compose.material3)
-    implementation(libs.androidx.appCompat)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.core)
-    implementation(libs.coroutines.android)
-    implementation(libs.kotlinInject.runtime)
-    implementation(libs.serialization.core)
-    implementation(libs.serialization.json)
-    api(libs.circuit.foundation)
-
-
-    with(projects.common) {
-        api(bookmarksTab.impl)
-        api(core.impl)
-        api(hikeTab.impl)
-        api(homeTab.impl)
-        api(navigation.impl)
-        api(networking.impl)
-        api(profileTab.impl)
-        api(searchTab.impl)
-        api(tig.compose)
-    }
-
-    ksp(libs.kotlinInject.compiler)
-}
-
-ksp {
-    arg("me.tatarka.inject.generateCompanionExtensions", "true")
+    implementation(libs.kotlin.inject.runtime)
+    ksp(libs.kotlin.inject.compiler)
 }

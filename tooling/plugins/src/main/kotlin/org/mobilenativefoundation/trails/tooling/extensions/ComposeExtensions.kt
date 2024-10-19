@@ -38,7 +38,7 @@ fun Project.configureAndroidCompose(
             val bom = libs.findLibrary("androidx-compose-bom").get()
 
             add("implementation", platform(bom))
-            add("lintChecks", libs.findLibrary("lint-compose").get())
+            add("lintChecks", libs.findLibrary("compose-lint-checks").get())
         }
     }
 }

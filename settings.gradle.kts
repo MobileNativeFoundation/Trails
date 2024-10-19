@@ -23,28 +23,24 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Trails"
 
-// Android > App
+// Android
 include(":android:app")
 
-// Lib
-include(":lib:paging:core")
-include(":lib:paging:compose")
+// XPLAT
+/// Core
+include(":xplat:core:circuit:api")
+include(":xplat:core:circuit:impl")
 
-// Common
-include(":common:homeTab:api")
-include(":common:homeTab:impl")
-include(":common:bookmarksTab:impl")
-include(":common:bookmarksTab:api")
-include(":common:hikeTab:impl")
-include(":common:hikeTab:api")
-include(":common:profileTab:impl")
-include(":common:profileTab:api")
-include(":common:searchTab:impl")
-include(":common:searchTab:api")
-include(":common:navigation:api")
-include(":common:navigation:impl")
-include(":common:networking:api")
-include(":common:networking:impl")
-include(":common:tig:compose")
-include(":common:core:api")
-include(":common:core:impl")
+/// Feat
+include(":xplat:feat:bottomNav:api")
+include(":xplat:feat:bottomNav:impl")
+include(":xplat:feat:homeScreen:api")
+include(":xplat:feat:homeScreen:impl")
+include(":xplat:feat:scaffold:api")
+include(":xplat:feat:scaffold:impl")
+
+/// Lib
+include(":xplat:lib:carve")
+include(":xplat:lib:rest:api")
+include(":xplat:lib:rest:impl")
+

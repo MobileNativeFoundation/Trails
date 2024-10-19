@@ -8,7 +8,6 @@
 
     <application
         android:name=".TrailsApp"
-        android:allowBackup="false"
         android:exported="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Trails"
