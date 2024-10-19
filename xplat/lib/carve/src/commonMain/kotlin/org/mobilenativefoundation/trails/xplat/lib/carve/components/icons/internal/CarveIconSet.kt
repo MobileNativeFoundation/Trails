@@ -7,6 +7,7 @@ internal data class CarveIconSet(
     val heart: DrawableResource,
     val home: DrawableResource,
     val location: DrawableResource,
+    val message: DrawableResource,
     val notification: DrawableResource,
     val plus: DrawableResource,
     val profile: DrawableResource,

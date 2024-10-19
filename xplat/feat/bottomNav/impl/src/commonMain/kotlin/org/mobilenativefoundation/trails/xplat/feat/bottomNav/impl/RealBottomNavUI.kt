@@ -20,7 +20,11 @@ class RealBottomNavUI(
     override fun Content(selectedIndex: Int, onSelectedIndex: (index: Int, screen: Screen) -> Unit) {
         val items = remember(Unit) {
             listOf(
-                BottomNavItem.HOME
+                BottomNavItem.HOME,
+                BottomNavItem.SEARCH,
+                BottomNavItem.POST,
+                BottomNavItem.INBOX,
+                BottomNavItem.PROFILE
             )
         }
 
@@ -41,6 +45,10 @@ class RealBottomNavUI(
                     onClick = {
                         val screen: Screen = when (bottomNavItem) {
                             BottomNavItem.HOME -> screenFactory.homeScreen()
+                            BottomNavItem.SEARCH -> screenFactory.homeScreen()
+                            BottomNavItem.POST -> screenFactory.homeScreen()
+                            BottomNavItem.PROFILE -> screenFactory.homeScreen()
+                            BottomNavItem.INBOX -> screenFactory.homeScreen()
                         }
 
                         onSelectedIndex(index, screen)

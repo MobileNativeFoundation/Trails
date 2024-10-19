@@ -21,6 +21,7 @@ fun CarveIcon(
         Icon.HEART -> iconSet.heart to "Heart"
         Icon.HOME -> iconSet.home to "Home"
         Icon.LOCATION -> iconSet.location to "Location"
+        Icon.MESSAGE -> iconSet.message to "Message"
         Icon.NOTIFICATION -> iconSet.notification to "Notification"
         Icon.PLUS -> iconSet.plus to "Plus"
         Icon.PROFILE -> iconSet.profile to "Profile"

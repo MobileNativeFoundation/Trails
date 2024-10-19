@@ -5,6 +5,7 @@ enum class Icon {
     HEART,
     HOME,
     LOCATION,
+    MESSAGE,
     NOTIFICATION,
     PLUS,
     PROFILE,
