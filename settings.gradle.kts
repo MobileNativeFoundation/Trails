@@ -36,8 +36,8 @@ include(":xplat:feat:bottomNav:api")
 include(":xplat:feat:bottomNav:impl")
 include(":xplat:feat:homeScreen:api")
 include(":xplat:feat:homeScreen:impl")
-include(":xplat:feat:scaffold:api")
-include(":xplat:feat:scaffold:impl")
+include(":xplat:feat:searchScreen:api")
+include(":xplat:feat:searchScreen:impl")
 
 /// Lib
 include(":xplat:lib:carve")

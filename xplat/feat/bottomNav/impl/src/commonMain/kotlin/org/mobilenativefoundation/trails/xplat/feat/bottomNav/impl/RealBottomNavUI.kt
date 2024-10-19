@@ -45,7 +45,7 @@ class RealBottomNavUI(
                     onClick = {
                         val screen: Screen = when (bottomNavItem) {
                             BottomNavItem.HOME -> screenFactory.homeScreen()
-                            BottomNavItem.SEARCH -> screenFactory.homeScreen()
+                            BottomNavItem.SEARCH -> screenFactory.searchScreen()
                             BottomNavItem.POST -> screenFactory.homeScreen()
                             BottomNavItem.PROFILE -> screenFactory.homeScreen()
                             BottomNavItem.INBOX -> screenFactory.homeScreen()
