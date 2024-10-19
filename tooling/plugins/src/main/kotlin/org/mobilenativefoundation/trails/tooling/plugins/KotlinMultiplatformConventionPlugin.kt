@@ -34,6 +34,10 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             iosArm64()
             iosSimulatorArm64()
 
+            js {
+                browser()
+            }
+
             targets.all {
                 compilations.all {
                     compilerOptions.configure {
