@@ -36,6 +36,8 @@ include(":xplat:feat:bottomNav:api")
 include(":xplat:feat:bottomNav:impl")
 include(":xplat:feat:homeScreen:api")
 include(":xplat:feat:homeScreen:impl")
+include(":xplat:feat:messagesScreen:api")
+include(":xplat:feat:messagesScreen:impl")
 include(":xplat:feat:searchScreen:api")
 include(":xplat:feat:searchScreen:impl")
 

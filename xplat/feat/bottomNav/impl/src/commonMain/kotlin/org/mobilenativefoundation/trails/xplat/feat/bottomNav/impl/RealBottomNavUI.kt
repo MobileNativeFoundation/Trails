@@ -47,8 +47,8 @@ class RealBottomNavUI(
                             BottomNavItem.HOME -> screenFactory.homeScreen()
                             BottomNavItem.SEARCH -> screenFactory.searchScreen()
                             BottomNavItem.POST -> screenFactory.homeScreen()
+                            BottomNavItem.INBOX -> screenFactory.messagesScreen()
                             BottomNavItem.PROFILE -> screenFactory.homeScreen()
-                            BottomNavItem.INBOX -> screenFactory.homeScreen()
                         }
 
                         onSelectedIndex(index, screen)

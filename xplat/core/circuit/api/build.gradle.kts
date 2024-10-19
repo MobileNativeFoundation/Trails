@@ -10,6 +10,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.xplat.feat.homeScreen.api)
+                api(projects.xplat.feat.messagesScreen.api)
                 api(projects.xplat.feat.searchScreen.api)
 
                 // 3P

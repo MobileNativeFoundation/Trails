@@ -23,7 +23,9 @@ import org.mobilenativefoundation.trails.xplat.feat.bottomNav.impl.create
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.impl.RealHomeScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.impl.create
+import org.mobilenativefoundation.trails.xplat.feat.messagesScreen.api.MessagesScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.searchScreen.api.SearchScreenComponent
+import org.mobilenativefoundation.trails.xplat.feat.searchScreen.impl.RealMessagesScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.searchScreen.impl.RealSearchScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.searchScreen.impl.create
 import org.mobilenativefoundation.trails.xplat.lib.carve.material3.Carve
@@ -32,10 +34,11 @@ import org.mobilenativefoundation.trails.xplat.lib.carve.material3.Carve
 class MainActivity : ComponentActivity() {
 
 
+    private val messagesScreenComponent: MessagesScreenComponent by lazy { RealMessagesScreenComponent::class.create() }
     private val searchScreenComponent: SearchScreenComponent by lazy { RealSearchScreenComponent::class.create() }
     private val homeScreenComponent: HomeScreenComponent by lazy { RealHomeScreenComponent::class.create() }
     private val circuitComponent: CircuitComponent by lazy {
-        RealCircuitComponent::class.create(homeScreenComponent, searchScreenComponent)
+        RealCircuitComponent::class.create(homeScreenComponent, messagesScreenComponent, searchScreenComponent)
     }
     private val bottomNavComponent: BottomNavComponent by lazy {
         RealBottomNavComponent::class.create(

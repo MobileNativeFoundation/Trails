@@ -7,11 +7,13 @@ import me.tatarka.inject.annotations.Provides
 import org.mobilenativefoundation.trails.xplat.core.circuit.api.CircuitComponent
 import org.mobilenativefoundation.trails.xplat.core.circuit.api.ScreenFactory
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreenComponent
+import org.mobilenativefoundation.trails.xplat.feat.messagesScreen.api.MessagesScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.searchScreen.api.SearchScreenComponent
 
 @Component
 abstract class RealCircuitComponent(
     @Component val homeScreenComponent: HomeScreenComponent,
+    @Component val messagesScreenComponent: MessagesScreenComponent,
     @Component val searchScreenComponent: SearchScreenComponent,
 ) : CircuitComponent {
     @Provides
