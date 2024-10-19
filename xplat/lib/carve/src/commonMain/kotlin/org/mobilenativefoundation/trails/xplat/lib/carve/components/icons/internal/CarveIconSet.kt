@@ -3,5 +3,12 @@ package org.mobilenativefoundation.trails.xplat.lib.carve.components.icons.inter
 import org.jetbrains.compose.resources.DrawableResource
 
 internal data class CarveIconSet(
-    val home: DrawableResource
+    val chat: DrawableResource,
+    val heart: DrawableResource,
+    val home: DrawableResource,
+    val location: DrawableResource,
+    val notification: DrawableResource,
+    val plus: DrawableResource,
+    val profile: DrawableResource,
+    val search: DrawableResource,
 )

@@ -17,7 +17,14 @@ fun CarveIcon(
     }
 
     val (resource, resourceDescription) = when (icon) {
+        Icon.CHAT -> iconSet.chat to "Chat"
+        Icon.HEART -> iconSet.heart to "Heart"
         Icon.HOME -> iconSet.home to "Home"
+        Icon.LOCATION -> iconSet.location to "Location"
+        Icon.NOTIFICATION -> iconSet.notification to "Notification"
+        Icon.PLUS -> iconSet.plus to "Plus"
+        Icon.PROFILE -> iconSet.profile to "Profile"
+        Icon.SEARCH -> iconSet.search to "Search"
     }
 
     val painter = painterResource(resource)
