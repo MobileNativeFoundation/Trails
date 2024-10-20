@@ -1,0 +1,167 @@
+import org.mobilenativefoundation.trails.backend.models.Platform;
+
+CREATE TABLE creator (
+    id SERIAL PRIMARY KEY,
+    _id VARCHAR(100),
+    username VARCHAR(100) NOT NULL,
+    full_name VARCHAR(255),
+    profile_pic_url VARCHAR(500),
+    is_verified BOOLEAN NOT NULL,
+    bio TEXT,
+    platform TEXT AS Platform NOT NULL,
+    CONSTRAINT unique_id_username_platform UNIQUE (username, platform)
+);
+
+
+CREATE TABLE post (
+    id SERIAL PRIMARY KEY,
+    _id VARCHAR(100),
+    creator_id SERIAL NOT NULL,
+    caption TEXT,
+    platform TEXT AS Platform NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    likes_count INT NOT NULL,
+    comments_count INT NOT NULL,
+    shares_count INT NOT NULL,
+    views_count INT NOT NULL,
+    is_sponsored BOOLEAN NOT NULL,
+    location_name VARCHAR(255),
+    cover_url TEXT NOT NULL,
+    FOREIGN KEY (creator_id) REFERENCES creator(id)
+);
+
+
+
+CREATE TABLE media(
+    id SERIAL PRIMARY KEY,
+    post_id SERIAL NOT NULL,
+    media_url TEXT NOT NULL,
+    _media_url TEXT,
+    media_type TEXT NOT NULL,
+    height INT,
+    width INT,
+    duration INT,
+    alt_text TEXT,
+    media_format TEXT,
+    FOREIGN KEY (post_id) REFERENCES post(id)
+);
+
+CREATE TABLE comment(
+    id SERIAL PRIMARY KEY,
+    _id VARCHAR(100),
+    post_id SERIAL NOT NULL,
+    creator_id SERIAL NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    likes_count INT NOT NULL,
+    parent_comment_id SERIAL,
+    FOREIGN KEY (post_id) REFERENCES post(id),
+    FOREIGN KEY (creator_id) REFERENCES creator(id),
+    FOREIGN KEY (parent_comment_id) REFERENCES comment(id)
+);
+
+CREATE TABLE hashtag(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE post_hashtag(
+  post_id SERIAL NOT NULL,
+  hashtag_id SERIAL NOT NULL,
+  PRIMARY KEY (post_id, hashtag_id),
+  FOREIGN KEY (post_id) REFERENCES post(id),
+  FOREIGN KEY (hashtag_id) REFERENCES hashtag(id)
+);
+
+CREATE TABLE mention(
+    id SERIAL PRIMARY KEY,
+    post_id SERIAL NOT NULL,
+    mentioned_username VARCHAR(100) NOT NULL,
+    platform TEXT AS Platform NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES post(id)
+);
+
+-- Queries
+
+insertPost:
+INSERT INTO post(
+    _id,
+    cover_url,
+    creator_id,
+    caption,
+    platform,
+    created_at,
+    likes_count,
+    comments_count,
+    shares_count,
+    views_count,
+    is_sponsored,
+    location_name
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+RETURNING id
+;
+
+insertMention:
+INSERT INTO mention(post_id, mentioned_username, platform) VALUES (?, ?, ?);
+
+insertHashtag:
+INSERT INTO hashtag(name) VALUES (?);
+
+insertPostHashtag:
+INSERT INTO post_hashtag(post_id, hashtag_id) VALUES (?, ?);
+
+insertOneComment:
+INSERT INTO comment VALUES?;
+
+insertMedia:
+INSERT INTO media(
+    post_id,
+    media_url,
+    _media_url,
+    media_type,
+    media_format,
+    height,
+    width,
+    duration,
+    alt_text
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+insertCreator:
+INSERT INTO creator(
+    _id,
+    username,
+    full_name,
+    profile_pic_url,
+    is_verified,
+    bio,
+    platform
+) VALUES (?, ?, ?, ?, ?, ?, ?)
+RETURNING id;
+
+
+selectOrInsertCreator:
+WITH new_or_existing AS (
+INSERT INTO creator(
+    _id,
+    username,
+    full_name,
+    profile_pic_url,
+    is_verified,
+    bio,
+    platform
+) VALUES (?, ?, ?, ?, ?, ?, ?)
+ON CONFLICT(username, platform) DO NOTHING
+RETURNING id
+)
+SELECT id FROM new_or_existing;
+
+selectOrInsertHashtag:
+WITH new_or_existing AS (
+INSERT INTO hashtag(
+    name
+) VALUES (?)
+ON CONFLICT(name) DO NOTHING
+RETURNING id
+)
+SELECT * FROM new_or_existing;

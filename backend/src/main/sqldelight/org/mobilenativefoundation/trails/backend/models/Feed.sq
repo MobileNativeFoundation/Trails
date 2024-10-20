@@ -1,0 +1,15 @@
+import org.mobilenativefoundation.trails.backend.models.FeedType;
+
+CREATE TABLE feed (
+    id SERIAL PRIMARY KEY,
+    user_id SERIAL NOT NULL,
+    type TEXT AS FeedType NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    CONSTRAINT unique_type_user UNIQUE (type, user_id)
+);
+
+CREATE TABLE feed_post(
+    feed_id SERIAL NOT NULL REFERENCES feed(id),
+    post_id SERIAL NOT NULL REFERENCES post(id),
+    PRIMARY KEY (feed_id, post_id)
+);

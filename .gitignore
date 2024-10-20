@@ -43,3 +43,4 @@ bin/
 .DS_Store
 
 backend/postgres.yaml
+**/backend/data/*

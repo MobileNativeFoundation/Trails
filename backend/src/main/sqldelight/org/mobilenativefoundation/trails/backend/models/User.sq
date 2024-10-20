@@ -1,0 +1,60 @@
+CREATE TABLE user (
+    id SERIAL PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
+    full_name TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    profile_pic_url TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE follow (
+    follower_id INTEGER NOT NULL REFERENCES user(id),
+    following_id INTEGER NOT NULL REFERENCES user(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (follower_id, following_id)
+);
+
+CREATE TABLE collection(
+    id SERIAL PRIMARY KEY,
+    user_id SERIAL NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+CREATE TABLE collection_post (
+    collection_id SERIAL NOT NULL REFERENCES collection(id),
+    post_id SERIAL NOT NULL REFERENCES post(id),
+    PRIMARY KEY (collection_id, post_id)
+);
+
+insertUser:
+INSERT INTO user (
+     email, full_name, password_hash, profile_pic_url
+) VALUES (?, ?, ?, ?);
+
+selectUserById:
+SELECT * FROM user WHERE id = ?;
+
+searchUsers:
+SELECT * FROM user WHERE full_name LIKE '%' || ? || '%';
+
+insertFollow:
+INSERT INTO follow (follower_id, following_id) VALUES (?, ?);
+
+deleteFollow:
+DELETE FROM follow WHERE follower_id = ? AND following_id = ?;
+
+selectFollowers:
+SELECT user.*
+FROM follow
+JOIN user ON follow.follower_id = user.id
+WHERE following_id = ?;
+
+selectFollowing:
+SELECT user.*
+FROM follow
+JOIN user ON follow.following_id = user.id
+WHERE follower_id = ?;
+

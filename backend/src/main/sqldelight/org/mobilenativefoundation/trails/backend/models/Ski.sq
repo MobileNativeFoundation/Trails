@@ -1,0 +1,54 @@
+import org.mobilenativefoundation.trails.backend.models.TrailDifficulty;
+
+CREATE TABLE ski_resort (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    slug VARCHAR(50) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    url VARCHAR(500) NOT NULL,
+    latitude NUMERIC,
+    longitude NUMERIC,
+    instagram VARCHAR(255),
+    tiktok VARCHAR(255),
+    open_lifts_count INT NOT NULL,
+    closed_lifts_count INT NOT NULL,
+    open_trails_count INT NOT NULL,
+    closed_trails_count INT NOT NULL
+);
+
+CREATE TABLE ski_resort_lift(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    ski_resort_id SERIAL NOT NULL,
+    FOREIGN KEY (ski_resort_id) REFERENCES ski_resort(id)
+);
+
+CREATE TABLE ski_resort_conditions(
+    id SERIAL PRIMARY KEY,
+    ski_resort_id SERIAL NOT NULL,
+    summary TEXT,
+    base_temp_f_high_today INT,
+    base_temp_f_low_today INT,
+    snowfall_inches_24h INT,
+    snowfall_inches_48h INT,
+    snowfall_inches_7d INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIME,
+    FOREIGN KEY (ski_resort_id) REFERENCES ski_resort(id)
+);
+
+CREATE TABLE ski_resort_lift_status(
+    id SERIAL PRIMARY KEY,
+    ski_resort_lift_id SERIAL NOT NULL,
+    open BOOLEAN NOT NULL,
+    FOREIGN KEY (ski_resort_lift_id) REFERENCES ski_resort_lift(id)
+);
+
+CREATE TABLE ski_resort_trail(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    ski_resort_id SERIAL NOT NULL,
+    open BOOLEAN NOT NULL,
+    difficulty TEXT AS TrailDifficulty,
+    CONSTRAINT unique_name_ski_resort UNIQUE (name, ski_resort_id),
+    FOREIGN KEY (ski_resort_id) REFERENCES ski_resort(id)
+);
