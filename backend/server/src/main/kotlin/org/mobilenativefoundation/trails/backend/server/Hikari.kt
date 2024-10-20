@@ -8,7 +8,7 @@ internal fun createHikariDataSource(): HikariDataSource {
     val connection = System.getenv("CONNECTION")
     val username = System.getenv("USERNAME")
     val password = System.getenv("PASSWORD")
-    val proxyUrl = URI(System.getenv("QUOTAGUARDSTATIC_URL"))
+    val proxyUrl = URI(System.getenv("QUOTAGUARDSHIELD_URL"))
 
     val hikariConfig = HikariConfig().apply {
         this.jdbcUrl = connection
