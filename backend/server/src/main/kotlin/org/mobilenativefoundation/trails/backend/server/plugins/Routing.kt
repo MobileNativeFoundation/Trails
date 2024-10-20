@@ -39,5 +39,19 @@ fun Application.configureRouting(
                 call.respond(error.message, TypeInfo(Throwable::class))
             }
         }
+
+        get("/post/{postId}") {
+
+            val postId = call.parameters["postId"]?.toInt()
+            val post = postId?.let {
+                database.postQueries.selectPostById(postId).executeAsOneOrNull()
+            }
+
+            if (post != null) {
+                call.respond(post)
+            } else {
+                call.respond(404)
+            }
+        }
     }
 }

@@ -169,3 +169,6 @@ SELECT * FROM new_or_existing;
 
 selectPosts:
 SELECT * FROM post LIMIT ?;
+
+selectPostById:
+SELECT * FROM post WHERE id = ? LIMIT 1;
