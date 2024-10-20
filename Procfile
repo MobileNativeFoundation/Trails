@@ -1,0 +1,1 @@
+web: ./backend/server/build/install/server/bin/server
