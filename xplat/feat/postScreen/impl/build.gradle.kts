@@ -1,3 +1,4 @@
+
 plugins {
     id("plugin.trails.android.library")
     id("plugin.trails.kotlin.multiplatform")
@@ -5,23 +6,17 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.plugin.parcelize)
 }
 
 kotlin {
-
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
-                api(projects.xplat.core.circuit.api)
-
+                api(projects.xplat.feat.postScreen.api)
                 implementation(projects.xplat.lib.carve)
-                implementation(projects.xplat.feat.homeScreen.api)
-                implementation(projects.xplat.feat.messagesScreen.api)
-                implementation(projects.xplat.feat.postScreen.api)
-                implementation(projects.xplat.feat.searchScreen.impl)
 
                 // 3P
-                implementation(compose.ui)
                 implementation(compose.material3)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlin.inject.runtime)
@@ -37,5 +32,5 @@ dependencies {
 }
 
 android {
-    namespace = "org.mobilenativefoundation.trails.xplat.core.circuit.impl"
+    namespace = "org.mobilenativefoundation.trails.xplat.feat.postScreen.impl"
 }
