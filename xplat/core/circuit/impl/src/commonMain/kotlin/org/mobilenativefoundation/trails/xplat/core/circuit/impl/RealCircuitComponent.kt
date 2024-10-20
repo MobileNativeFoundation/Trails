@@ -9,6 +9,7 @@ import org.mobilenativefoundation.trails.xplat.core.circuit.api.ScreenFactory
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.messagesScreen.api.MessagesScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.postScreen.api.PostScreenComponent
+import org.mobilenativefoundation.trails.xplat.feat.profileScreen.api.ProfileScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.searchScreen.api.SearchScreenComponent
 
 @Component
@@ -17,6 +18,7 @@ abstract class RealCircuitComponent(
     @Component val messagesScreenComponent: MessagesScreenComponent,
     @Component val postScreenComponent: PostScreenComponent,
     @Component val searchScreenComponent: SearchScreenComponent,
+    @Component val profileScreenComponent: ProfileScreenComponent
 ) : CircuitComponent {
     @Provides
     fun bindScreenFactory(impl: RealScreenFactory): ScreenFactory = impl

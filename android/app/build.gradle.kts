@@ -28,6 +28,7 @@ dependencies {
     implementation(projects.xplat.core.circuit.impl)
     implementation(projects.xplat.feat.homeScreen.impl)
     implementation(projects.xplat.feat.messagesScreen.impl)
+    implementation(projects.xplat.feat.profileScreen.impl)
     implementation(projects.xplat.feat.postScreen.impl)
     implementation(projects.xplat.feat.searchScreen.impl)
     implementation(projects.xplat.feat.bottomNav.impl)

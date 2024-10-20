@@ -40,6 +40,8 @@ include(":xplat:feat:messagesScreen:api")
 include(":xplat:feat:messagesScreen:impl")
 include(":xplat:feat:postScreen:api")
 include(":xplat:feat:postScreen:impl")
+include(":xplat:feat:profileScreen:api")
+include(":xplat:feat:profileScreen:impl")
 include(":xplat:feat:searchScreen:api")
 include(":xplat:feat:searchScreen:impl")
 

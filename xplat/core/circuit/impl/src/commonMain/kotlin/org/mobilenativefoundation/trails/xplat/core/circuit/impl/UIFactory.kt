@@ -8,6 +8,7 @@ import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreen
 import org.mobilenativefoundation.trails.xplat.feat.messagesScreen.api.MessagesScreen
 import org.mobilenativefoundation.trails.xplat.feat.postScreen.api.PostScreen
+import org.mobilenativefoundation.trails.xplat.feat.profileScreen.api.ProfileScreen
 import org.mobilenativefoundation.trails.xplat.feat.searchScreen.api.SearchScreen
 
 @Inject
@@ -15,7 +16,8 @@ class UIFactory(
     private val homeScreenUI: HomeScreen.UI,
     private val messagesScreenUI: MessagesScreen.UI,
     private val postScreenUI: PostScreen.UI,
-    private val searchScreenUI: SearchScreen.UI
+    private val searchScreenUI: SearchScreen.UI,
+    private val profileScreenUI: ProfileScreen.UI
 ) : Ui.Factory {
 
     override fun create(screen: Screen, context: CircuitContext): Ui<*>? {
@@ -34,6 +36,10 @@ class UIFactory(
 
             is PostScreen -> ui<PostScreen.State> { state, modifier ->
                 postScreenUI.Content(state, modifier)
+            }
+
+            is ProfileScreen -> ui<ProfileScreen.State> { state, modifier ->
+                profileScreenUI.Content(state, modifier)
             }
 
             else -> null
