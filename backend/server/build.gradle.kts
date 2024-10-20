@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.sqldelight)
 }
 
+configureJava()
+
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
 }
@@ -39,3 +41,16 @@ sqldelight {
 tasks {
     create("stage").dependsOn("installDist")
 }
+
+
+
+
+fun Project.configureJava() {
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
+}
+
+fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure<JavaPluginExtension>(action)
