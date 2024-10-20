@@ -1,15 +1,9 @@
 package org.mobilenativefoundation.trails.xplat.lib.rest.impl
 
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.TrailsClient
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.ResortOperations
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.TrailOperations
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.UserOperations
+import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.PostOperations
 
 class RealTrailsClient(
-    private val resortOperations: ResortOperations,
-    private val trailOperations: TrailOperations,
-    private val userOperations: UserOperations
+    private val postOperations: PostOperations
 ) : TrailsClient,
-    ResortOperations by resortOperations,
-    TrailOperations by trailOperations,
-    UserOperations by userOperations
+    PostOperations by postOperations

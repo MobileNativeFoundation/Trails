@@ -42,5 +42,5 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-backend/postgres.yaml
-**/backend/data/*
+backend/server/postgres.yaml
+**/backend/server/data/*

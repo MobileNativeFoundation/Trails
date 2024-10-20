@@ -1,6 +1,0 @@
-ktor:
-  application:
-    modules:
-      - org.mobilenativefoundation.trails.backend.ApplicationKt.module
-  deployment:
-    port: 8080

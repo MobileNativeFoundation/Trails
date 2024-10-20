@@ -1,10 +1,6 @@
 package org.mobilenativefoundation.trails.xplat.lib.rest.api
 
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.ResortOperations
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.TrailOperations
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.UserOperations
+import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.PostOperations
 
 interface TrailsClient :
-    ResortOperations,
-    TrailOperations,
-    UserOperations
+    PostOperations
