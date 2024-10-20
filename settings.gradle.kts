@@ -26,6 +26,9 @@ rootProject.name = "Trails"
 // Android
 include(":android:app")
 
+// Backend
+include(":backend")
+
 // XPLAT
 /// Core
 include(":xplat:core:circuit:api")
