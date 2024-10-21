@@ -1,4 +1,3 @@
-
 plugins {
     id("plugin.trails.android.library")
     id("plugin.trails.kotlin.multiplatform")
@@ -10,12 +9,12 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api(projects.xplat.lib.rest.api)
+
                 implementation(libs.kotlin.inject.runtime)
                 implementation(libs.ktor.core)
                 implementation(libs.ktor.negotiation)
                 implementation(libs.ktor.serialization.json)
-
-                implementation(projects.xplat.lib.rest.api)
             }
         }
 
@@ -32,6 +31,11 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation(libs.ktor.client.apache5)
+            }
+        }
+        jsMain {
+            dependencies {
+                implementation(libs.ktor.client.js)
             }
         }
     }

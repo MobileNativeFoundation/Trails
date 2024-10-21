@@ -7,7 +7,9 @@ import com.slack.circuit.runtime.presenter.Presenter as CircuitPresenter
 import com.slack.circuit.runtime.ui.Ui as CircuitUI
 
 interface HomeScreen : Screen {
-    object State : CircuitUiState
+    data class State(
+        val posts: List<String>
+    ) : CircuitUiState
 
     sealed interface Event : CircuitUiEvent {
         class ClickNavItem(val index: Int) : Event

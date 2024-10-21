@@ -32,6 +32,7 @@ dependencies {
     implementation(projects.xplat.feat.postScreen.impl)
     implementation(projects.xplat.feat.searchScreen.impl)
     implementation(projects.xplat.feat.bottomNav.impl)
+    implementation(projects.xplat.lib.rest.impl)
 
     // 3P
     implementation(compose.runtime)

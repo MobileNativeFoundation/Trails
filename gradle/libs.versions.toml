@@ -3,6 +3,7 @@ agp = "8.2.2"
 androidx-activity = "1.9.3"
 buildkonfig = "0.15.1"
 circuit = "0.24.0"
+coil-compose = "3.0.0-rc01"
 compose-bom = "2024.10.00"
 compose-compiler = "1.5.11"
 compose-lint-checks = "1.2.0"
@@ -25,6 +26,9 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.7.0
 androidx-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-core = { module = "androidx.core:core-ktx", version = "1.13.1" }
 circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-compose" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil-compose" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil-compose" }
 hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "hikaricp" }
 jdbc-driver = { module = "app.cash.sqldelight:jdbc-driver", version.ref = "sqldelight" }
 kotlin-inject-compiler = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlin-inject" }
@@ -40,6 +44,8 @@ ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version
 ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-cio = {module = "io.ktor:ktor-client-cio", version.ref = "ktor"}
+ktor-client-js = {module = "io.ktor:ktor-client-js", version.ref = "ktor"}
 
 ktor-client-apache5 = { module = "io.ktor:ktor-client-apache5", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }

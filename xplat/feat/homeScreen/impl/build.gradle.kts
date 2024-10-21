@@ -15,11 +15,14 @@ kotlin {
             dependencies {
                 api(projects.xplat.feat.homeScreen.api)
                 implementation(projects.xplat.lib.carve)
+                implementation(projects.xplat.lib.rest.api)
 
                 // 3P
                 implementation(compose.material3)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlin.inject.runtime)
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network.ktor3)
             }
         }
     }
