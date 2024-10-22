@@ -17,6 +17,7 @@ fun CarveIcon(
     val (iconSet, iconSetDescription) = when (style) {
         IconStyle.BOLD -> CarveIconSets.Bold to "Bold"
         IconStyle.LIGHT_OUTLINE -> CarveIconSets.LightOutline to "Light Outline"
+        IconStyle.CURVED -> CarveIconSets.Curved to "Curved"
     }
 
     val (resource, resourceDescription) = when (icon) {
@@ -29,9 +30,14 @@ fun CarveIcon(
         Icon.PLUS -> iconSet.plus to "Plus"
         Icon.PROFILE -> iconSet.profile to "Profile"
         Icon.SEARCH -> iconSet.search to "Search"
+        Icon.ACTIVITY -> iconSet.activity to "Activity"
+        Icon.BOOKMARK -> iconSet.bookmark to "Bookmark"
+        Icon.MORE_SQUARE -> iconSet.moreSquare to "More Square"
+        Icon.SEND -> iconSet.send to "Send"
+        Icon.TICK_SQUARE -> iconSet.tickSquare to "Tick Square"
     }
 
-    val painter = painterResource(resource)
+    val painter = painterResource(resource ?: error("Resource not found."))
     val contentDescription = "$iconSetDescription $resourceDescription Icon"
 
     Icon(painter, contentDescription, modifier = modifier)

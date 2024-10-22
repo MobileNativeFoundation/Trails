@@ -66,10 +66,11 @@ fun VideoCard(
             ) {
                 CarveIcon(icon = Icon.HEART, style = IconStyle.LIGHT_OUTLINE, modifier = Modifier.size(28.dp))
                 CarveIcon(icon = Icon.CHAT, style = IconStyle.LIGHT_OUTLINE, modifier = Modifier.size(28.dp))
+                CarveIcon(icon = Icon.SEND, style = IconStyle.CURVED, modifier = Modifier.size(28.dp))
             }
 
 
-            CarveIcon(icon = Icon.PLUS, style = IconStyle.LIGHT_OUTLINE, modifier = Modifier.size(28.dp)) // TODO
+            CarveIcon(icon = Icon.BOOKMARK, style = IconStyle.CURVED, modifier = Modifier.size(28.dp))
 
         }
 

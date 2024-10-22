@@ -12,4 +12,9 @@ internal data class CarveIconSet(
     val plus: DrawableResource,
     val profile: DrawableResource,
     val search: DrawableResource,
+    val activity: DrawableResource,
+    val bookmark: DrawableResource,
+    val moreSquare: DrawableResource,
+    val send: DrawableResource,
+    val tickSquare: DrawableResource?
 )

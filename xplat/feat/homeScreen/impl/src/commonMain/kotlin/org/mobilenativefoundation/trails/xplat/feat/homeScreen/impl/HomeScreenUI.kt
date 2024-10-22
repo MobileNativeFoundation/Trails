@@ -38,8 +38,8 @@ class HomeScreenUI : HomeScreen.UI {
                     ) {
                         CarveIcon(
                             modifier = Modifier.size(28.dp),
-                            icon = Icon.HEART,
-                            style = IconStyle.LIGHT_OUTLINE
+                            icon = Icon.ACTIVITY,
+                            style = IconStyle.CURVED
                         )
                     }
                 }
