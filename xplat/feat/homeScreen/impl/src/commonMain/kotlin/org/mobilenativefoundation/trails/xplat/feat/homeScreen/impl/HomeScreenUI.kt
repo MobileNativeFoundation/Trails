@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
 import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreen
@@ -16,7 +17,9 @@ class HomeScreenUI : HomeScreen.UI {
         LazyColumn {
             items(state.posts) {
                 AsyncImage(
+                    modifier = Modifier.fillParentMaxWidth(),
                     model = it,
+                    contentScale = ContentScale.FillWidth,
                     contentDescription = null
                 )
             }

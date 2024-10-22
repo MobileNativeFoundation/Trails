@@ -2,6 +2,8 @@ package org.mobilenativefoundation.trails.xplat.lib.carve.components.icons
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import org.jetbrains.compose.resources.painterResource
 import org.mobilenativefoundation.trails.xplat.lib.carve.components.icons.internal.CarveIconSets
 
@@ -10,6 +12,7 @@ import org.mobilenativefoundation.trails.xplat.lib.carve.components.icons.intern
 fun CarveIcon(
     icon: Icon,
     style: IconStyle,
+    modifier: Modifier = Modifier
 ) {
     val (iconSet, iconSetDescription) = when (style) {
         IconStyle.BOLD -> CarveIconSets.Bold to "Bold"
@@ -31,5 +34,5 @@ fun CarveIcon(
     val painter = painterResource(resource)
     val contentDescription = "$iconSetDescription $resourceDescription Icon"
 
-    Icon(painter, contentDescription)
+    Icon(painter, contentDescription, modifier = modifier)
 }
