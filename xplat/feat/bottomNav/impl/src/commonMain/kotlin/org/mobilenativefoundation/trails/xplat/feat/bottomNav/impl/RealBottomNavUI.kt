@@ -1,14 +1,14 @@
 package org.mobilenativefoundation.trails.xplat.feat.bottomNav.impl
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.screen.Screen
 import me.tatarka.inject.annotations.Inject
@@ -16,7 +16,6 @@ import org.mobilenativefoundation.trails.xplat.core.circuit.api.ScreenFactory
 import org.mobilenativefoundation.trails.xplat.feat.bottomNav.api.BottomNavUI
 import org.mobilenativefoundation.trails.xplat.lib.carve.components.icons.CarveIcon
 import org.mobilenativefoundation.trails.xplat.lib.carve.components.icons.IconStyle
-import org.mobilenativefoundation.trails.xplat.lib.carve.material3.Carve
 
 @Inject
 class RealBottomNavUI(
@@ -34,23 +33,18 @@ class RealBottomNavUI(
             )
         }
 
-        val outlineColor = Carve.ColorScheme.outline
         val interactionSource = remember { MutableInteractionSource() }
 
-        NavigationBar(
-            containerColor = Carve.ColorScheme.surface,
-            modifier = Modifier.drawBehind {
-
-                drawLine(
-                    outlineColor,
-                    Offset(0f, 0f),
-                    Offset(size.width, 0f),
-                    0.1f
-                )
-            }
+        Surface(
+            shadowElevation = 8.dp,
+            modifier = Modifier.fillMaxWidth().background(Color.White)
         ) {
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth().background(Color.White).padding(vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
                 items.forEachIndexed { index, bottomNavItem ->
                     val isSelected = selectedIndex == index
 
@@ -76,7 +70,7 @@ class RealBottomNavUI(
                             style = if (isSelected) IconStyle.BOLD else IconStyle.LIGHT_OUTLINE
                         )
                     }
-            }
+                }
 
             }
 

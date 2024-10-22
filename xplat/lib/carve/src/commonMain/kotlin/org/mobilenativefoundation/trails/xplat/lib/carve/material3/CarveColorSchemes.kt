@@ -36,7 +36,7 @@ internal object CarveColorSchemes {
         errorContainer = Colors.LIGHT_RED_300,
         onError = Colors.WHITE,
         onErrorContainer = Colors.LIGHT_RED_1400,
-        background = LightSurface,
+        background = Colors.WHITE,
         onBackground = Colors.BLACK,
         surface = LightSurface,
         onSurface = Colors.BLACK,

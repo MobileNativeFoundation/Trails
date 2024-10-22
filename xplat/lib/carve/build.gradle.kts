@@ -12,6 +12,8 @@ kotlin {
                 api(compose.material3)
                 implementation(compose.components.uiToolingPreview)
                 implementation(compose.components.resources)
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network.ktor3)
             }
         }
     }
