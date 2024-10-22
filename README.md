@@ -1,4 +1,4 @@
-<img src=".github/trails_logo_gradient.svg" height="300" alt="Trails logo"/>
+<img src=".github/trails_logo.svg" height="500" alt="Trails logo"/>
 
 # Trails
 
