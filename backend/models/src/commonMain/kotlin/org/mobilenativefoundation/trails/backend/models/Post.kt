@@ -33,6 +33,15 @@ data class Post(
 )
 
 @Serializable
+data class PopulatedPost(
+    val post: Post,
+    val creator: Creator,
+    val hashtags: List<Hashtag>,
+    val mentions: List<Mention>,
+    val media: List<Media>
+)
+
+@Serializable
 data class Media(
     val id: Int,
     val postId: Int,

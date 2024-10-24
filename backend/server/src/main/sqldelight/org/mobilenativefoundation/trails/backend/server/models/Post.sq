@@ -172,3 +172,79 @@ SELECT * FROM post LIMIT ?;
 
 selectPostById:
 SELECT * FROM post WHERE id = ? LIMIT 1;
+
+searchPosts:
+    SELECT p.*
+    FROM post AS p
+    LEFT JOIN creator AS c ON p.creator_id = c.id
+    LEFT JOIN post_hashtag AS ph ON p.id = ph.post_id
+    LEFT JOIN hashtag AS h ON ph.hashtag_id = h.id
+    WHERE
+        (:captionSearchTerm IS NULL OR p.caption LIKE '%' || :captionSearchTerm || '%')
+        AND (:usernameSearchTerm IS NULL OR c.username LIKE '%' || :usernameSearchTerm || '%')
+        AND (:hashtagName IS NULL OR h.name = :hashtagName)
+    ORDER BY p.created_at DESC
+    LIMIT :limit OFFSET :offset;
+
+updatePost:
+UPDATE post SET
+    cover_url = :cover_url,
+    creator_id = :creator_id,
+    caption = :caption,
+    platform = :platform,
+    created_at = :created_at,
+    likes_count = :likes_count,
+    comments_count = :comments_count,
+    shares_count = :shares_count,
+    views_count = :views_count,
+    is_sponsored = :is_sponsored,
+    location_name = :location_name
+WHERE id = :id;
+
+
+getPopulatedPostById:
+SELECT
+    p.id AS post_id,
+    p.cover_url AS post_cover_url,
+    p.creator_id AS post_creator_id,
+    p.caption AS post_caption,
+    p.platform AS post_platform,
+    p.created_at AS post_created_at,
+    p.likes_count AS post_likes_count,
+    p.comments_count AS post_comments_count,
+    p.shares_count AS post_shares_count,
+    p.views_count AS post_views_count,
+    p.is_sponsored AS post_is_sponsored,
+    p.location_name AS post_location_name,
+
+    c.id AS creator_id,
+    c.username AS creator_username,
+    c.full_name AS creator_full_name,
+    c.profile_pic_url AS creator_profile_pic_url,
+    c.is_verified AS creator_is_verified,
+    c.bio AS creator_bio,
+    c.platform AS creator_platform,
+
+    m.id AS media_id,
+    m.media_url AS media_media_url,
+    m.media_type AS media_media_type,
+    m.height AS media_height,
+    m.width AS media_width,
+    m.duration AS media_duration,
+    m.alt_text AS media_alt_text,
+    m.media_format AS media_media_format,
+
+    h.id AS hashtag_id,
+    h.name AS hashtag_name,
+
+    ment.id AS mention_id,
+    ment.mentioned_username AS mention_mentioned_username,
+    ment.platform AS mention_platform
+FROM post AS p
+LEFT JOIN creator AS c ON p.creator_id = c.id
+LEFT JOIN media AS m ON m.post_id = p.id
+LEFT JOIN post_hashtag AS ph ON ph.post_id = p.id
+LEFT JOIN hashtag AS h ON h.id = ph.hashtag_id
+LEFT JOIN mention AS ment ON ment.post_id = p.id
+WHERE p.id = ?;
+
