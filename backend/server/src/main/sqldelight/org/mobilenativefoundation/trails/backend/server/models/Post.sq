@@ -168,7 +168,7 @@ SELECT * FROM new_or_existing;
 
 
 selectPosts:
-SELECT * FROM post ORDER BY created_at DESC LIMIT ?;
+SELECT * FROM post ORDER BY likes_count DESC LIMIT ?;
 
 selectPostById:
 SELECT * FROM post WHERE id = ? LIMIT 1;
