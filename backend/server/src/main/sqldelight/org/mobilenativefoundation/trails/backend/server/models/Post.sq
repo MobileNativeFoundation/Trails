@@ -168,7 +168,7 @@ SELECT * FROM new_or_existing;
 
 
 selectPosts:
-SELECT * FROM post WHERE caption LIKE '%skiing%' ORDER BY likes_count DESC;
+SELECT * FROM post WHERE caption LIKE '%skiing%' ORDER BY likes_count DESC LIMIT ?;
 
 selectPostById:
 SELECT * FROM post WHERE id = ? LIMIT 1;
