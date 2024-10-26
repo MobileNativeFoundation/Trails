@@ -5,7 +5,6 @@ import org.mobilenativefoundation.store.store5.Converter
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.StoreBuilder
-import org.mobilenativefoundation.trails.xplat.lib.db.GetPopulatedPostById
 import org.mobilenativefoundation.trails.xplat.lib.db.PostHashtagEntity
 import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.db.extensions.PostExtensions.toCreatorEntity
@@ -15,6 +14,9 @@ import org.mobilenativefoundation.trails.xplat.lib.db.extensions.PostExtensions.
 import org.mobilenativefoundation.trails.xplat.lib.db.extensions.PostExtensions.toPostEntity
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.GetPopulatedPostByIdExtensions.asCreator
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.GetPopulatedPostByIdExtensions.asPost
+import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.GetPopulatedPostByIdExtensions.extractHashtags
+import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.GetPopulatedPostByIdExtensions.extractMedia
+import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.GetPopulatedPostByIdExtensions.extractMentions
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostConverters.asPopulatedPost
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostQueriesExtensions.insertCreatorOrIgnore
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostQueriesExtensions.insertHashtagOrIgnore
@@ -87,62 +89,6 @@ class PostsStoreFactory(
         return PopulatedPost(post, creator, hashtags, mentions, media)
     }
 
-    private fun List<GetPopulatedPostById>.extractHashtags(): List<Hashtag> {
-        return this.mapNotNull { row ->
-            val id = row.hashtag_id
-            val name = row.hashtag_name
-            if (id != null && name != null) {
-                Hashtag(id = id.toInt(), name = name)
-            } else {
-                null
-            }
-        }
-    }
-
-    private fun List<GetPopulatedPostById>.extractMentions(postId: Long): List<Mention> {
-        return this.mapNotNull { row ->
-            val id = row.mention_id
-            val platform = row.mention_platform
-            val mentionedUsername = row.mention_mentioned_username
-            if (id != null && platform != null && mentionedUsername != null) {
-                Mention(
-                    id = id.toInt(),
-                    postId = postId.toInt(),
-                    mentionedUsername = mentionedUsername,
-                    platform = platform
-                )
-            } else {
-                null
-            }
-        }
-    }
-
-    private fun List<GetPopulatedPostById>.extractMedia(): List<Media> {
-        return this.mapNotNull { row ->
-            val id = row.media_id
-            val mediaURL = row.media_media_url
-            val mediaType = row.media_media_type
-            val height = row.media_height
-            val width = row.media_width
-            val duration = row.media_duration
-            val altText = row.media_alt_text
-            val mediaFormat = row.media_media_format
-            if (id != null && mediaURL != null && mediaType != null) {
-                Media(
-                    mediaURL = mediaURL,
-                    mediaType = mediaType,
-                    mediaFormat = mediaFormat,
-                    duration = duration?.toInt(),
-                    altText = altText,
-                    height = height?.toInt(),
-                    width = width?.toInt(),
-                    id = id.toInt()
-                )
-            } else {
-                null
-            }
-        }
-    }
 
     private suspend fun savePopulatedPost(populatedPost: PopulatedPost) {
         val postEntity = populatedPost.toPostEntity()

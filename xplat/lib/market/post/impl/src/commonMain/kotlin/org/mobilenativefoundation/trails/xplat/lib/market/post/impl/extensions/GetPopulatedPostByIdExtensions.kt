@@ -2,8 +2,7 @@ package org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions
 
 import kotlinx.datetime.LocalDateTime
 import org.mobilenativefoundation.trails.xplat.lib.db.GetPopulatedPostById
-import org.mobilenativefoundation.trails.xplat.lib.models.post.Creator
-import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.models.post.*
 
 object GetPopulatedPostByIdExtensions {
 
@@ -35,4 +34,62 @@ object GetPopulatedPostByIdExtensions {
             platform = this.creator_platform ?: error("Missing creator platform")
         )
     }
+
+     fun List<GetPopulatedPostById>.extractHashtags(): List<Hashtag> {
+        return this.mapNotNull { row ->
+            val id = row.hashtag_id
+            val name = row.hashtag_name
+            if (id != null && name != null) {
+                Hashtag(id = id.toInt(), name = name)
+            } else {
+                null
+            }
+        }
+    }
+
+     fun List<GetPopulatedPostById>.extractMentions(postId: Long): List<Mention> {
+        return this.mapNotNull { row ->
+            val id = row.mention_id
+            val platform = row.mention_platform
+            val mentionedUsername = row.mention_mentioned_username
+            if (id != null && platform != null && mentionedUsername != null) {
+                Mention(
+                    id = id.toInt(),
+                    postId = postId.toInt(),
+                    mentionedUsername = mentionedUsername,
+                    platform = platform
+                )
+            } else {
+                null
+            }
+        }
+    }
+
+     fun List<GetPopulatedPostById>.extractMedia(): List<Media> {
+        return this.mapNotNull { row ->
+            val id = row.media_id
+            val mediaURL = row.media_media_url
+            val mediaType = row.media_media_type
+            val height = row.media_height
+            val width = row.media_width
+            val duration = row.media_duration
+            val altText = row.media_alt_text
+            val mediaFormat = row.media_media_format
+            if (id != null && mediaURL != null && mediaType != null) {
+                Media(
+                    mediaURL = mediaURL,
+                    mediaType = mediaType,
+                    mediaFormat = mediaFormat,
+                    duration = duration?.toInt(),
+                    altText = altText,
+                    height = height?.toInt(),
+                    width = width?.toInt(),
+                    id = id.toInt()
+                )
+            } else {
+                null
+            }
+        }
+    }
+
 }
