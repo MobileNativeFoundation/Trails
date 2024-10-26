@@ -1,0 +1,157 @@
+import org.mobilenativefoundation.trails.xplat.lib.models.post.MediaFormat;
+import org.mobilenativefoundation.trails.xplat.lib.models.post.MediaType;
+import org.mobilenativefoundation.trails.xplat.lib.models.post.Platform;
+
+CREATE TABLE postEntity (
+    id INTEGER PRIMARY KEY NOT NULL,
+    creator_id INTEGER NOT NULL,
+    caption TEXT,
+    created_at TEXT NOT NULL,
+    likes_count INTEGER NOT NULL,
+    comments_count INTEGER NOT NULL,
+    shares_count INTEGER NOT NULL,
+    views_count INTEGER NOT NULL,
+    is_sponsored INTEGER NOT NULL,
+    cover_url TEXT NOT NULL,
+    platform TEXT AS Platform NOT NULL,
+    location_name TEXT,
+    FOREIGN KEY (creator_id) REFERENCES creatorEntity(id)
+);
+
+CREATE TABLE creatorEntity (
+    id INTEGER PRIMARY KEY NOT NULL,
+    username TEXT NOT NULL,
+    full_name TEXT,
+    profile_pic_url TEXT,
+    is_verified INTEGER NOT NULL,
+    bio TEXT,
+    platform TEXT AS Platform NOT NULL
+);
+
+CREATE TABLE mediaEntity(
+    id INTEGER PRIMARY KEY,
+    post_id INTEGER NOT NULL,
+    media_url TEXT NOT NULL,
+    media_type TEXT AS MediaType NOT NULL,
+    height INTEGER,
+    width INTEGER,
+    duration INTEGER,
+    alt_text TEXT,
+    media_format TEXT AS MediaFormat,
+    FOREIGN KEY (post_id) REFERENCES postEntity(id)
+);
+
+
+
+CREATE TABLE  hashtagEntity(
+    id INTEGER PRIMARY KEY,
+    name TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE  postHashtagEntity(
+  post_id INTEGER NOT NULL,
+  hashtag_id INTEGER NOT NULL,
+  PRIMARY KEY (post_id, hashtag_id),
+  FOREIGN KEY (post_id) REFERENCES postEntity(id),
+  FOREIGN KEY (hashtag_id) REFERENCES hashtagEntity(id)
+);
+
+CREATE TABLE mentionEntity(
+    id INTEGER PRIMARY KEY,
+    post_id INTEGER NOT NULL,
+    mentioned_username TEXT NOT NULL,
+    platform TEXT AS Platform NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES postEntity(id)
+);
+
+
+
+-- Queries
+
+insertPost:
+INSERT INTO postEntity VALUES ?;
+insertCreator:
+INSERT INTO creatorEntity VALUES ?;
+insertMedia:
+INSERT INTO mediaEntity VALUES ?;
+insertHashtag:
+INSERT INTO hashtagEntity VALUES ?;
+insertPostHashtag:
+INSERT INTO postHashtagEntity VALUES ?;
+insertMention:
+INSERT INTO mentionEntity VALUES ?;
+
+getPopulatedPostById:
+SELECT
+    p.id AS post_id,
+    p.cover_url AS post_cover_url,
+    p.creator_id AS post_creator_id,
+    p.caption AS post_caption,
+    p.platform AS post_platform,
+    p.created_at AS post_created_at,
+    p.likes_count AS post_likes_count,
+    p.comments_count AS post_comments_count,
+    p.shares_count AS post_shares_count,
+    p.views_count AS post_views_count,
+    p.is_sponsored AS post_is_sponsored,
+    p.location_name AS post_location_name,
+
+    c.id AS creator_id,
+    c.username AS creator_username,
+    c.full_name AS creator_full_name,
+    c.profile_pic_url AS creator_profile_pic_url,
+    c.is_verified AS creator_is_verified,
+    c.bio AS creator_bio,
+    c.platform AS creator_platform,
+
+    m.id AS media_id,
+    m.media_url AS media_media_url,
+    m.media_type AS media_media_type,
+    m.height AS media_height,
+    m.width AS media_width,
+    m.duration AS media_duration,
+    m.alt_text AS media_alt_text,
+    m.media_format AS media_media_format,
+
+    h.id AS hashtag_id,
+    h.name AS hashtag_name,
+
+    ment.id AS mention_id,
+    ment.mentioned_username AS mention_mentioned_username,
+    ment.platform AS mention_platform
+FROM postEntity AS p
+LEFT JOIN creatorEntity AS c ON p.creator_id = c.id
+LEFT JOIN mediaEntity AS m ON m.post_id = p.id
+LEFT JOIN postHashtagEntity AS ph ON ph.post_id = p.id
+LEFT JOIN hashtagEntity AS h ON h.id = ph.hashtag_id
+LEFT JOIN mentionEntity AS ment ON ment.post_id = p.id
+WHERE p.id = ?;
+
+selectPosts:
+SELECT * FROM postEntity WHERE caption LIKE ? ORDER BY likes_count DESC LIMIT ?;
+
+updatePost:
+UPDATE postEntity SET
+    likes_count = :likes_count,
+    comments_count = :comments_count,
+    shares_count = :shares_count,
+    views_count = :views_count
+WHERE id = :id;
+
+findPostById:
+SELECT id FROM postEntity WHERE id = ? LIMIT 1;
+
+findCreatorById:
+SELECT * FROM creatorEntity WHERE id = ? LIMIT 1;
+
+findHashtagById:
+SELECT id FROM hashtagEntity WHERE id = ? LIMIT 1;
+
+findPostHashtag:
+SELECT post_id, hashtag_id FROM postHashtagEntity WHERE post_id = ? AND hashtag_id = ? LIMIT 1;
+
+findMediaById:
+SELECT id FROM mediaEntity WHERE id = ? LIMIT 1;
+
+findMentionById:
+SELECT id FROM mentionEntity WHERE id = ? LIMIT 1;

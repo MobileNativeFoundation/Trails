@@ -5,7 +5,7 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import me.tatarka.inject.annotations.Inject
-import org.mobilenativefoundation.trails.backend.models.Post
+import org.mobilenativefoundation.trails.backend.models.PopulatedPost
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.PostOperations
 import org.mobilenativefoundation.trails.xplat.lib.rest.impl.TrailsEndpoints
 import org.mobilenativefoundation.trails.xplat.lib.rest.impl.httpClient
@@ -14,10 +14,9 @@ import org.mobilenativefoundation.trails.xplat.lib.rest.impl.httpClient
 class RealPostOperations(
     private val httpClient: HttpClient = httpClient()
 ) : PostOperations {
-    override suspend fun getPosts(): List<Post> {
+    override suspend fun getPosts(): List<PopulatedPost> {
         val url = TrailsEndpoints.GET_POSTS
         val response = httpClient.get(url)
-        println(response.bodyAsText())
         return response.body()
     }
 }

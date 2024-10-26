@@ -46,7 +46,7 @@ class HomeScreenUI : HomeScreen.UI {
             }
 
             LazyColumn {
-                itemsIndexed(state.posts) { index, post ->
+                itemsIndexed(state.posts) { index, populatedPost ->
                     if (index != 0) {
                         Spacer(
                             modifier = Modifier.fillMaxWidth().height(16.dp).background(Carve.ColorScheme.background)
@@ -54,12 +54,15 @@ class HomeScreenUI : HomeScreen.UI {
                     }
 
                     VideoCard(
-                        url = post,
-                        creatorHandle = "netflix",
-                        creatorAvatarURL = "https://pngimg.com/d/netflix_PNG22.png",
+                        url = populatedPost.post.coverURL,
+                        creatorHandle = populatedPost.creator.username,
+                        creatorAvatarURL = populatedPost.creator.profilePicURL,
                         creatorIsVerified = true,
-                        creatorDisplayName = "netflix",
-                        audioSource = "Original audio"
+                        creatorDisplayName = populatedPost.creator.fullName,
+                        audioSource = "Original audio",
+                        caption = populatedPost.post.caption,
+                        likeCount = populatedPost.post.likesCount,
+                        commentCount = populatedPost.post.commentsCount
                     )
                 }
             }

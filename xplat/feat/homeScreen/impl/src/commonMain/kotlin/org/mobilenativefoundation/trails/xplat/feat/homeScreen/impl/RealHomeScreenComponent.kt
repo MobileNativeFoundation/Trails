@@ -4,11 +4,11 @@ import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreen
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreenComponent
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.TrailsClientComponent
+import org.mobilenativefoundation.trails.xplat.lib.market.post.api.PostComponent
 
 @Component
 abstract class RealHomeScreenComponent(
-    @Component val trailsClientComponent: TrailsClientComponent
+    @Component val postComponent: PostComponent
 ) : HomeScreenComponent {
     @Provides
     fun bindHomeScreenUI(impl: HomeScreenUI): HomeScreen.UI = impl

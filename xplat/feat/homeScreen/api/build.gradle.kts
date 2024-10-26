@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api(projects.xplat.lib.models)
                 api(libs.circuit.foundation)
             }
         }

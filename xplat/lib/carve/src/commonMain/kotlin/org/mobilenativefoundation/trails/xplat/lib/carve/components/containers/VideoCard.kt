@@ -28,11 +28,14 @@ import org.mobilenativefoundation.trails.xplat.lib.carve.material3.Carve
 @Composable
 fun VideoCard(
     url: String,
-    creatorAvatarURL: String,
+    creatorAvatarURL: String?,
     creatorHandle: String,
-    creatorDisplayName: String,
+    creatorDisplayName: String?,
     creatorIsVerified: Boolean,
     audioSource: String,
+    caption: String?,
+    likeCount: Long,
+    commentCount: Long,
     modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     Column(modifier = modifier) {
@@ -82,7 +85,7 @@ fun VideoCard(
         ) {
 
             Text(
-                "63,777 likes",
+                "$likeCount likes",
                 color = Color.Black,
                 style = Carve.Typography.bodyLarge,
                 fontWeight = FontWeight.Bold
@@ -96,8 +99,6 @@ fun VideoCard(
             modifier = Modifier.fillMaxWidth().background(Color.White).padding(top = 8.dp, start = 16.dp, end = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-
-            val description = "to understand life we must go back to the beginning | LIFE ON OUR PLANET" // TODO
 
             Text(
                 buildAnnotatedString {
@@ -118,7 +119,7 @@ fun VideoCard(
                             fontSize = Carve.Typography.bodyLarge.fontSize
                         )
                     ) {
-                        append(description)
+                        append(caption)
                     }
                 })
 
@@ -133,7 +134,7 @@ fun VideoCard(
 
 
             Text(
-                "View all 3,051 comments",
+                "View all $commentCount comments",
                 color = Color.LightGray,
                 style = Carve.Typography.bodyLarge,
                 fontWeight = FontWeight.Normal
@@ -162,9 +163,9 @@ fun VideoCard(
 
 @Composable
 private fun VideoMetadataUI(
-    creatorAvatarURL: String,
+    creatorAvatarURL: String?,
     creatorHandle: String,
-    creatorDisplayName: String,
+    creatorDisplayName: String?,
     creatorIsVerified: Boolean,
     audioSource: String
 ) {
@@ -182,7 +183,7 @@ private fun VideoMetadataUI(
 
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             // Avatar
-            Avatar(creatorAvatarURL)
+            creatorAvatarURL?.let { Avatar(it) }
 
 
             Column {
@@ -192,7 +193,8 @@ private fun VideoMetadataUI(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     // Display name
-                    Text(creatorDisplayName, color = contentColor)
+                    creatorDisplayName?.let { Text(it, color = contentColor) }
+
 
                     // Is Verified
                     Icon(
