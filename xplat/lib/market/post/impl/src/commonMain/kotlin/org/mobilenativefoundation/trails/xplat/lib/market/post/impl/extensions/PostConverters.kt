@@ -1,5 +1,7 @@
-package org.mobilenativefoundation.trails.xplat.lib.market.post.impl.converters
+package org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions
 
+import kotlinx.datetime.LocalDateTime
+import org.mobilenativefoundation.trails.xplat.lib.db.GetPopulatedPostById
 import org.mobilenativefoundation.trails.xplat.lib.models.post.*
 import org.mobilenativefoundation.trails.backend.models.Creator as CreatorNetworkModel
 import org.mobilenativefoundation.trails.backend.models.Platform as PlatformNetworkModel
@@ -52,5 +54,6 @@ object PostConverters {
             platform = platform.asPlatform()
         )
     }
+
 
 }
