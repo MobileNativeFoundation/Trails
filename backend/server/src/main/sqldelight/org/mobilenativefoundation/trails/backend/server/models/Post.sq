@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS post (
     caption TEXT,
     platform TEXT AS Platform NOT NULL,
     created_at TIMESTAMP NOT NULL,
-    likes_count INT NOT NULL,
-    comments_count INT NOT NULL,
-    shares_count INT NOT NULL,
-    views_count INT NOT NULL,
+    likes_count BIGINT NOT NULL,
+    comments_count BIGINT NOT NULL,
+    shares_count BIGINT NOT NULL,
+    views_count BIGINT NOT NULL,
     is_sponsored BOOLEAN NOT NULL,
     location_name VARCHAR(255),
     cover_url TEXT NOT NULL,
@@ -168,7 +168,7 @@ SELECT * FROM new_or_existing;
 
 
 selectPosts:
-SELECT * FROM post LIMIT ?;
+SELECT * FROM post ORDER BY created_at DESC LIMIT ?;
 
 selectPostById:
 SELECT * FROM post WHERE id = ? LIMIT 1;
