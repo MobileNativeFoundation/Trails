@@ -178,5 +178,11 @@ SELECT id FROM mediaEntity WHERE id = ? LIMIT 1;
 findMentionById:
 SELECT id FROM mentionEntity WHERE id = ? LIMIT 1;
 
+findQueryById:
+SELECT id FROM queryEntity WHERE id = ? LIMIT 1;
+
+findQueryPostById:
+SELECT post_id, query_id FROM queryPostEntity WHERE post_id = ? AND query_id = ? LIMIT 1;
+
 selectPostById:
 SELECT * FROM postEntity WHERE id = ? LIMIT 1;

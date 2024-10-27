@@ -30,6 +30,25 @@ object PostQueriesExtensions {
         }
     }
 
+    suspend fun PostQueries.insertQueryOrIgnore(entity: QueryEntity) {
+        val query = findQueryById(entity.id).executeAsOneOrNull()
+
+        if (query == null) {
+            insertQuery(entity)
+        }
+    }
+
+    suspend fun PostQueries.insertQueryPostOrIgnore(entity: QueryPostEntity) {
+        val queryPost = findQueryPostById(
+            post_id = entity.post_id,
+            query_id = entity.query_id
+        ).executeAsOneOrNull()
+
+        if (queryPost == null) {
+            insertQueryPost(entity)
+        }
+    }
+
     suspend fun PostQueries.insertCreatorOrIgnore(entity: CreatorEntity) {
         val creator = findCreatorById(entity.id).executeAsOneOrNull()
 

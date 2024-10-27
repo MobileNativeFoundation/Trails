@@ -85,11 +85,8 @@ internal object CarveColorSchemes {
 
     @Composable
     fun systemColorScheme(): ColorScheme {
-        return if (isSystemInDarkTheme()) {
-            Dark
-        } else {
-            Light
-        }
+        // TODO(): Support Dark Color Scheme
+        return Light
     }
 }
 

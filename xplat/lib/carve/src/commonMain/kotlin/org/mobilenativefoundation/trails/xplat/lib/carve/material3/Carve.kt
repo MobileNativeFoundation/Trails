@@ -2,6 +2,7 @@ package org.mobilenativefoundation.trails.xplat.lib.carve.material3
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
@@ -23,11 +24,9 @@ object Carve {
 
 @Composable
 fun Carve(
-    colorScheme: ColorScheme = systemColorScheme(),
     typography: Typography = CarveTypography.value,
     content: @Composable () -> Unit
 ) {
-
     CompositionLocalProvider(
         LocalColorScheme provides colorScheme,
         LocalTypography provides typography

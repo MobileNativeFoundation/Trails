@@ -11,6 +11,8 @@ import org.mobilenativefoundation.trails.xplat.lib.db.QueryEntity
 import org.mobilenativefoundation.trails.xplat.lib.db.QueryPostEntity
 import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.CompositePostExtensions.asCompositePost
+import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostQueriesExtensions.insertQueryOrIgnore
+import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostQueriesExtensions.insertQueryPostOrIgnore
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostQueriesExtensions.saveCompositePost
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.PostOperations
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.PostsQuery
@@ -62,9 +64,11 @@ class PostsStoreFactory(
                     posts_limit = query.limit.toLong()
                 )
 
+                trailsDatabase.postQueries.insertQueryOrIgnore(queryEntity)
+
                 // Link each post ID to the query
                 postIds.forEach { postId ->
-                    trailsDatabase.postQueries.insertQueryPost(
+                    trailsDatabase.postQueries.insertQueryPostOrIgnore(
                         QueryPostEntity(
                             query_id = queryId,
                             post_id = postId.toLong()
