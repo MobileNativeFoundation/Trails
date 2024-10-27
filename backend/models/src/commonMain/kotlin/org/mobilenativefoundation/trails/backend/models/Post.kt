@@ -16,6 +16,13 @@ data class Creator(
     val platform: Platform
 )
 
+
+@Serializable
+data class CompositeCreator(
+    val creator: Creator,
+    val posts: List<Post>
+)
+
 @Serializable
 data class Post(
     val id: Int,
@@ -33,7 +40,7 @@ data class Post(
 )
 
 @Serializable
-data class PopulatedPost(
+data class CompositePost(
     val post: Post,
     val creator: Creator,
     val hashtags: List<Hashtag>,
@@ -55,6 +62,11 @@ data class Media(
 )
 
 @Serializable
+data class CompositeMedia(
+    val media: Media
+)
+
+@Serializable
 data class Comment(
     val id: Int,
     val postId: Int,
@@ -63,6 +75,14 @@ data class Comment(
     val createdAt: Instant,
     val likesCount: Int,
     val parentCommentId: Int?
+)
+
+@Serializable
+data class CompositeComment(
+    val comment: Comment,
+    val post: Post,
+    val creator: Creator,
+    val parentComment: Comment
 )
 
 @Serializable
@@ -83,4 +103,11 @@ data class Mention(
     val postId: Int,
     val mentionedUsername: String,
     val platform: Platform
+)
+
+@Serializable
+data class CompositeMention(
+    val mention: Mention,
+    val post: Post,
+    val creator: Creator
 )

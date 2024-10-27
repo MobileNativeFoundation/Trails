@@ -202,7 +202,7 @@ UPDATE post SET
 WHERE id = :id;
 
 
-getPopulatedPostById:
+getCompositePostById:
 SELECT
     p.id AS post_id,
     p.cover_url AS post_cover_url,
