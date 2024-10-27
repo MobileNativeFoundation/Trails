@@ -25,13 +25,13 @@ object GetCompositePostByIdExtensions {
 
     fun GetCompositePostById.asCreator(): Creator {
         return Creator(
-            id = this.creator_id?.toInt() ?: error("Missing creator ID"),
-            username = this.creator_username ?: error("Missing creator username"),
+            id = this.creator_id?.toInt() ?: error("Missing creator ID."),
+            username = this.creator_username ?: error("Missing creator username."),
             fullName = this.creator_full_name,
             profilePicURL = this.creator_profile_pic_url,
             isVerified = this.creator_is_verified == 1L,
             bio = this.creator_bio,
-            platform = this.creator_platform ?: error("Missing creator platform")
+            platform = this.creator_platform ?: error("Missing creator platform.")
         )
     }
 

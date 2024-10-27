@@ -5,6 +5,8 @@ import me.tatarka.inject.annotations.Provides
 import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.market.post.api.PostComponent
 import org.mobilenativefoundation.trails.xplat.lib.market.post.api.PostRepository
+import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.store.post.PostStore
+import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.store.post.PostStoreFactory
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.store.posts.PostsStore
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.store.posts.PostsStoreFactory
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.TrailsClientComponent
@@ -18,6 +20,14 @@ abstract class RealPostComponent(
     @Provides
     fun providePostsStore(): PostsStore {
         return PostsStoreFactory(
+            client = trailsClientComponent.trailsClient,
+            trailsDatabase = database
+        ).create()
+    }
+
+    @Provides
+    fun providePostStore(): PostStore {
+        return PostStoreFactory(
             client = trailsClientComponent.trailsClient,
             trailsDatabase = database
         ).create()

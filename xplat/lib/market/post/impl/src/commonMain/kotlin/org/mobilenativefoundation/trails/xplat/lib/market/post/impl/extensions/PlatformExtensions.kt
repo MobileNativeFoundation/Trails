@@ -11,5 +11,12 @@ object PlatformExtensions {
             PlatformNetworkModel.Instagram -> Platform.Instagram
         }
     }
+
+    fun Platform.asNetworkModel(): PlatformNetworkModel {
+        return when (this) {
+            Platform.TikTok -> PlatformNetworkModel.TikTok
+            Platform.Instagram -> PlatformNetworkModel.Instagram
+        }
+    }
 }
 

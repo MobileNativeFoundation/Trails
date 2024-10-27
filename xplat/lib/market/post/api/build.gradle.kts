@@ -9,6 +9,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.xplat.lib.models)
+                api(projects.xplat.lib.rest.api)
                 implementation(libs.kotlinx.datetime)
             }
         }

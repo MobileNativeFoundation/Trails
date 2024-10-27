@@ -3,7 +3,7 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.MediaType;
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Platform;
 
 CREATE TABLE postEntity (
-    id INTEGER PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY,
     creator_id INTEGER NOT NULL,
     caption TEXT,
     created_at TEXT NOT NULL,
@@ -16,6 +16,22 @@ CREATE TABLE postEntity (
     platform TEXT AS Platform NOT NULL,
     location_name TEXT,
     FOREIGN KEY (creator_id) REFERENCES creatorEntity(id)
+);
+
+
+CREATE TABLE queryEntity(
+    id TEXT PRIMARY KEY NOT NULL,
+    search TEXT,
+    posts_limit INTEGER NOT NULL,
+    posts_offset INTEGER NOT NULL
+);
+
+CREATE TABLE queryPostEntity(
+    query_id TEXT NOT NULL,
+    post_id INTEGER NOT NULL,
+    FOREIGN KEY (query_id) REFERENCES queryEntity(id),
+    FOREIGN KEY (post_id) REFERENCES postEntity(id),
+    PRIMARY KEY (query_id, post_id)
 );
 
 CREATE TABLE creatorEntity (
@@ -81,6 +97,12 @@ INSERT INTO postHashtagEntity VALUES ?;
 insertMention:
 INSERT INTO mentionEntity VALUES ?;
 
+insertQuery:
+INSERT INTO queryEntity VALUES ?;
+
+insertQueryPost:
+INSERT INTO queryPostEntity VALUES ?;
+
 getCompositePostById:
 SELECT
     p.id AS post_id,
@@ -128,7 +150,7 @@ LEFT JOIN mentionEntity AS ment ON ment.post_id = p.id
 WHERE p.id = ?;
 
 selectPosts:
-SELECT * FROM postEntity WHERE caption LIKE ? ORDER BY likes_count DESC LIMIT ?;
+SELECT * FROM postEntity WHERE caption LIKE :search ORDER BY likes_count DESC LIMIT :limit OFFSET :offset;
 
 updatePost:
 UPDATE postEntity SET
@@ -155,3 +177,6 @@ SELECT id FROM mediaEntity WHERE id = ? LIMIT 1;
 
 findMentionById:
 SELECT id FROM mentionEntity WHERE id = ? LIMIT 1;
+
+selectPostById:
+SELECT * FROM postEntity WHERE id = ? LIMIT 1;

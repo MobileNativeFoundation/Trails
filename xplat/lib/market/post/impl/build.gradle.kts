@@ -10,7 +10,6 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.xplat.lib.market.post.api)
-                implementation(projects.xplat.lib.rest.api)
                 implementation(projects.xplat.lib.db)
                 implementation(libs.kotlin.inject.runtime)
                 implementation(libs.ktor.core)
