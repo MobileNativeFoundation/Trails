@@ -46,7 +46,7 @@ class HomeScreenUI : HomeScreen.UI {
             }
 
             LazyColumn {
-                itemsIndexed(state.posts) { index, populatedPost ->
+                itemsIndexed(state.posts) { index, composite ->
                     if (index != 0) {
                         Spacer(
                             modifier = Modifier.fillMaxWidth().height(16.dp).background(Carve.ColorScheme.background)
@@ -54,15 +54,15 @@ class HomeScreenUI : HomeScreen.UI {
                     }
 
                     VideoCard(
-                        url = populatedPost.post.coverURL,
-                        creatorHandle = populatedPost.creator.username,
-                        creatorAvatarURL = populatedPost.creator.profilePicURL,
+                        url = composite.post.coverURL,
+                        creatorHandle = composite.creator.username,
+                        creatorAvatarURL = composite.creator.profilePicURL,
                         creatorIsVerified = true,
-                        creatorDisplayName = populatedPost.creator.fullName,
+                        creatorDisplayName = composite.creator.fullName,
                         audioSource = "Original audio",
-                        caption = populatedPost.post.caption,
-                        likeCount = populatedPost.post.likesCount,
-                        commentCount = populatedPost.post.commentsCount
+                        caption = composite.post.caption,
+                        likeCount = composite.post.likesCount,
+                        commentCount = composite.post.commentsCount
                     )
                 }
             }

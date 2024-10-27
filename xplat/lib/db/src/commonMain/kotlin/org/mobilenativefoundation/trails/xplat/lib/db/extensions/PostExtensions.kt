@@ -1,11 +1,11 @@
 package org.mobilenativefoundation.trails.xplat.lib.db.extensions
 
 import org.mobilenativefoundation.trails.xplat.lib.db.*
-import org.mobilenativefoundation.trails.xplat.lib.models.post.PopulatedPost
+import org.mobilenativefoundation.trails.xplat.lib.models.post.CompositePost
 
 object PostExtensions {
 
-    fun PopulatedPost.toPostEntity(): PostEntity {
+    fun CompositePost.toPostEntity(): PostEntity {
 
         return PostEntity(
             id = this.post.id.toLong(),
@@ -23,7 +23,7 @@ object PostExtensions {
         )
     }
 
-    fun PopulatedPost.toCreatorEntity(): CreatorEntity {
+    fun CompositePost.toCreatorEntity(): CreatorEntity {
         return CreatorEntity(
             id = this.creator.id.toLong(),
             username = creator.username,
@@ -35,13 +35,13 @@ object PostExtensions {
         )
     }
 
-    fun PopulatedPost.toHashtagEntities(): List<HashtagEntity> {
+    fun CompositePost.toHashtagEntities(): List<HashtagEntity> {
         return this.hashtags.map {
             HashtagEntity(id = it.id.toLong(), name = it.name)
         }
     }
 
-    fun PopulatedPost.toMentionEntities(): List<MentionEntity> {
+    fun CompositePost.toMentionEntities(): List<MentionEntity> {
         return this.mentions.map {
             MentionEntity(
                 id = it.id.toLong(),
@@ -52,7 +52,7 @@ object PostExtensions {
         }
     }
 
-    fun PopulatedPost.toMediaEntities(): List<MediaEntity> {
+    fun CompositePost.toMediaEntities(): List<MediaEntity> {
         return this.media.map {
             MediaEntity(
                 id = it.id.toLong(),

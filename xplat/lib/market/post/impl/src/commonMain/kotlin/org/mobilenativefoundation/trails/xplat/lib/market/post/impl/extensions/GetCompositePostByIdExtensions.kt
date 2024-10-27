@@ -1,12 +1,12 @@
 package org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions
 
 import kotlinx.datetime.LocalDateTime
-import org.mobilenativefoundation.trails.xplat.lib.db.GetPopulatedPostById
+import org.mobilenativefoundation.trails.xplat.lib.db.GetCompositePostById
 import org.mobilenativefoundation.trails.xplat.lib.models.post.*
 
-object GetPopulatedPostByIdExtensions {
+object GetCompositePostByIdExtensions {
 
-    fun GetPopulatedPostById.asPost(): Post {
+    fun GetCompositePostById.asPost(): Post {
         return Post(
             id = this.post_id.toInt(),
             creatorId = this.post_creator_id.toInt(),
@@ -23,7 +23,7 @@ object GetPopulatedPostByIdExtensions {
         )
     }
 
-    fun GetPopulatedPostById.asCreator(): Creator {
+    fun GetCompositePostById.asCreator(): Creator {
         return Creator(
             id = this.creator_id?.toInt() ?: error("Missing creator ID"),
             username = this.creator_username ?: error("Missing creator username"),
@@ -35,7 +35,7 @@ object GetPopulatedPostByIdExtensions {
         )
     }
 
-     fun List<GetPopulatedPostById>.extractHashtags(): List<Hashtag> {
+    fun List<GetCompositePostById>.extractHashtags(): List<Hashtag> {
         return this.mapNotNull { row ->
             val id = row.hashtag_id
             val name = row.hashtag_name
@@ -47,7 +47,7 @@ object GetPopulatedPostByIdExtensions {
         }
     }
 
-     fun List<GetPopulatedPostById>.extractMentions(postId: Long): List<Mention> {
+    fun List<GetCompositePostById>.extractMentions(postId: Long): List<Mention> {
         return this.mapNotNull { row ->
             val id = row.mention_id
             val platform = row.mention_platform
@@ -65,7 +65,7 @@ object GetPopulatedPostByIdExtensions {
         }
     }
 
-     fun List<GetPopulatedPostById>.extractMedia(): List<Media> {
+    fun List<GetCompositePostById>.extractMedia(): List<Media> {
         return this.mapNotNull { row ->
             val id = row.media_id
             val mediaURL = row.media_media_url

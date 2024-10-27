@@ -23,7 +23,7 @@ data class Post(
 )
 
 
-data class PopulatedPost(
+data class CompositePost(
     val post: Post,
     val creator: Creator,
     val hashtags: List<Hashtag>,

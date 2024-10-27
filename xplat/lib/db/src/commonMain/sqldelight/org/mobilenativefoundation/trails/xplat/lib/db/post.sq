@@ -81,7 +81,7 @@ INSERT INTO postHashtagEntity VALUES ?;
 insertMention:
 INSERT INTO mentionEntity VALUES ?;
 
-getPopulatedPostById:
+getCompositePostById:
 SELECT
     p.id AS post_id,
     p.cover_url AS post_cover_url,

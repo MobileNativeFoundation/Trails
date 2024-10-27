@@ -3,13 +3,13 @@ package org.mobilenativefoundation.trails.xplat.feat.homeScreen.api
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
-import org.mobilenativefoundation.trails.xplat.lib.models.post.PopulatedPost
+import org.mobilenativefoundation.trails.xplat.lib.models.post.CompositePost
 import com.slack.circuit.runtime.presenter.Presenter as CircuitPresenter
 import com.slack.circuit.runtime.ui.Ui as CircuitUI
 
 interface HomeScreen : Screen {
     data class State(
-        val posts: List<PopulatedPost>
+        val posts: List<CompositePost>
     ) : CircuitUiState
 
     sealed interface Event : CircuitUiEvent {
