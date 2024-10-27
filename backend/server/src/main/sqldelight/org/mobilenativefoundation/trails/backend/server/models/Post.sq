@@ -202,6 +202,33 @@ UPDATE post SET
 WHERE id = :id;
 
 
+getCompositeCreatorById:
+SELECT
+    c.id AS creator_id,
+    c.username AS creator_username,
+    c.full_name AS creator_full_name,
+    c.profile_pic_url AS creator_profile_pic_url,
+    c.is_verified AS creator_is_verified,
+    c.bio AS creator_bio,
+    c.platform AS creator_platform,
+
+    p.id AS post_id,
+    p.cover_url AS post_cover_url,
+    p.creator_id AS post_creator_id,
+    p.caption AS post_caption,
+    p.platform AS post_platform,
+    p.created_at AS post_created_at,
+    p.likes_count AS post_likes_count,
+    p.comments_count AS post_comments_count,
+    p.shares_count AS post_shares_count,
+    p.views_count AS post_views_count,
+    p.is_sponsored AS post_is_sponsored,
+    p.location_name AS post_location_name
+
+FROM creator AS c
+LEFT JOIN post AS p ON p.creator_id = c.id
+WHERE c.id = ?;
+
 getCompositePostById:
 SELECT
     p.id AS post_id,
@@ -247,4 +274,6 @@ LEFT JOIN post_hashtag AS ph ON ph.post_id = p.id
 LEFT JOIN hashtag AS h ON h.id = ph.hashtag_id
 LEFT JOIN mention AS ment ON ment.post_id = p.id
 WHERE p.id = ?;
+
+
 
