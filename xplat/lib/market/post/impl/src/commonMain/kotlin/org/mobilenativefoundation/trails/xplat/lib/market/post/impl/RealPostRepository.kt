@@ -4,6 +4,7 @@ import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.store.core5.ExperimentalStoreApi
 import org.mobilenativefoundation.store.store5.StoreWriteRequest
 import org.mobilenativefoundation.store.store5.StoreWriteResponse
+import org.mobilenativefoundation.store.store5.impl.extensions.fresh
 import org.mobilenativefoundation.store.store5.impl.extensions.get
 import org.mobilenativefoundation.trails.xplat.lib.market.post.api.PostRepository
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.store.post.PostStore
@@ -18,7 +19,7 @@ class RealPostRepository(
     private val postStore: PostStore
 ) : PostRepository {
     override suspend fun getPosts(query: PostsQuery): List<CompositePost> {
-        val postIds = postsStore.get(query)
+        val postIds = postsStore.fresh(query)
         return postIds.map {
             postStore.get<Int, CompositePost, Boolean>(it)
         }
