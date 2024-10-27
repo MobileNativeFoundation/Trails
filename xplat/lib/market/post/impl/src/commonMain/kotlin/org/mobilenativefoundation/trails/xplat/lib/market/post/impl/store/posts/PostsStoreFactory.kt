@@ -17,7 +17,7 @@ import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.G
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.GetPopulatedPostByIdExtensions.extractHashtags
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.GetPopulatedPostByIdExtensions.extractMedia
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.GetPopulatedPostByIdExtensions.extractMentions
-import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostConverters.asPopulatedPost
+import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PopulatedPostExtensions.asPopulatedPost
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostQueriesExtensions.insertCreatorOrIgnore
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostQueriesExtensions.insertHashtagOrIgnore
 import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.extensions.PostQueriesExtensions.insertMediaOrIgnore
