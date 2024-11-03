@@ -15,7 +15,8 @@ kotlin {
             dependencies {
                 api(projects.xplat.feat.homeScreen.api)
                 implementation(projects.xplat.lib.carve)
-                implementation(projects.xplat.lib.market.post.api)
+                implementation(projects.xplat.lib.repositories.post.api)
+                implementation(projects.xplat.lib.models)
 
                 // 3P
                 implementation(compose.material3)

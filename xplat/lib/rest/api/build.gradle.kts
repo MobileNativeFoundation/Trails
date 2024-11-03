@@ -9,7 +9,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(projects.backend.models)
+                api(projects.xplat.lib.models)
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.datetime)
             }

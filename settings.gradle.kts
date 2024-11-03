@@ -52,9 +52,10 @@ include(":xplat:feat:searchScreen:impl")
 /// Lib
 include(":xplat:lib:carve")
 include(":xplat:lib:db")
-include(":xplat:lib:market:post:api")
-include(":xplat:lib:market:post:impl")
+include(":xplat:lib:repositories:post:api")
+include(":xplat:lib:repositories:post:impl")
 include(":xplat:lib:models")
 include(":xplat:lib:rest:api")
 include(":xplat:lib:rest:impl")
-
+include(":xplat:lib:operations")
+include(":xplat:lib:coroutines")

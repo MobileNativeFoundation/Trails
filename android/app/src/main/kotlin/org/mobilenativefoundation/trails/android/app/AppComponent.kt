@@ -27,9 +27,9 @@ import org.mobilenativefoundation.trails.xplat.feat.searchScreen.impl.RealMessag
 import org.mobilenativefoundation.trails.xplat.feat.searchScreen.impl.RealSearchScreenComponent
 import org.mobilenativefoundation.trails.xplat.feat.searchScreen.impl.create
 import org.mobilenativefoundation.trails.xplat.lib.db.*
-import org.mobilenativefoundation.trails.xplat.lib.market.post.api.PostComponent
-import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.RealPostComponent
-import org.mobilenativefoundation.trails.xplat.lib.market.post.impl.create
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.api.PostComponent
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.RealPostComponent
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.create
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.TrailsClientComponent
 import org.mobilenativefoundation.trails.xplat.lib.rest.impl.RealTrailsClientComponent
 import org.mobilenativefoundation.trails.xplat.lib.rest.impl.create

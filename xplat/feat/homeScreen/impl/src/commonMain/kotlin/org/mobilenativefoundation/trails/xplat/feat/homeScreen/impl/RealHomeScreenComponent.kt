@@ -4,7 +4,7 @@ import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreen
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreenComponent
-import org.mobilenativefoundation.trails.xplat.lib.market.post.api.PostComponent
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.api.PostComponent
 
 @Component
 abstract class RealHomeScreenComponent(

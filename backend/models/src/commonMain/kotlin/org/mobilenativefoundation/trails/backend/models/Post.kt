@@ -5,48 +5,75 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class Creator(
-    val id: Int,
-    val username: String,
-    val fullName: String?,
-    val profilePicUrl: String?,
-    val isVerified: Boolean,
-    val bio: String?,
-    val platform: Platform
-)
+
+object Creator {
+
+    @Serializable
+    data class Key(val id: Int)
+
+    @Serializable
+    data class Node(
+        val username: String,
+        val fullName: String?,
+        val profilePicUrl: String?,
+        val isVerified: Boolean,
+        val bio: String?,
+        val platform: Platform
+    )
+
+    @Serializable
+    data class Model(val key: Key, val node: Node)
+
+    @Serializable
+    data class Edges(
+        val posts: List<Post.Model>
+    )
+
+    @Serializable
+    data class Composite(
+        val model: Model,
+        val edges: Edges
+    )
+}
 
 
-@Serializable
-data class CompositeCreator(
-    val creator: Creator,
-    val posts: List<Post>
-)
+sealed class Post {
+    @Serializable
+    data class Node(
+        val creatorId: Int,
+        val caption: String?,
+        val platform: Platform,
+        val createdAt: LocalDateTime,
+        val likesCount: Long,
+        val commentsCount: Long,
+        val sharesCount: Long,
+        val viewsCount: Long,
+        val isSponsored: Boolean,
+        val locationName: String?,
+        val coverUrl: String
+    )
 
-@Serializable
-data class Post(
-    val id: Int,
-    val creatorId: Int,
-    val caption: String?,
-    val platform: Platform,
-    val createdAt: LocalDateTime,
-    val likesCount: Long,
-    val commentsCount: Long,
-    val sharesCount: Long,
-    val viewsCount: Long,
-    val isSponsored: Boolean,
-    val locationName: String?,
-    val coverUrl: String
-)
+    @Serializable
+    data class Key(val id: Int)
 
-@Serializable
-data class CompositePost(
-    val post: Post,
-    val creator: Creator,
-    val hashtags: List<Hashtag>,
-    val mentions: List<Mention>,
-    val media: List<Media>
-)
+    @Serializable
+    data class Model(val key: Key, val node: Node): Post()
+
+    @Serializable
+    data class Edges(
+        val creator: Creator.Model,
+        val hashtags: List<Hashtag>,
+        val mentions: List<Mention>,
+        val media: List<Media>
+    )
+
+    @Serializable
+    data class Composite(
+        val model: Model,
+        val edges: Edges
+    ): Post()
+}
+
 
 @Serializable
 data class Media(

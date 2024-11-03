@@ -15,7 +15,7 @@ application {
 
 dependencies {
 
-    implementation(projects.backend.models)
+    implementation(projects.xplat.lib.models)
 
     implementation(libs.kotlinx.datetime)
     implementation(libs.ktor.server.core.jvm)

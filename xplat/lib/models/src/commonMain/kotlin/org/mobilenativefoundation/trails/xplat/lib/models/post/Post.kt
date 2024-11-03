@@ -1,46 +1,48 @@
 package org.mobilenativefoundation.trails.xplat.lib.models.post
 
 import kotlinx.datetime.LocalDateTime
+import org.mobilenativefoundation.trails.xplat.lib.models.Model
 
-enum class Platform {
-    TikTok,
-    Instagram
+
+sealed interface Post : Model<Post.Key, Post.Properties, Post.Edges> {
+    data class Key(val id: Int) : Model.Key
+
+    data class Properties(
+        val creatorId: Int,
+        val caption: String?,
+        val createdAt: LocalDateTime,
+        val likesCount: Long,
+        val commentsCount: Long,
+        val sharesCount: Long,
+        val viewsCount: Long,
+        val isSponsored: Boolean,
+        val coverURL: String,
+        val platform: Platform,
+        val locationName: String?
+    ) : Model.Properties, Post
+
+    data class Edges(
+        val creator: Creator.Node,
+        val hashtags: List<Hashtag.Node>,
+        val mentions: List<Mention.Node>,
+        val media: List<Media.Node>
+    ) : Model.Edges
+
+    data class Node(
+        override val key: Key,
+        override val properties: Properties
+    ) : Model.Node<Key, Properties, Edges>, Post
+
+    data class Composite(
+        override val node: Post.Node,
+        override val edges: Post.Edges
+    ) : Model.Composite<Key, Properties, Edges>, Post
 }
 
-data class Post(
-    val id: Int,
-    val creatorId: Int,
-    val caption: String?,
-    val createdAt: LocalDateTime,
-    val likesCount: Long,
-    val commentsCount: Long,
-    val sharesCount: Long,
-    val viewsCount: Long,
-    val isSponsored: Boolean,
-    val coverURL: String,
-    val platform: Platform,
-    val locationName: String?
-)
 
+val Post.Node.caption: String
+    get() = this.properties.caption.orEmpty()
 
-data class CompositePost(
-    val post: Post,
-    val creator: Creator,
-    val hashtags: List<Hashtag>,
-    val mentions: List<Mention>,
-    val media: List<Media>
-)
+val Post.Node.id: Int
+    get() = this.key.id
 
-
-data class Hashtag(
-    val id: Int,
-    val name: String
-)
-
-
-data class Mention(
-    val id: Int,
-    val postId: Int,
-    val mentionedUsername: String,
-    val platform: Platform
-)

@@ -4,10 +4,9 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import me.tatarka.inject.annotations.Inject
-import org.mobilenativefoundation.trails.backend.models.CompositePost
-import org.mobilenativefoundation.trails.backend.models.Post
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.PostOperations
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.operations.PostsQuery
+import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
+import org.mobilenativefoundation.trails.xplat.lib.rest.api.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.rest.impl.TrailsEndpoints
 import org.mobilenativefoundation.trails.xplat.lib.rest.impl.httpClient
 
@@ -15,22 +14,71 @@ import org.mobilenativefoundation.trails.xplat.lib.rest.impl.httpClient
 class RealPostOperations(
     private val httpClient: HttpClient = httpClient()
 ) : PostOperations {
-
-    override suspend fun getPost(id: Int): CompositePost? {
-        val url = TrailsEndpoints.getPost(id)
+    override suspend fun findOne(key: Post.Key): Post.Node? {
+        val url = TrailsEndpoints.getPost(key.id)
         val response = httpClient.get(url)
         return response.body()
     }
 
-    override suspend fun getPosts(query: PostsQuery): List<CompositePost> {
+    override suspend fun findMany(keys: List<Post.Key>): List<Post.Node> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findAll(): List<Post.Node> {
         val url = TrailsEndpoints.getPosts()
         val response = httpClient.get(url)
         return response.body()
     }
 
-    override suspend fun updatePost(post: Post): Boolean {
-        val url = TrailsEndpoints.updatePost(post.id)
+    override suspend fun findOneComposite(key: Post.Key): Post.Composite? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findManyComposite(keys: List<Post.Key>): List<Post.Composite> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryOne(query: Query.One<Post.Node>): Post.Node? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryMany(query: Query.Many<Post.Node>): List<Post.Node> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertOne(properties: Post.Properties): Post.Key? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertMany(properties: List<Post.Properties>): List<Post.Key?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateOne(node: Post.Node): Int {
+        val url = TrailsEndpoints.updatePost(node.key.id)
         val response = httpClient.post(url)
         return response.body()
     }
+
+    override suspend fun updateMany(nodes: List<Post.Node>): Int {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun upsertOne(properties: Post.Properties): Post.Key? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteOne(key: Post.Key): Int {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteMany(keys: List<Post.Key>): Int {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAll(): Int {
+        TODO("Not yet implemented")
+    }
+
+
 }

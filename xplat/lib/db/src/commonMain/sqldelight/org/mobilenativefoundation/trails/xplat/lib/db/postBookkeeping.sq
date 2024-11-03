@@ -1,0 +1,37 @@
+CREATE TABLE postFailedUpdate (
+    post_id INTEGER,
+    timestamp INTEGER,
+    FOREIGN KEY (post_id) REFERENCES postEntity(id)
+);
+
+CREATE TABLE postFailedDelete(
+    post_id INTEGER,
+    timestamp INTEGER,
+    FOREIGN KEY (post_id) REFERENCES postEntity(id)
+);
+
+-- Queries
+
+insertFailedUpdate:
+INSERT INTO postFailedUpdate VALUES ?;
+
+insertFailedDelete:
+INSERT INTO postFailedDelete VALUES ?;
+
+getOneFailedUpdate:
+SELECT timestamp FROM postFailedUpdate WHERE post_id = ? LIMIT 1;
+
+getOneFailedDelete:
+SELECT timestamp FROM postFailedDelete WHERE post_id = ? LIMIT 1;
+
+getManyFailedUpdates:
+SELECT timestamp FROM postFailedUpdate WHERE post_id IN ?;
+
+getManyFailedDeletes:
+SELECT timestamp FROM postFailedDelete WHERE post_id IN ?;
+
+getFailedUpdates:
+SELECT timestamp FROM postFailedUpdate;
+
+getFailedDeletes:
+SELECT timestamp FROM postFailedDelete;

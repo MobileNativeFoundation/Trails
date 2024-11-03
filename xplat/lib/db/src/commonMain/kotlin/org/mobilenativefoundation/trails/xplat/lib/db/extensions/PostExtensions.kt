@@ -1,69 +1,76 @@
 package org.mobilenativefoundation.trails.xplat.lib.db.extensions
 
 import org.mobilenativefoundation.trails.xplat.lib.db.*
-import org.mobilenativefoundation.trails.xplat.lib.models.post.CompositePost
+import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 
 object PostExtensions {
 
-    fun CompositePost.toPostEntity(): PostEntity {
+    fun Post.Composite.toPostEntity(): PostEntity {
+        val id = this.node.key.id
+        val properties = this.node.properties
 
         return PostEntity(
-            id = this.post.id.toLong(),
-            creator_id = this.creator.id.toLong(),
-            caption = this.post.caption,
-            created_at = this.post.createdAt.toString(),
-            likes_count = this.post.likesCount.toLong(),
-            comments_count = this.post.commentsCount.toLong(),
-            shares_count = this.post.sharesCount.toLong(),
-            views_count = this.post.viewsCount.toLong(),
-            is_sponsored = if (this.post.isSponsored) 1 else 0,
-            cover_url = this.post.coverURL,
-            platform = this.post.platform,
-            location_name = this.post.locationName,
+            id = id.toLong(),
+            creator_id = this.edges.creator.key.id.toLong(),
+            caption = properties.caption,
+            created_at = properties.createdAt.toString(),
+            likes_count = properties.likesCount.toLong(),
+            comments_count = properties.commentsCount.toLong(),
+            shares_count = properties.sharesCount.toLong(),
+            views_count = properties.viewsCount.toLong(),
+            is_sponsored = if (properties.isSponsored) 1 else 0,
+            cover_url = properties.coverURL,
+            platform = properties.platform,
+            location_name = properties.locationName,
         )
     }
 
-    fun CompositePost.toCreatorEntity(): CreatorEntity {
+    fun Post.Composite.toCreatorEntity(): CreatorEntity {
+        val creator = this.edges.creator
+
         return CreatorEntity(
-            id = this.creator.id.toLong(),
-            username = creator.username,
-            full_name = creator.fullName,
-            profile_pic_url = creator.profilePicURL,
-            is_verified = if (creator.isVerified) 1 else 0,
-            bio = creator.bio,
-            platform = creator.platform,
+            id = creator.key.id.toLong(),
+            username = creator.properties.username,
+            full_name = creator.properties.fullName,
+            profile_pic_url = creator.properties.profilePicURL,
+            is_verified = if (creator.properties.isVerified) 1 else 0,
+            bio = creator.properties.bio,
+            platform = creator.properties.platform,
         )
     }
 
-    fun CompositePost.toHashtagEntities(): List<HashtagEntity> {
-        return this.hashtags.map {
-            HashtagEntity(id = it.id.toLong(), name = it.name)
+    fun Post.Composite.toHashtagEntities(): List<HashtagEntity> {
+
+        return this.edges.hashtags.map {
+            HashtagEntity(id = it.key.id.toLong(), name = it.properties.name)
         }
     }
 
-    fun CompositePost.toMentionEntities(): List<MentionEntity> {
-        return this.mentions.map {
+    fun Post.Composite.toMentionEntities(): List<MentionEntity> {
+        return this.edges.mentions.map {
             MentionEntity(
-                id = it.id.toLong(),
-                mentioned_username = it.mentionedUsername,
-                platform = it.platform,
-                post_id = it.postId.toLong()
+                id = it.key.id.toLong(),
+                mentioned_username = it.properties.mentionedUsername,
+                platform = it.properties.platform,
+                post_id = it.properties.postId.toLong()
             )
         }
     }
 
-    fun CompositePost.toMediaEntities(): List<MediaEntity> {
-        return this.media.map {
+
+    fun Post.Composite.toMediaEntities(): List<MediaEntity> {
+        val postId = this.node.key.id
+        return this.edges.media.map {
             MediaEntity(
-                id = it.id.toLong(),
-                post_id = this.post.id.toLong(),
-                media_url = it.mediaURL,
-                media_type = it.mediaType,
-                height = it.height?.toLong(),
-                width = it.width?.toLong(),
-                duration = it.duration?.toLong(),
-                alt_text = it.altText,
-                media_format = it.mediaFormat,
+                id = it.key.id.toLong(),
+                post_id = postId.toLong(),
+                media_url = it.properties.mediaURL,
+                media_type = it.properties.mediaType,
+                height = it.properties.height?.toLong(),
+                width = it.properties.width?.toLong(),
+                duration = it.properties.duration?.toLong(),
+                alt_text = it.properties.altText,
+                media_format = it.properties.mediaFormat,
             )
         }
     }
