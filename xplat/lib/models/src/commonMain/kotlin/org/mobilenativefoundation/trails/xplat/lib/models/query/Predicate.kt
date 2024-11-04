@@ -1,16 +1,15 @@
 package org.mobilenativefoundation.trails.xplat.lib.models.query
 
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
 
-sealed class Predicate< out T : @Contextual Any> {
+sealed class Predicate<out T : Any> {
     @Serializable
-    data class Comparison<T : @Contextual Any>(
+    data class Comparison<T : Any>(
         val propertyName: String,
         val operator: ComparisonOperator,
-        val value: @Contextual T,
+        val value: T,
         val valuePropertyValueType: PropertyValueType
     ) : Predicate<T>()
 
