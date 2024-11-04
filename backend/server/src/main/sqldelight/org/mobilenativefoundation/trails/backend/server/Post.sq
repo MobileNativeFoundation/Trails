@@ -1,4 +1,6 @@
-import org.mobilenativefoundation.trails.backend.models.Platform;
+import org.mobilenativefoundation.trails.xplat.lib.models.post.Platform;
+
+
 
 CREATE TABLE IF NOT EXISTS creator (
     id SERIAL PRIMARY KEY,

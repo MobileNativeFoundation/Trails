@@ -4,11 +4,10 @@ import io.ktor.http.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.datetime.toKotlinLocalDateTime
-import org.mobilenativefoundation.trails.backend.models.CompositeCreator
-import org.mobilenativefoundation.trails.backend.models.Creator
-import org.mobilenativefoundation.trails.backend.models.Post
+import org.mobilenativefoundation.trails.backend.server.GetCompositeCreatorById
 import org.mobilenativefoundation.trails.backend.server.TrailsDatabase
-import org.mobilenativefoundation.trails.backend.server.models.GetCompositeCreatorById
+import org.mobilenativefoundation.trails.xplat.lib.models.post.Creator
+import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 
 class CreatorRoutes(private val database: TrailsDatabase) {
     fun Route.getCreatorById() {
@@ -30,17 +29,22 @@ class CreatorRoutes(private val database: TrailsDatabase) {
         }
     }
 
-    private fun buildCompositeCreator(rowsForCreator: List<GetCompositeCreatorById>, creatorId: Int): CompositeCreator {
+    private fun buildCompositeCreator(
+        rowsForCreator: List<GetCompositeCreatorById>,
+        creatorId: Int
+    ): Creator.Composite {
         val entity = rowsForCreator.first()
 
-        val creator = Creator(
-            id = entity.creator_id,
-            username = entity.creator_username,
-            fullName = entity.creator_full_name,
-            profilePicUrl = entity.creator_profile_pic_url,
-            isVerified = entity.creator_is_verified,
-            bio = entity.creator_bio,
-            platform = entity.creator_platform
+        val creator = Creator.Node(
+            key = Creator.Key(id = entity.creator_id),
+            properties = Creator.Properties(
+                username = entity.creator_username,
+                fullName = entity.creator_full_name,
+                profilePicURL = entity.creator_profile_pic_url,
+                isVerified = entity.creator_is_verified,
+                bio = entity.creator_bio,
+                platform = entity.creator_platform
+            )
         )
 
         val posts = rowsForCreator.mapNotNull { row ->
@@ -53,20 +57,23 @@ class CreatorRoutes(private val database: TrailsDatabase) {
                                     row.post_views_count?.let { viewsCount ->
                                         row.post_is_sponsored?.let { isSponsored ->
                                             row.post_cover_url?.let { coverURL ->
-                                                Post(
-                                                    id = postId,
-                                                    creatorId = creatorId,
-                                                    caption = row.post_caption,
-                                                    platform = platform,
-                                                    createdAt = createdAt.toKotlinLocalDateTime(),
-                                                    likesCount = likesCount,
-                                                    commentsCount = commentsCount,
-                                                    sharesCount = sharesCount,
-                                                    viewsCount = viewsCount,
-                                                    isSponsored = isSponsored,
-                                                    locationName = row.post_location_name,
-                                                    coverUrl = coverURL,
+                                                Post.Node(
+                                                    key = Post.Key(id = postId),
+                                                    properties = Post.Properties(
+                                                        creatorId = creatorId,
+                                                        caption = row.post_caption,
+                                                        platform = platform,
+                                                        createdAt = createdAt.toKotlinLocalDateTime(),
+                                                        likesCount = likesCount,
+                                                        commentsCount = commentsCount,
+                                                        sharesCount = sharesCount,
+                                                        viewsCount = viewsCount,
+                                                        isSponsored = isSponsored,
+                                                        locationName = row.post_location_name,
+                                                        coverURL = coverURL,
+                                                    )
                                                 )
+                                                null
                                             }
                                         }
                                     }
@@ -78,7 +85,13 @@ class CreatorRoutes(private val database: TrailsDatabase) {
 
             }
         }
-        return CompositeCreator(creator, posts)
+        return Creator.Composite(
+            node = creator,
+            edges = Creator.Edges(
+                posts = posts
+            )
+
+        )
     }
 
 }

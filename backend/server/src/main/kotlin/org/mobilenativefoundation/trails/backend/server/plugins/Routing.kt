@@ -17,6 +17,7 @@ fun Application.configureRouting(
         with(postRoutes) {
             getPostById()
             getPosts()
+            queryPostsComposite()
         }
 
         with(creatorRoutes) {

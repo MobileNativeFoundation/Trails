@@ -1,12 +1,15 @@
 package org.mobilenativefoundation.trails.xplat.lib.models.post
 
 import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.Serializable
 import org.mobilenativefoundation.trails.xplat.lib.models.Model
 
-
+@Serializable
 sealed interface Post : Model<Post.Key, Post.Properties, Post.Edges> {
+    @Serializable
     data class Key(val id: Int) : Model.Key
 
+    @Serializable
     data class Properties(
         val creatorId: Int,
         val caption: String?,
@@ -21,6 +24,7 @@ sealed interface Post : Model<Post.Key, Post.Properties, Post.Edges> {
         val locationName: String?
     ) : Model.Properties, Post
 
+    @Serializable
     data class Edges(
         val creator: Creator.Node,
         val hashtags: List<Hashtag.Node>,
@@ -28,14 +32,16 @@ sealed interface Post : Model<Post.Key, Post.Properties, Post.Edges> {
         val media: List<Media.Node>
     ) : Model.Edges
 
+    @Serializable
     data class Node(
         override val key: Key,
         override val properties: Properties
     ) : Model.Node<Key, Properties, Edges>, Post
 
+    @Serializable
     data class Composite(
-        override val node: Post.Node,
-        override val edges: Post.Edges
+        override val node: Node,
+        override val edges: Edges
     ) : Model.Composite<Key, Properties, Edges>, Post
 }
 
