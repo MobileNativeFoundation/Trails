@@ -153,7 +153,7 @@ class RealPostRepository(
             else -> StoreReadRequest.cached(input, refresh = true)
         }
 
-        return stream<Boolean>(request).firstOrNull {
+        return stream<PostWriteResponse>(request).firstOrNull {
             it is StoreReadResponse.Data
         }?.dataOrNull()
     }

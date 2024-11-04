@@ -15,6 +15,8 @@ interface PostOperations {
     suspend fun queryOne(query: Query.One<Post.Node>): Post.Node?
     suspend fun queryMany(query: Query.Many<Post.Node>): List<Post.Node>
 
+    suspend fun queryManyComposite(query: Query.Many<Post.Node>): List<Post.Composite>
+
     suspend fun insertOne(properties: Post.Properties): Post.Key?
     suspend fun insertMany(properties: List<Post.Properties>): List<Post.Key?>
 

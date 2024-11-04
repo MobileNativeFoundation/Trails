@@ -3,7 +3,7 @@ package org.mobilenativefoundation.trails.xplat.lib.models.query
 import kotlin.reflect.KProperty1
 
 sealed class Predicate<T> {
-    data class Comparison<T, V : Comparable<V>>(
+    data class Comparison<T, V : Any>(
         val property: KProperty1<T, V>,
         val operator: ComparisonOperator,
         val value: V

@@ -36,7 +36,7 @@ class PostFetcherFactory(
                 is Operation.Query.QueryOne -> queryAndEmitOne(operation)
                 is Operation.Query.FindAll -> findAndEmitAll()
                 is Operation.Query.QueryMany -> queryAndEmitMany(operation)
-                is Operation.Query.QueryManyComposite -> TODO()
+                is Operation.Query.QueryManyComposite -> queryAndEmitManyComposite(operation)
             }
         }
     }
@@ -71,6 +71,23 @@ class PostFetcherFactory(
         trailsDatabase.postQueries.saveComposite(post)
 
         val output = PostOutput.Single(post)
+        emit(output)
+    }
+
+    private suspend fun FlowCollector<PostOutput>.queryAndEmitManyComposite(operation: Operation.Query.QueryManyComposite<Post.Key, Post.Properties, Post.Edges, Post.Node>) {
+        // Fetch composite post from the network
+        val posts = client.queryManyComposite(
+            Many(
+                predicate = operation.query.predicate,
+                order = operation.query.order,
+                limit = operation.query.limit
+            )
+        )
+
+        // Save the post and associated entities
+        posts.forEach { post -> trailsDatabase.postQueries.saveComposite(post) }
+
+        val output = PostOutput.Collection(posts)
         emit(output)
     }
 

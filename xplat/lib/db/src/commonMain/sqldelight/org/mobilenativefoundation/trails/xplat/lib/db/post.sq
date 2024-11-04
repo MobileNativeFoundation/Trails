@@ -152,6 +152,9 @@ WHERE p.id = ?;
 selectPosts:
 SELECT * FROM postEntity WHERE caption LIKE :search ORDER BY likes_count DESC LIMIT :limit OFFSET :offset;
 
+findAllPosts:
+SELECT * FROM postEntity;
+
 updatePost:
 UPDATE postEntity SET
     likes_count = :likes_count,

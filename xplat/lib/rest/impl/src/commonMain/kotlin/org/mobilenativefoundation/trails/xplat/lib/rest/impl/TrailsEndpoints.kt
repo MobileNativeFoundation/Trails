@@ -5,4 +5,5 @@ internal object TrailsEndpoints {
     fun getPosts() = "$ROOT_API_URL/posts"
     fun getPost(id: Int) = "$ROOT_API_URL/posts/$id"
     fun updatePost(id: Int) = "$ROOT_API_URL/posts/$id"
+    fun queryPostsComposite() = "$ROOT_API_URL/posts/query"
 }

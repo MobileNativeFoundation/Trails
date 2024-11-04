@@ -8,7 +8,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreen
@@ -17,7 +16,6 @@ import org.mobilenativefoundation.trails.xplat.lib.carve.components.icons.CarveI
 import org.mobilenativefoundation.trails.xplat.lib.carve.components.icons.Icon
 import org.mobilenativefoundation.trails.xplat.lib.carve.components.icons.IconStyle
 import org.mobilenativefoundation.trails.xplat.lib.carve.components.images.TrailsTextLogo
-import org.mobilenativefoundation.trails.xplat.lib.carve.components.messaging.banner.*
 import org.mobilenativefoundation.trails.xplat.lib.carve.material3.Carve
 
 @Inject
@@ -47,27 +45,6 @@ class HomeScreenUI : HomeScreen.UI {
                     }
                 }
             }
-
-            Banner(
-                "Test banner", paragraphText = "Test banner", leadingArtwork = IconContent(
-                    icon = Icon.HEART,
-                    style = IconStyle.CURVED,
-                    tint = Color.Red,
-                ), modifier = Modifier.padding(16.dp), trailingButton = BannerTrailingIcon(
-                    content = IconContent(
-                        icon = Icon.HEART,
-                        style = IconStyle.CURVED,
-                        tint = Color.Red,
-                    ),
-                    onClick = {},
-                    buttonType = ButtonType.PRIMARY,
-                ), colors = BannerColors(
-                    containerColor = Carve.ColorScheme.background,
-                    contentColor = Carve.ColorScheme.onBackground,
-                    trailingButtonContentColor = Carve.ColorScheme.onBackground,
-                    trailingButtonContainerColor = Carve.ColorScheme.background
-                )
-            )
 
             LazyColumn {
                 itemsIndexed(state.posts) { index, composite ->
