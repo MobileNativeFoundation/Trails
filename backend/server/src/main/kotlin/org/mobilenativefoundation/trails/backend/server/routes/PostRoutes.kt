@@ -35,7 +35,8 @@ class PostRoutes(private val database: TrailsDatabase) {
 
     fun Route.queryPostsComposite() {
         post("/posts/query") {
-            val query = call.receive<Query.Many>()
+
+            val query = call.receive<Query.Many<*>>()
             try {
 
                 val entities = database.postQueries.selectAllPosts().executeAsList()
