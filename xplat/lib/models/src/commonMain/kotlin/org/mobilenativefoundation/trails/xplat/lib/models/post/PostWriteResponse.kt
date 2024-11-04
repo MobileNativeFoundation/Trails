@@ -1,6 +1,4 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models
-
-import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+package org.mobilenativefoundation.trails.xplat.lib.models.post
 
 sealed class PostWriteResponse {
     data class Create(val key: Post.Key?) : PostWriteResponse()

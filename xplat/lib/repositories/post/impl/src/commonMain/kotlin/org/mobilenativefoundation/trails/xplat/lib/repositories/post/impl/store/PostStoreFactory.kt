@@ -13,7 +13,7 @@ import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostSourceOfTruthReader
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostSourceOfTruthWriter
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.PostFetcherFactory
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostOutput
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.updater.PostUpdaterFactory
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
 

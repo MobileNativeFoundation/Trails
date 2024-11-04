@@ -1,6 +1,4 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models
-
-import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+package org.mobilenativefoundation.trails.xplat.lib.models.post
 
 sealed class PostOutput {
     data class Keys(val values: List<Post.Key>): PostOutput()

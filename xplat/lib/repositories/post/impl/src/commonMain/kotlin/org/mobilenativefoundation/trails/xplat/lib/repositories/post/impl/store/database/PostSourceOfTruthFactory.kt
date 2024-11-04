@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostOutput
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 
 class PostSourceOfTruthFactory(
     private val reader: PostSourceOfTruthReader,

@@ -3,7 +3,6 @@ package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.exten
 import kotlinx.datetime.LocalDateTime
 import org.mobilenativefoundation.trails.xplat.lib.db.PostEntity
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
-import org.mobilenativefoundation.trails.xplat.lib.models.post.id
 
 
 object PostExtensions {

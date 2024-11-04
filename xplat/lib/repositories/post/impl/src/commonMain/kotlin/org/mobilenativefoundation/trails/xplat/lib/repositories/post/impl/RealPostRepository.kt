@@ -20,8 +20,8 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.query.isRemoteOnly
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.api.PostRepository
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostStore
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostOutput
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostWriteResponse
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostWriteResponse
 
 @Inject
 class RealPostRepository(
@@ -30,13 +30,13 @@ class RealPostRepository(
     override suspend fun findOne(input: Operation.Query.FindOne<Post.Key>): Post.Node? {
         val output = store.firstOrNull(input) ?: return null
         require(output is PostOutput.Single && output.value is Post.Node)
-        return output.value
+        return output.value as Post.Node
     }
 
     override suspend fun findOneComposite(input: Operation.Query.FindOneComposite<Post.Key>): Post.Composite? {
         val output = store.firstOrNull(input) ?: return null
         require(output is PostOutput.Single && output.value is Post.Composite)
-        return output.value
+        return output.value as Post.Composite
     }
 
     override suspend fun findMany(input: Operation.Query.FindMany<Post.Key>): List<Post.Node> {
@@ -58,7 +58,7 @@ class RealPostRepository(
         val input = Operation.Query.QueryOne(query, query.dataSources)
         val output = store.firstOrNull(input) ?: return null
         require(output is PostOutput.Single && output.value is Post.Node)
-        return output.value
+        return output.value as Post.Node
     }
 
     override suspend fun queryMany(builder: QueryManyBuilder<Post.Node>.() -> Unit): List<Post.Node> {

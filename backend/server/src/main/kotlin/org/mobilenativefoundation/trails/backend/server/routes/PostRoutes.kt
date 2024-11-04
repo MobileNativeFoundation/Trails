@@ -9,6 +9,7 @@ import org.mobilenativefoundation.trails.backend.server.GetCompositePostById
 import org.mobilenativefoundation.trails.backend.server.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Creator
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.models.query.*
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KProperty2
@@ -59,7 +60,7 @@ class PostRoutes(private val database: TrailsDatabase) {
                         query.limit?.let { sequence.take(it) } ?: sequence
                     }.toList()
 
-                call.respond(posts)
+                call.respond(PostOutput.Collection(posts))
 
             } catch (error: Throwable) {
                 call.respond(

@@ -6,7 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
-import org.mobilenativefoundation.trails.xplat.lib.models.post.id
 import org.mobilenativefoundation.trails.xplat.lib.models.query.ComparisonOperator
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Direction
 import org.mobilenativefoundation.trails.xplat.lib.models.query.LogicalOperator
@@ -16,7 +15,7 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.query.Predicate
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asNode
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostQueriesExtensions.assembleCompositePost
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostOutput
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 
 class PostSourceOfTruthReader(
     private val trailsDatabase: TrailsDatabase,

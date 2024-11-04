@@ -13,7 +13,7 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.query.Predicate
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostQueriesExtensions.saveComposite
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostOutput
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
 
 

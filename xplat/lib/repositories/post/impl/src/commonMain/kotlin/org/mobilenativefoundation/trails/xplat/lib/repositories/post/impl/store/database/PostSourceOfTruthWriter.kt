@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostOutput
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 
 class PostSourceOfTruthWriter(
     private val trailsDatabase: TrailsDatabase,

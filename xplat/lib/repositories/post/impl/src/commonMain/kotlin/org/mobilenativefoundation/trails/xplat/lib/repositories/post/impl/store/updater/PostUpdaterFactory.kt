@@ -3,10 +3,10 @@ package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store
 import org.mobilenativefoundation.store.store5.Updater
 import org.mobilenativefoundation.store.store5.UpdaterResult
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostWriteResponse
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostOutput
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostWriteResponse
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
 
 class PostUpdaterFactory(
@@ -24,7 +24,7 @@ class PostUpdaterFactory(
         return when (operation) {
             is Operation.Mutation.Create.InsertOne -> {
                 require(post is PostOutput.Single && post.value is Post.Properties)
-                insertOne(post.value)
+                insertOne(post.value as Post.Properties)
             }
 
             Operation.Mutation.Delete.DeleteAll -> {
@@ -50,7 +50,7 @@ class PostUpdaterFactory(
 
             is Operation.Mutation.Upsert.UpsertOne -> {
                 require(post is PostOutput.Single && post.value is Post.Properties)
-                upsertOne(post.value)
+                upsertOne(post.value as Post.Properties)
             }
 
 
@@ -68,9 +68,9 @@ class PostUpdaterFactory(
     }
 
     private suspend fun updateOne(post: PostOutput.Single): UpdaterResult {
-        val count = when (post.value) {
-            is Post.Composite -> client.updateOne(post.value.node)
-            is Post.Node -> client.updateOne(post.value)
+        val count = when (val value = post.value) {
+            is Post.Composite -> client.updateOne(value.node)
+            is Post.Node -> client.updateOne(value)
             is Post.Properties -> {
                 throw UnsupportedOperationException()
             }
