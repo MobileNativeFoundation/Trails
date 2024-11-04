@@ -1,6 +1,7 @@
 package org.mobilenativefoundation.trails.xplat.lib.rest.api.post
 
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query
 
 
@@ -15,7 +16,7 @@ interface PostOperations {
     suspend fun queryOne(query: Query.One): Post.Node?
     suspend fun queryMany(query: Query.Many): List<Post.Node>
 
-    suspend fun queryManyComposite(query: Query.Many): List<Post.Composite>
+    suspend fun queryManyComposite(query: Query.Many): PostOutput.Collection
 
     suspend fun insertOne(properties: Post.Properties): Post.Key?
     suspend fun insertMany(properties: List<Post.Properties>): List<Post.Key?>

@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.flow
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Order
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query.Many
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query.One
@@ -13,7 +14,6 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.query.Predicate
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostQueriesExtensions.saveComposite
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
-import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
 
 
@@ -137,7 +137,7 @@ class PostFetcherFactory(
             convertOrder(it)
         }
 
-        val posts = client.queryManyComposite(
+        val output = client.queryManyComposite(
             Many(
                 predicate = operation.query.predicate?.let { convertPredicate(it) },
                 order = order,
@@ -145,10 +145,6 @@ class PostFetcherFactory(
             )
         )
 
-        // Save the post and associated entities
-        posts.forEach { post -> trailsDatabase.postQueries.saveComposite(post) }
-
-        val output = PostOutput.Collection(posts)
         emit(output)
     }
 

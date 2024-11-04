@@ -7,6 +7,7 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
 import org.mobilenativefoundation.trails.xplat.lib.rest.impl.TrailsEndpoints
@@ -48,7 +49,7 @@ class RealPostOperations(
         TODO("Not yet implemented")
     }
 
-    override suspend fun queryManyComposite(query: Query.Many): List<Post.Composite> {
+    override suspend fun queryManyComposite(query: Query.Many): PostOutput.Collection {
         val url = TrailsEndpoints.queryPostsComposite()
         val response = httpClient.post(url) {
             setBody(query)

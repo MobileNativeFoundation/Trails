@@ -53,14 +53,21 @@ class PostRoutes(private val database: TrailsDatabase) {
                     return@post
                 }
 
-                val posts = entities.map { it.asNode() }.asSequence()
+                val nodes = entities.map { it.asNode() }.asSequence()
                     .filter { item -> query.predicate?.let { evaluatePredicate(it, item) } ?: true }
                     .sortedWith { a, b -> compareItems(a, b, query.order) }
                     .let { sequence ->
                         query.limit?.let { sequence.take(it) } ?: sequence
                     }.toList()
 
-                call.respond(PostOutput.Collection(posts))
+                val allRows =
+                    nodes.map { it.id }.flatMap { database.postQueries.getCompositePostById(it).executeAsList() }
+
+                val composites = allRows
+                    .groupBy { it.post_id }
+                    .map { (postId, rowsForPost) -> buildCompositePost(rowsForPost, postId) }
+
+                call.respond(PostOutput.Collection(composites))
 
             } catch (error: Throwable) {
                 call.respond(
@@ -177,7 +184,8 @@ class PostRoutes(private val database: TrailsDatabase) {
         println("PROPERTIES = ${instance::class.memberProperties}")
         println("MEMBERS = ${instance::class.members}")
         println("MEMBER EXTENSION PROPS = ${instance::class.memberExtensionProperties}")
-        val property = instance::class.memberProperties.firstOrNull { it.name == propertyName } as? KProperty1<T, String>
+        val property =
+            instance::class.memberProperties.firstOrNull { it.name == propertyName } as? KProperty1<T, String>
         val extensionProperty =
             instance::class.memberExtensionProperties.firstOrNull { it.name == propertyName } as? KProperty2<T, T, String>
 
@@ -203,7 +211,8 @@ class PostRoutes(private val database: TrailsDatabase) {
         println("PROPERTIES = ${instance::class.memberProperties}")
         println("MEMBERS = ${instance::class.members}")
         println("MEMBER EXTENSION PROPS = ${instance::class.memberExtensionProperties}")
-        val property = instance::class.memberProperties.firstOrNull { it.name == propertyName } as? KProperty1<T, Boolean>
+        val property =
+            instance::class.memberProperties.firstOrNull { it.name == propertyName } as? KProperty1<T, Boolean>
         val extensionProperty =
             instance::class.memberExtensionProperties.firstOrNull { it.name == propertyName } as? KProperty2<T, T, Boolean>
 
