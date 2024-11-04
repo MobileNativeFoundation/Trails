@@ -168,6 +168,8 @@ RETURNING id
 )
 SELECT * FROM new_or_existing;
 
+selectAllPosts:
+SELECT * FROM post;
 
 selectPosts:
 SELECT * FROM post WHERE caption LIKE '%skiing%' ORDER BY likes_count DESC LIMIT ?;

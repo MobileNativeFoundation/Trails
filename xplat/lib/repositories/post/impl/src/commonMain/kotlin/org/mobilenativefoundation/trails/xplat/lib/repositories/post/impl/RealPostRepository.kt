@@ -150,7 +150,7 @@ class RealPostRepository(
         val request = when {
             input.dataSources.isRemoteOnly() -> StoreReadRequest.fresh(input)
             input.dataSources.isLocalOnly() -> StoreReadRequest.localOnly(input)
-            else -> StoreReadRequest.cached(input, refresh = true)
+            else -> StoreReadRequest.fresh(input)
         }
 
         return stream<PostWriteResponse>(request).firstOrNull {

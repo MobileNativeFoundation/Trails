@@ -1,16 +1,24 @@
 package org.mobilenativefoundation.trails.xplat.lib.models.query
 
-import kotlin.reflect.KProperty1
+import kotlinx.serialization.Serializable
 
-sealed class Predicate<T> {
-    data class Comparison<T, V : Any>(
-        val property: KProperty1<T, V>,
+@Serializable
+sealed class Predicate<out T : Any> {
+    @Serializable
+    data class Comparison<T : Any>(
+        val propertyName: String,
         val operator: ComparisonOperator,
-        val value: V
+        val value: T,
+        val type: Type
     ) : Predicate<T>()
 
-    data class Logical<T>(
+    @Serializable
+    data class Logical<T : Any>(
         val operator: LogicalOperator,
         val predicates: List<Predicate<T>>
     ) : Predicate<T>()
+}
+
+enum class Type {
+    STRING, BOOLEAN, INT, LONG
 }

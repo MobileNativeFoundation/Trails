@@ -5,14 +5,17 @@ import kotlinx.coroutines.flow.flow
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.models.query.Order
+import org.mobilenativefoundation.trails.xplat.lib.models.query.Query.Many
+import org.mobilenativefoundation.trails.xplat.lib.models.query.Query.One
+import org.mobilenativefoundation.trails.xplat.lib.models.query.Type
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
+import org.mobilenativefoundation.trails.xplat.lib.operations.query.Predicate
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostQueriesExtensions.saveComposite
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.models.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.query.Query.Many
-import org.mobilenativefoundation.trails.xplat.lib.rest.api.query.Query.One
 
 
 class PostFetcherFactory(
@@ -74,12 +77,56 @@ class PostFetcherFactory(
         emit(output)
     }
 
+    private fun convertPredicate(predicate: Predicate<Post.Node, *>): org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate<*> {
+        return when (predicate) {
+            is Predicate.Comparison<*, *> -> {
+                org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate.Comparison(
+                    propertyName = predicate.property.name,
+                    operator = predicate.operator,
+                    value = predicate.value,
+                    type = when (predicate.value) {
+                        is String -> Type.STRING
+                        is Boolean -> Type.BOOLEAN
+                        is Int -> Type.INT
+                        is Long -> Type.LONG
+                        else -> error("Unsupported type.")
+                    }
+                )
+            }
+
+            is Predicate.Logical -> {
+                org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate.Logical(
+                    operator = predicate.operator,
+                    predicates = predicate.predicates.map { convertPredicate(it) }
+                )
+
+            }
+        }
+
+    }
+
+
+    private fun convertOrder(order: org.mobilenativefoundation.trails.xplat.lib.operations.query.Order<*>?): Order? {
+        return order?.let {
+            Order(
+                propertyName = it.property.name,
+                direction = it.direction,
+                type = it.type
+            )
+        }
+    }
+
+
     private suspend fun FlowCollector<PostOutput>.queryAndEmitManyComposite(operation: Operation.Query.QueryManyComposite<Post.Key, Post.Properties, Post.Edges, Post.Node>) {
         // Fetch composite post from the network
+        val order = operation.query.order?.let {
+            convertOrder(it)
+        }
+
         val posts = client.queryManyComposite(
             Many(
-                predicate = operation.query.predicate,
-                order = operation.query.order,
+                predicate = operation.query.predicate?.let { convertPredicate(it) },
+                order = order,
                 limit = operation.query.limit
             )
         )
@@ -94,7 +141,9 @@ class PostFetcherFactory(
     private suspend fun FlowCollector<PostOutput>.queryAndEmitOne(operation: Operation.Query.QueryOne<Post.Key, Post.Properties, Post.Edges, Post.Node>) {
         // Fetch post from the network
         val post = client.queryOne(
-            query = One(operation.query.predicate, operation.query.order)
+            query = One(
+                operation.query.predicate?.let { convertPredicate(it) },
+                operation.query.order?.let { convertOrder(it) })
         ) ?: error(404)
 
         // Save the post
@@ -107,7 +156,11 @@ class PostFetcherFactory(
     private suspend fun FlowCollector<PostOutput>.queryAndEmitMany(operation: Operation.Query.QueryMany<Post.Key, Post.Properties, Post.Edges, Post.Node>) {
         // Fetch post from the network
         val posts = client.queryMany(
-            query = Many(operation.query.predicate, operation.query.order, operation.query.limit)
+            query = Many(
+                operation.query.predicate?.let { convertPredicate(it) },
+                operation.query.order?.let { convertOrder(it) },
+                operation.query.limit
+            )
         )
 
         // Save the posts

@@ -1,13 +1,18 @@
 package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database
 
+
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.post.id
-import org.mobilenativefoundation.trails.xplat.lib.models.query.*
+import org.mobilenativefoundation.trails.xplat.lib.models.query.ComparisonOperator
+import org.mobilenativefoundation.trails.xplat.lib.models.query.Direction
+import org.mobilenativefoundation.trails.xplat.lib.models.query.LogicalOperator
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
+import org.mobilenativefoundation.trails.xplat.lib.operations.query.Order
+import org.mobilenativefoundation.trails.xplat.lib.operations.query.Predicate
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asNode
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostQueriesExtensions.assembleCompositePost
@@ -55,6 +60,7 @@ class PostSourceOfTruthReader(
 
             val entities = trailsDatabase.postQueries.findAllPosts().executeAsList()
 
+
             val composites = entities.map { it.asNode() }.asSequence()
                 .filter { item -> query.predicate?.let { evaluatePredicate(it, item) } ?: true }
                 .sortedWith { a, b -> compareItems(a, b, query.order) }
@@ -74,7 +80,8 @@ class PostSourceOfTruthReader(
         }
     }
 
-    private fun evaluatePredicate(predicate: Predicate<Post.Node>, item: Post.Node): Boolean {
+
+    private fun evaluatePredicate(predicate: Predicate<Post.Node, *>, item: Post.Node): Boolean {
         return when (predicate) {
             is Predicate.Comparison<Post.Node, *> -> {
 

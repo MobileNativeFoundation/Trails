@@ -1,13 +1,16 @@
 package org.mobilenativefoundation.trails.backend.server.routes
 
 import io.ktor.http.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.datetime.toKotlinLocalDateTime
-import org.mobilenativefoundation.trails.backend.server.TrailsDatabase
 import org.mobilenativefoundation.trails.backend.server.GetCompositePostById
+import org.mobilenativefoundation.trails.backend.server.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Creator
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.models.query.*
+import kotlin.reflect.KCallable
 
 class PostRoutes(private val database: TrailsDatabase) {
 
@@ -32,19 +35,22 @@ class PostRoutes(private val database: TrailsDatabase) {
 
     fun Route.queryPostsComposite() {
         post("/posts/query") {
+            val query = call.receive<Query.Many>()
             try {
 
-                val postIds = database.postQueries.selectPosts(8).executeAsList().map { it.id }
-                if (postIds.isEmpty()) {
+                val entities = database.postQueries.selectAllPosts().executeAsList()
+
+                if (entities.isEmpty()) {
                     call.respond(emptyList<Post.Composite>())
                     return@post
                 }
 
-                val allRows = postIds.flatMap { database.postQueries.getCompositePostById(it).executeAsList() }
-
-                val posts = allRows
-                    .groupBy { it.post_id }
-                    .map { (postId, rowsForPost) -> buildCompositePost(rowsForPost, postId) }
+                val posts = entities.map { it.asNode() }.asSequence()
+                    .filter { item -> query.predicate?.let { evaluatePredicate(it, item) } ?: true }
+                    .sortedWith { a, b -> compareItems(a, b, query.order) }
+                    .let { sequence ->
+                        query.limit?.let { sequence.take(it) } ?: sequence
+                    }.toList()
 
                 call.respond(posts)
 
@@ -55,6 +61,166 @@ class PostRoutes(private val database: TrailsDatabase) {
                 )
             }
         }
+    }
+
+    private fun org.mobilenativefoundation.trails.backend.server.Post.asNode(): Post.Node {
+        val key = Post.Key(this.id)
+        val properties = Post.Properties(
+            creatorId = this.creator_id,
+            caption = this.caption,
+            createdAt = this.created_at.toKotlinLocalDateTime(),
+            likesCount = this.likes_count,
+            commentsCount = this.comments_count,
+            sharesCount = this.shares_count,
+            viewsCount = this.views_count,
+            isSponsored = is_sponsored,
+            coverURL = cover_url,
+            platform = platform,
+            locationName = location_name
+        )
+        return Post.Node(key, properties)
+    }
+
+
+    private fun evaluatePredicate(predicate: Predicate<*>, item: Post.Node): Boolean {
+        return when (predicate) {
+            is Predicate.Comparison<*> -> {
+
+                when (predicate.type) {
+                    Type.STRING -> {
+
+
+                        val propertyValue = getStringProperty(item, predicate.propertyName)
+                        val comparisonValue = predicate.value as String
+
+                        when (predicate.operator) {
+                            ComparisonOperator.EQUALS -> propertyValue == comparisonValue
+                            ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
+                            ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
+                            ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
+                            ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
+                            ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
+                            ComparisonOperator.CONTAINS -> propertyValue.contains(comparisonValue)
+                        }
+                    }
+
+                    Type.BOOLEAN -> {
+                        val propertyValue = getBooleanProperty(item, predicate.propertyName)
+                        val comparisonValue = predicate.value as Boolean
+
+                        when (predicate.operator) {
+                            ComparisonOperator.EQUALS -> propertyValue == comparisonValue
+                            ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
+                            ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
+                            ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
+                            ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
+                            ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
+                            ComparisonOperator.CONTAINS -> throw UnsupportedOperationException()
+                        }
+                    }
+
+                    Type.INT -> {
+                        val propertyValue = getIntProperty(item, predicate.propertyName)
+                        val comparisonValue = predicate.value as Int
+
+                        when (predicate.operator) {
+                            ComparisonOperator.EQUALS -> propertyValue == comparisonValue
+                            ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
+                            ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
+                            ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
+                            ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
+                            ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
+                            ComparisonOperator.CONTAINS -> throw UnsupportedOperationException()
+                        }
+                    }
+
+                    Type.LONG -> {
+                        val propertyValue = getLongProperty(item, predicate.propertyName)
+                        val comparisonValue = predicate.value as Long
+
+                        when (predicate.operator) {
+                            ComparisonOperator.EQUALS -> propertyValue == comparisonValue
+                            ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
+                            ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
+                            ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
+                            ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
+                            ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
+                            ComparisonOperator.CONTAINS -> throw UnsupportedOperationException()
+                        }
+                    }
+                }
+            }
+
+            is Predicate.Logical -> {
+                val evaluations = predicate.predicates.map { evaluatePredicate(it, item) }
+                when (predicate.operator) {
+                    LogicalOperator.AND -> evaluations.all { it }
+                    LogicalOperator.OR -> evaluations.any { it }
+                }
+            }
+        }
+    }
+
+    private fun compareItems(a: Post.Node, b: Post.Node, order: Order?): Int {
+        return if (order != null) {
+
+            return when (order.type) {
+                Type.STRING -> {
+                    val valueA = getStringProperty(a, order.propertyName)
+                    val valueB = getStringProperty(b, order.propertyName)
+                    val comparison = valueA.compareTo(valueB)
+                    if (order.direction == Direction.ASC) comparison else -comparison
+                }
+
+                Type.BOOLEAN -> {
+                    val valueA = getBooleanProperty(a, order.propertyName)
+                    val valueB = getBooleanProperty(b, order.propertyName)
+                    val comparison = valueA.compareTo(valueB)
+                    if (order.direction == Direction.ASC) comparison else -comparison
+                }
+
+                Type.INT -> {
+                    val valueA = getIntProperty(a, order.propertyName)
+                    val valueB = getIntProperty(b, order.propertyName)
+                    val comparison = valueA.compareTo(valueB)
+                    if (order.direction == Direction.ASC) comparison else -comparison
+                }
+
+                Type.LONG -> {
+                    val valueA = getLongProperty(a, order.propertyName)
+                    val valueB = getLongProperty(b, order.propertyName)
+                    val comparison = valueA.compareTo(valueB)
+                    if (order.direction == Direction.ASC) comparison else -comparison
+                }
+            }
+        } else {
+            0
+        }
+    }
+
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> getStringProperty(instance: T, propertyName: String): String {
+        val callable = instance::class.members.first { it.name == propertyName } as KCallable<String>
+        return callable.call()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> getIntProperty(instance: T, propertyName: String): Int {
+        val callable = instance::class.members.first { it.name == propertyName } as KCallable<Int>
+        return callable.call()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> getBooleanProperty(instance: T, propertyName: String): Boolean {
+        val callable = instance::class.members.first { it.name == propertyName } as KCallable<Boolean>
+        return callable.call()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> getLongProperty(instance: T, propertyName: String): Long {
+        val callable = instance::class.members.first { it.name == propertyName } as KCallable<Long>
+        return callable.call()
     }
 
     fun Route.getPosts() {
@@ -125,7 +291,6 @@ class PostRoutes(private val database: TrailsDatabase) {
                 media = emptyList()
             )
         )
-
 
 
 //        val hashtags = rowsForPost

@@ -6,7 +6,6 @@ import org.mobilenativefoundation.trails.xplat.feat.homeScreen.api.HomeScreen
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.post.caption
 import org.mobilenativefoundation.trails.xplat.lib.models.post.id
-import org.mobilenativefoundation.trails.xplat.lib.models.query.ASC
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.DataSources
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.api.PostRepository
 
@@ -25,7 +24,7 @@ class HomeScreenPresenter(
                 from(DataSources.all)
                 where { Post.Node::caption contains "skiing" }
                 limit(12)
-                orderBy(Post.Node::id, ASC)
+                orderBy(Post.Node::id)
             }
         }
 

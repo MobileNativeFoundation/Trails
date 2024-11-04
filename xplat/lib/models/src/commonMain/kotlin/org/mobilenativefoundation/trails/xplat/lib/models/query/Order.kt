@@ -1,8 +1,13 @@
 package org.mobilenativefoundation.trails.xplat.lib.models.query
 
-import kotlin.reflect.KProperty1
+import kotlinx.serialization.Serializable
 
-data class Order<T>(
-    val property: KProperty1<T, *>,
-    val direction: Direction
+@Serializable
+data class Order(
+    @Serializable
+    val propertyName: String,
+    @Serializable
+    val direction: Direction,
+    @Serializable
+    val type: Type
 )
