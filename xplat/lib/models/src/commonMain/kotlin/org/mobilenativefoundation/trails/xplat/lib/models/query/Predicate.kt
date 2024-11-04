@@ -10,7 +10,7 @@ sealed class Predicate< out T : @Contextual Any> {
     data class Comparison<T : Any>(
         val propertyName: String,
         val operator: ComparisonOperator,
-        val value: T,
+        val value: @Contextual T,
         val valuePropertyValueType: PropertyValueType
     ) : Predicate<T>()
 
@@ -24,3 +24,4 @@ sealed class Predicate< out T : @Contextual Any> {
 enum class PropertyValueType {
     STRING, BOOLEAN, INT, LONG
 }
+
