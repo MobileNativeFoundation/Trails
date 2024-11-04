@@ -1,7 +1,7 @@
 package org.mobilenativefoundation.trails.xplat.lib.operations.query
 
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Direction
-import org.mobilenativefoundation.trails.xplat.lib.models.query.PropertyValueType
+import org.mobilenativefoundation.trails.xplat.lib.models.query.Type
 import kotlin.reflect.KProperty1
 
 class QueryOneBuilder<T : Any> {
@@ -30,23 +30,25 @@ class QueryOneBuilder<T : Any> {
 
 
 class OrderByBuilder<T : Any> {
-    private lateinit var property: KProperty1<T, *>
+    lateinit var property: KProperty1<T, *>
     private var direction: Direction = Direction.ASC
-    private lateinit var propertyValueType: PropertyValueType
+    lateinit var propertyType: Type
 
     infix fun direction(direction: Direction) {
         this.direction = direction
     }
 
-    infix fun type(propertyValueType: PropertyValueType) {
-        this.propertyValueType = propertyValueType
-    }
+    inline infix fun <reified V : Any> property(property: KProperty1<T, V>) {
+        this.propertyType = when (V::class) {
+            String::class -> Type.STRING
+            Int::class -> Type.INT
+            else -> throw UnsupportedOperationException("Unsupported type ${V::class}.")
+        }
 
-    infix fun property(property: KProperty1<T, *>) {
         this.property = property
     }
 
-    internal fun build(): Order<T> = Order(property, direction, propertyValueType)
+    internal fun build(): Order<T> = Order(property, direction, propertyType)
 }
 
 class QueryManyBuilder<T : Any> {
@@ -69,14 +71,13 @@ class QueryManyBuilder<T : Any> {
 
 
     inline fun <reified V : Any> orderBy(property: KProperty1<T, V>, direction: Direction = Direction.ASC) {
-        val propertyValueType = when (V::class) {
-            String::class -> PropertyValueType.STRING
-            Int::class -> PropertyValueType.INT
-            Long::class -> PropertyValueType.LONG
-            else -> error("Unsupported type: ${V::class}.")
+        val propertyType = when (V::class) {
+            String::class -> Type.STRING
+            Int::class -> Type.INT
+            else -> throw UnsupportedOperationException("Unsupported type ${V::class}.")
         }
 
-        this.order = Order(property, direction, propertyValueType = propertyValueType)
+        this.order = Order(property, direction, propertyType)
     }
 
     fun limit(value: Int) {

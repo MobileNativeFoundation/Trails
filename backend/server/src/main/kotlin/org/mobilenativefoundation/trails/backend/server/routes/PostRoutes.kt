@@ -36,7 +36,10 @@ class PostRoutes(private val database: TrailsDatabase) {
     fun Route.queryPostsComposite() {
         post("/posts/query") {
 
-            val query = call.receive<Query.Many<*>>()
+
+            val query = call.receive<Query.Many>()
+
+
             try {
 
                 val entities = database.postQueries.selectAllPosts().executeAsList()
@@ -83,74 +86,23 @@ class PostRoutes(private val database: TrailsDatabase) {
     }
 
 
-    private fun evaluatePredicate(predicate: Predicate<*>, item: Post.Node): Boolean {
+    private fun evaluatePredicate(predicate: Predicate, item: Post.Node): Boolean {
         return when (predicate) {
-            is Predicate.Comparison<*> -> {
+            is Predicate.Comparison.StringComparison -> {
+                val propertyValue = getStringProperty(item, predicate.propertyName)
+                val comparisonValue = predicate.value as String
 
-                when (predicate.valuePropertyValueType) {
-                    PropertyValueType.STRING -> {
-
-
-                        val propertyValue = getStringProperty(item, predicate.propertyName)
-                        val comparisonValue = predicate.value as String
-
-                        when (predicate.operator) {
-                            ComparisonOperator.EQUALS -> propertyValue == comparisonValue
-                            ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
-                            ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
-                            ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
-                            ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
-                            ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
-                            ComparisonOperator.CONTAINS -> propertyValue.contains(comparisonValue)
-                        }
-                    }
-
-                    PropertyValueType.BOOLEAN -> {
-                        val propertyValue = getBooleanProperty(item, predicate.propertyName)
-                        val comparisonValue = predicate.value as Boolean
-
-                        when (predicate.operator) {
-                            ComparisonOperator.EQUALS -> propertyValue == comparisonValue
-                            ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
-                            ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
-                            ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
-                            ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
-                            ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
-                            ComparisonOperator.CONTAINS -> throw UnsupportedOperationException()
-                        }
-                    }
-
-                    PropertyValueType.INT -> {
-                        val propertyValue = getIntProperty(item, predicate.propertyName)
-                        val comparisonValue = predicate.value as Int
-
-                        when (predicate.operator) {
-                            ComparisonOperator.EQUALS -> propertyValue == comparisonValue
-                            ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
-                            ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
-                            ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
-                            ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
-                            ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
-                            ComparisonOperator.CONTAINS -> throw UnsupportedOperationException()
-                        }
-                    }
-
-                    PropertyValueType.LONG -> {
-                        val propertyValue = getLongProperty(item, predicate.propertyName)
-                        val comparisonValue = predicate.value as Long
-
-                        when (predicate.operator) {
-                            ComparisonOperator.EQUALS -> propertyValue == comparisonValue
-                            ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
-                            ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
-                            ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
-                            ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
-                            ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
-                            ComparisonOperator.CONTAINS -> throw UnsupportedOperationException()
-                        }
-                    }
+                when (predicate.operator) {
+                    ComparisonOperator.EQUALS -> propertyValue == comparisonValue
+                    ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
+                    ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
+                    ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
+                    ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
+                    ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
+                    ComparisonOperator.CONTAINS -> propertyValue.contains(comparisonValue)
                 }
             }
+
 
             is Predicate.Logical -> {
                 val evaluations = predicate.predicates.map { evaluatePredicate(it, item) }
@@ -159,37 +111,53 @@ class PostRoutes(private val database: TrailsDatabase) {
                     LogicalOperator.OR -> evaluations.any { it }
                 }
             }
+
+            is Predicate.Comparison.BooleanComparison -> {
+                val propertyValue = getBooleanProperty(item, predicate.propertyName)
+                val comparisonValue = predicate.value as Boolean
+
+                when (predicate.operator) {
+                    ComparisonOperator.EQUALS -> propertyValue == comparisonValue
+                    ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
+                    ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
+                    ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
+                    ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
+                    ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
+                    ComparisonOperator.CONTAINS -> throw UnsupportedOperationException()
+                }
+            }
+
+            is Predicate.Comparison.IntComparison -> {
+                val propertyValue = getIntProperty(item, predicate.propertyName)
+                val comparisonValue = predicate.value as Int
+
+                when (predicate.operator) {
+                    ComparisonOperator.EQUALS -> propertyValue == comparisonValue
+                    ComparisonOperator.NOT_EQUALS -> propertyValue != comparisonValue
+                    ComparisonOperator.GREATER_THAN -> propertyValue > comparisonValue
+                    ComparisonOperator.LESS_THAN -> propertyValue < comparisonValue
+                    ComparisonOperator.GREATER_THAN_OR_EQUALS -> propertyValue >= comparisonValue
+                    ComparisonOperator.LESS_THAN_OR_EQUALS -> propertyValue <= comparisonValue
+                    ComparisonOperator.CONTAINS -> throw UnsupportedOperationException()
+                }
+            }
         }
     }
 
     private fun compareItems(a: Post.Node, b: Post.Node, order: Order?): Int {
         return if (order != null) {
 
-            return when (order.propertyValueType) {
-                PropertyValueType.STRING -> {
+            return when (order.propertyType) {
+                Type.STRING -> {
                     val valueA = getStringProperty(a, order.propertyName)
                     val valueB = getStringProperty(b, order.propertyName)
                     val comparison = valueA.compareTo(valueB)
                     if (order.direction == Direction.ASC) comparison else -comparison
                 }
 
-                PropertyValueType.BOOLEAN -> {
-                    val valueA = getBooleanProperty(a, order.propertyName)
-                    val valueB = getBooleanProperty(b, order.propertyName)
-                    val comparison = valueA.compareTo(valueB)
-                    if (order.direction == Direction.ASC) comparison else -comparison
-                }
-
-                PropertyValueType.INT -> {
+                Type.INT -> {
                     val valueA = getIntProperty(a, order.propertyName)
                     val valueB = getIntProperty(b, order.propertyName)
-                    val comparison = valueA.compareTo(valueB)
-                    if (order.direction == Direction.ASC) comparison else -comparison
-                }
-
-                PropertyValueType.LONG -> {
-                    val valueA = getLongProperty(a, order.propertyName)
-                    val valueB = getLongProperty(b, order.propertyName)
                     val comparison = valueA.compareTo(valueB)
                     if (order.direction == Direction.ASC) comparison else -comparison
                 }

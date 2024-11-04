@@ -8,7 +8,6 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Order
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query.Many
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query.One
-import org.mobilenativefoundation.trails.xplat.lib.models.query.PropertyValueType
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Predicate
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
@@ -77,21 +76,33 @@ class PostFetcherFactory(
         emit(output)
     }
 
-    private fun convertPredicate(predicate: Predicate<Post.Node, *>): org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate<*> {
+    private fun convertPredicate(predicate: Predicate<Post.Node, *>): org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate {
         return when (predicate) {
-            is Predicate.Comparison<*, *> -> {
-                org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate.Comparison(
-                    propertyName = predicate.property.name,
-                    operator = predicate.operator,
-                    value = predicate.value,
-                    valuePropertyValueType = when (predicate.value) {
-                        is String -> PropertyValueType.STRING
-                        is Boolean -> PropertyValueType.BOOLEAN
-                        is Int -> PropertyValueType.INT
-                        is Long -> PropertyValueType.LONG
-                        else -> error("Unsupported type.")
-                    }
-                )
+            is Predicate.Comparison -> {
+
+                when (predicate.value) {
+                    is String -> org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate.Comparison.StringComparison(
+                        propertyName = predicate.property.name,
+                        operator = predicate.operator,
+                        value = predicate.value as String,
+                    )
+
+                    is Boolean -> org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate.Comparison.BooleanComparison(
+                        propertyName = predicate.property.name,
+                        operator = predicate.operator,
+                        value = predicate.value as Boolean,
+                    )
+
+                    is Int -> org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate.Comparison.IntComparison(
+                        propertyName = predicate.property.name,
+                        operator = predicate.operator,
+                        value = predicate.value as Int,
+                    )
+
+                    else -> error("Unsupported type.")
+                }
+
+
             }
 
             is Predicate.Logical -> {
@@ -111,7 +122,7 @@ class PostFetcherFactory(
             Order(
                 propertyName = it.property.name,
                 direction = it.direction,
-                propertyValueType = it.propertyValueType
+                propertyType = it.propertyType
             )
         }
     }

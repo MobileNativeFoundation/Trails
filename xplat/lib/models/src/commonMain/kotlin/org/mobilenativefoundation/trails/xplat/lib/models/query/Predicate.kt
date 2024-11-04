@@ -3,24 +3,37 @@ package org.mobilenativefoundation.trails.xplat.lib.models.query
 import kotlinx.serialization.Serializable
 
 @Serializable
-
-sealed class Predicate<out T : Any> {
-    @Serializable
-    data class Comparison<T : Any>(
-        val propertyName: String,
-        val operator: ComparisonOperator,
-        val value: T,
-        val valuePropertyValueType: PropertyValueType
-    ) : Predicate<T>()
+sealed class Predicate {
 
     @Serializable
-    data class Logical<T : Any>(
-        val operator: LogicalOperator,
-        val predicates: List<Predicate<T>>
-    ) : Predicate<T>()
-}
+    sealed class Comparison : Predicate() {
+        abstract val propertyName: String
+        abstract val operator: ComparisonOperator
 
-enum class PropertyValueType {
-    STRING, BOOLEAN, INT, LONG
-}
+        @Serializable
+        data class StringComparison(
+            override val propertyName: String,
+            override val operator: ComparisonOperator,
+            val value: String,
+        ) : Comparison()
 
+        @Serializable
+        data class IntComparison(
+            override val propertyName: String,
+            override val operator: ComparisonOperator,
+            val value: Int,
+        ) : Comparison()
+
+        @Serializable
+        data class BooleanComparison(
+            override val propertyName: String,
+            override val operator: ComparisonOperator,
+            val value: Boolean,
+        ) : Comparison()
+    }
+
+    @Serializable
+    data class Logical(
+        val operator: LogicalOperator, val predicates: List<Predicate>
+    ) : Predicate()
+}

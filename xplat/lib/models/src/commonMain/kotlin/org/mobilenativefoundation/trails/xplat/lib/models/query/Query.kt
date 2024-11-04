@@ -3,17 +3,17 @@ package org.mobilenativefoundation.trails.xplat.lib.models.query
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Query<out T: Any> {
+sealed class Query {
     @Serializable
-    class One<out T: Any>(
-        val predicate: Predicate<T>?,
+    class One(
+        val predicate: Predicate?,
         val order: Order?,
-    ) : Query<T>()
+    ) : Query()
 
     @Serializable
-    class Many<out T: Any>(
-        val predicate: Predicate<T>?,
+    class Many(
+        val predicate: Predicate?,
         val order: Order?,
         val limit: Int?
-    ) : Query<T>()
+    ) : Query()
 }

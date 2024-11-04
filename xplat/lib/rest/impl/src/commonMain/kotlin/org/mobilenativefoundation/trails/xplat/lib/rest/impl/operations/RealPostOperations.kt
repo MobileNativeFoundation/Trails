@@ -39,15 +39,15 @@ class RealPostOperations(
         TODO("Not yet implemented")
     }
 
-    override suspend fun <T : Any> queryOne(query: Query.One<T>): Post.Node? {
+    override suspend fun queryOne(query: Query.One): Post.Node? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun <T : Any> queryMany(query: Query.Many<T>): List<Post.Node> {
+    override suspend fun queryMany(query: Query.Many): List<Post.Node> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun <T : Any> queryManyComposite(query: Query.Many<T>): List<Post.Composite> {
+    override suspend fun queryManyComposite(query: Query.Many): List<Post.Composite> {
         val url = TrailsEndpoints.queryPostsComposite()
         val response = httpClient.post(url) {
             setBody(query)

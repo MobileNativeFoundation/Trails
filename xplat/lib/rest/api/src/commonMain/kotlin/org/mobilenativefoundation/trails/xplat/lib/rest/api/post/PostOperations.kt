@@ -12,10 +12,10 @@ interface PostOperations {
     suspend fun findOneComposite(key: Post.Key): Post.Composite?
     suspend fun findManyComposite(keys: List<Post.Key>): List<Post.Composite>
 
-    suspend fun <T : Any> queryOne(query: Query.One<T>): Post.Node?
-    suspend fun <T : Any> queryMany(query: Query.Many<T>): List<Post.Node>
+    suspend fun queryOne(query: Query.One): Post.Node?
+    suspend fun queryMany(query: Query.Many): List<Post.Node>
 
-    suspend fun <T : Any> queryManyComposite(query: Query.Many<T>): List<Post.Composite>
+    suspend fun queryManyComposite(query: Query.Many): List<Post.Composite>
 
     suspend fun insertOne(properties: Post.Properties): Post.Key?
     suspend fun insertMany(properties: List<Post.Properties>): List<Post.Key?>

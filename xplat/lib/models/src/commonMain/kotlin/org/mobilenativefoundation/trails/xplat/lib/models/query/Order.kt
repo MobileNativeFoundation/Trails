@@ -9,5 +9,7 @@ data class Order(
     @Serializable
     val direction: Direction,
     @Serializable
-    val propertyValueType: PropertyValueType
+    val propertyType: Type
 )
+
+enum class Type {STRING, INT}
