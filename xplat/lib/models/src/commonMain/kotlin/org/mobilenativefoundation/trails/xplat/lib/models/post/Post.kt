@@ -36,7 +36,10 @@ sealed interface Post : Model<Post.Key, Post.Properties, Post.Edges> {
     data class Node(
         override val key: Key,
         override val properties: Properties
-    ) : Model.Node<Key, Properties, Edges>, Post
+    ) : Model.Node<Key, Properties, Edges>, Post {
+        val id: Int = this.key.id
+        val caption: String = this.properties.caption.orEmpty()
+    }
 
     @Serializable
     data class Composite(
@@ -44,11 +47,3 @@ sealed interface Post : Model<Post.Key, Post.Properties, Post.Edges> {
         override val edges: Edges
     ) : Model.Composite<Key, Properties, Edges>, Post
 }
-
-
-val Post.Node.caption: String
-    get() = this.properties.caption.orEmpty()
-
-val Post.Node.id: Int
-    get() = this.key.id
-
