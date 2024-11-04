@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 sealed class Predicate< out T : @Contextual Any> {
     @Serializable
-    data class Comparison<T : Any>(
+    data class Comparison<T : @Contextual Any>(
         val propertyName: String,
         val operator: ComparisonOperator,
         val value: @Contextual T,
