@@ -10,8 +10,9 @@ import org.mobilenativefoundation.trails.backend.server.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Creator
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.query.*
-import kotlin.reflect.KCallable
 import kotlin.reflect.KProperty1
+import kotlin.reflect.KProperty2
+import kotlin.reflect.full.memberExtensionProperties
 import kotlin.reflect.full.memberProperties
 
 class PostRoutes(private val database: TrailsDatabase) {
@@ -174,32 +175,52 @@ class PostRoutes(private val database: TrailsDatabase) {
     fun <T : Any> getStringProperty(instance: T, propertyName: String): String {
         println("PROPERTIES = ${instance::class.memberProperties}")
         println("MEMBERS = ${instance::class.members}")
-        val property = instance::class.memberProperties.first { it.name == propertyName } as KProperty1<T, String>
-        return property.get(instance)
+        println("MEMBER EXTENSION PROPS = ${instance::class.memberExtensionProperties}")
+        val property = instance::class.memberProperties.firstOrNull { it.name == propertyName } as? KProperty1<T, String>
+        val extensionProperty =
+            instance::class.memberExtensionProperties.firstOrNull { it.name == propertyName } as? KProperty2<T, T, String>
+
+        return property?.get(instance) ?: extensionProperty?.get(instance, instance)
+        ?: error("Property name $propertyName not found.")
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getIntProperty(instance: T, propertyName: String): Int {
         println("PROPERTIES = ${instance::class.memberProperties}")
         println("MEMBERS = ${instance::class.members}")
-        val property = instance::class.memberProperties.first { it.name == propertyName } as KProperty1<T, Int>
-        return property.get(instance)
+        println("MEMBER EXTENSION PROPS = ${instance::class.memberExtensionProperties}")
+        val property = instance::class.memberProperties.firstOrNull { it.name == propertyName } as? KProperty1<T, Int>
+        val extensionProperty =
+            instance::class.memberExtensionProperties.firstOrNull { it.name == propertyName } as? KProperty2<T, T, Int>
+
+        return property?.get(instance) ?: extensionProperty?.get(instance, instance)
+        ?: error("Property name $propertyName not found.")
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getBooleanProperty(instance: T, propertyName: String): Boolean {
         println("PROPERTIES = ${instance::class.memberProperties}")
         println("MEMBERS = ${instance::class.members}")
-        val property = instance::class.memberProperties.first { it.name == propertyName } as KProperty1<T, Boolean>
-        return property.get(instance)
+        println("MEMBER EXTENSION PROPS = ${instance::class.memberExtensionProperties}")
+        val property = instance::class.memberProperties.firstOrNull { it.name == propertyName } as? KProperty1<T, Boolean>
+        val extensionProperty =
+            instance::class.memberExtensionProperties.firstOrNull { it.name == propertyName } as? KProperty2<T, T, Boolean>
+
+        return property?.get(instance) ?: extensionProperty?.get(instance, instance)
+        ?: error("Property name $propertyName not found.")
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getLongProperty(instance: T, propertyName: String): Long {
         println("PROPERTIES = ${instance::class.memberProperties}")
         println("MEMBERS = ${instance::class.members}")
-        val property = instance::class.memberProperties.first { it.name == propertyName } as KProperty1<T, Long>
-        return property.get(instance)
+        println("MEMBER EXTENSION PROPS = ${instance::class.memberExtensionProperties}")
+        val property = instance::class.memberProperties.firstOrNull { it.name == propertyName } as? KProperty1<T, Long>
+        val extensionProperty =
+            instance::class.memberExtensionProperties.firstOrNull { it.name == propertyName } as? KProperty2<T, T, Long>
+
+        return property?.get(instance) ?: extensionProperty?.get(instance, instance)
+        ?: error("Property name $propertyName not found.")
     }
 
     fun Route.getPosts() {
