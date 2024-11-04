@@ -26,10 +26,110 @@ class PostBookkeeperFactory(
                 handleSetLastFailedSync(operation, timestamp)
             },
             clear = { operation ->
-                TODO()
+                when (operation) {
+                    is Operation.Mutation.Create.InsertOne -> {
+                        // Creating posts from the client is not supported
+                        false
+                    }
+
+                    is Operation.Mutation.Delete.DeleteAll -> {
+                        trailsDatabase.postBookkeepingQueries.clearAllFailedDeletes()
+                        true
+                    }
+
+                    is Operation.Mutation.Delete.DeleteMany -> {
+                        operation.keys.forEach { key ->
+                            trailsDatabase.postBookkeepingQueries.clearFailedDelete(key.id.toLong())
+                        }
+                        true
+                    }
+
+                    is Operation.Mutation.Delete.DeleteOne -> {
+                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
+                        true
+                    }
+
+                    is Operation.Mutation.Update.ReplaceOne -> {
+                        // Replacing a post is not supported
+                        false
+                    }
+
+                    is Operation.Mutation.Update.UpdateOne -> {
+                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.node.id.toLong())
+                        true
+                    }
+
+                    is Operation.Mutation.Upsert.UpsertOne -> {
+                        // Upserting a post from the client is not supported
+                        false
+                    }
+
+                    is Operation.Query.FindAll -> {
+                        trailsDatabase.postBookkeepingQueries.clearAllFailedUpdates()
+                        trailsDatabase.postBookkeepingQueries.clearAllFailedDeletes()
+                        true
+                    }
+
+                    is Operation.Query.FindMany -> {
+                        operation.keys.forEach { key ->
+                            trailsDatabase.postBookkeepingQueries.clearFailedUpdate(key.id.toLong())
+                            trailsDatabase.postBookkeepingQueries.clearFailedDelete(key.id.toLong())
+                        }
+                        true
+                    }
+
+                    is Operation.Query.FindOne -> {
+                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.key.id.toLong())
+                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
+                        true
+                    }
+
+                    is Operation.Query.FindOneComposite -> {
+                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.key.id.toLong())
+                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
+                        true
+                    }
+
+                    is Operation.Query.ObserveMany -> {
+                        operation.keys.forEach { key ->
+                            trailsDatabase.postBookkeepingQueries.clearFailedUpdate(key.id.toLong())
+                            trailsDatabase.postBookkeepingQueries.clearFailedDelete(key.id.toLong())
+                        }
+                        true
+                    }
+
+                    is Operation.Query.ObserveOne -> {
+                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.key.id.toLong())
+                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
+                        true
+                    }
+
+                    is Operation.Query.ObserveOneComposite -> {
+                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.key.id.toLong())
+                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
+                        true
+                    }
+
+                    is Operation.Query.QueryMany -> {
+                        // Updating nodes based on a query is not supported
+                        false
+                    }
+
+                    is Operation.Query.QueryManyComposite -> {
+                        // Updating composites based on a query is not supported
+                        false
+                    }
+
+                    is Operation.Query.QueryOne -> {
+                        // Updating a node based on a query is not supported
+                        false
+                    }
+                }
             },
             clearAll = {
-                TODO()
+                trailsDatabase.postBookkeepingQueries.clearAllFailedUpdates()
+                trailsDatabase.postBookkeepingQueries.clearAllFailedDeletes()
+                true
             }
         )
 
@@ -74,8 +174,9 @@ class PostBookkeeperFactory(
 
             is Operation.Query.FindOneComposite -> TODO()
             is Operation.Query.ObserveMany -> {
-                // TODO(): Support observing
-                throw UnsupportedOperationException()
+                // Updates to many nodes is not supported
+                // So we can just return null
+                null
             }
 
             is Operation.Query.ObserveOne -> {
@@ -89,8 +190,9 @@ class PostBookkeeperFactory(
             }
 
             is Operation.Query.QueryMany -> {
-                // TODO(): Support querying
-                throw UnsupportedOperationException()
+                // Updates to many nodes is not supported
+                // So we can just return null
+                null
             }
 
             is Operation.Query.QueryOne -> {
@@ -99,8 +201,9 @@ class PostBookkeeperFactory(
             }
 
             is Operation.Query.QueryManyComposite -> {
-                // TODO(): Support querying
-                throw UnsupportedOperationException()
+                // Updates to many composites is not supported
+                // So we can just return null
+                null
             }
         }
     }

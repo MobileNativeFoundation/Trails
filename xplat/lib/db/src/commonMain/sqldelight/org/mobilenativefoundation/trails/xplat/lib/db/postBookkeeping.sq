@@ -35,3 +35,15 @@ SELECT timestamp FROM postFailedUpdate;
 
 getFailedDeletes:
 SELECT timestamp FROM postFailedDelete;
+
+clearFailedUpdate:
+DELETE FROM postFailedUpdate WHERE post_id = ?;
+
+clearFailedDelete:
+DELETE FROM postFailedDelete WHERE post_id = ?;
+
+clearAllFailedUpdates:
+DELETE FROM postFailedUpdate;
+
+clearAllFailedDeletes:
+DELETE FROM postFailedDelete;
