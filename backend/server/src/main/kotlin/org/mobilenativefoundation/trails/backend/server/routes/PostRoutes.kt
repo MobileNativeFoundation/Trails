@@ -11,6 +11,8 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.Creator
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.query.*
 import kotlin.reflect.KCallable
+import kotlin.reflect.KProperty1
+import kotlin.reflect.full.memberProperties
 
 class PostRoutes(private val database: TrailsDatabase) {
 
@@ -170,26 +172,34 @@ class PostRoutes(private val database: TrailsDatabase) {
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getStringProperty(instance: T, propertyName: String): String {
-        val callable = instance::class.members.first { it.name == propertyName } as KCallable<String>
-        return callable.call()
+        println("PROPERTIES = ${instance::class.memberProperties}")
+        println("MEMBERS = ${instance::class.members}")
+        val property = instance::class.memberProperties.first { it.name == propertyName } as KProperty1<T, String>
+        return property.get(instance)
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getIntProperty(instance: T, propertyName: String): Int {
-        val callable = instance::class.members.first { it.name == propertyName } as KCallable<Int>
-        return callable.call()
+        println("PROPERTIES = ${instance::class.memberProperties}")
+        println("MEMBERS = ${instance::class.members}")
+        val property = instance::class.memberProperties.first { it.name == propertyName } as KProperty1<T, Int>
+        return property.get(instance)
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getBooleanProperty(instance: T, propertyName: String): Boolean {
-        val callable = instance::class.members.first { it.name == propertyName } as KCallable<Boolean>
-        return callable.call()
+        println("PROPERTIES = ${instance::class.memberProperties}")
+        println("MEMBERS = ${instance::class.members}")
+        val property = instance::class.memberProperties.first { it.name == propertyName } as KProperty1<T, Boolean>
+        return property.get(instance)
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getLongProperty(instance: T, propertyName: String): Long {
-        val callable = instance::class.members.first { it.name == propertyName } as KCallable<Long>
-        return callable.call()
+        println("PROPERTIES = ${instance::class.memberProperties}")
+        println("MEMBERS = ${instance::class.members}")
+        val property = instance::class.memberProperties.first { it.name == propertyName } as KProperty1<T, Long>
+        return property.get(instance)
     }
 
     fun Route.getPosts() {

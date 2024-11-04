@@ -3,6 +3,7 @@ package org.mobilenativefoundation.trails.xplat.lib.rest.impl.operations
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
@@ -53,6 +54,10 @@ class RealPostOperations(
             setBody(query)
             contentType(ContentType.Application.Json)
         }
+        println("RESPONSE")
+        println("BODY = ${response.bodyAsText()}")
+        println("Response = $response}")
+
         return response.body()
     }
 

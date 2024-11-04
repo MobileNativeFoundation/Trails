@@ -22,7 +22,7 @@ class HomeScreenPresenter(
         LaunchedEffect(Unit) {
             posts = postRepository.queryManyComposite {
                 from(DataSources.all)
-                where { Post.Node::caption contains "skiing" }
+                where { Post.Node::id greaterThan  1 }
                 limit(12)
                 orderBy(Post.Node::id)
             }

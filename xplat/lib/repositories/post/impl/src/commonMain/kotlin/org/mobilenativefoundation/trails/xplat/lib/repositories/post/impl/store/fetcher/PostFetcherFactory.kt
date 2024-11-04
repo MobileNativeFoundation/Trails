@@ -80,9 +80,12 @@ class PostFetcherFactory(
         return when (predicate) {
             is Predicate.Comparison -> {
 
+                println("PREDICATE = $predicate")
+                println("PREDICATE PROPERTY = ${predicate.property.name.removePrefix("property ")}")
+                println("PREDICATE PROPERTY NAME = ${predicate.property::name}")
                 when (predicate.value) {
                     is String -> org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate.Comparison.StringComparison(
-                        propertyName = predicate.property.name,
+                        propertyName = predicate.property.name.removePrefix("property "),
                         operator = predicate.operator,
                         value = predicate.value as String,
                     )
@@ -94,7 +97,7 @@ class PostFetcherFactory(
                     )
 
                     is Int -> org.mobilenativefoundation.trails.xplat.lib.models.query.Predicate.Comparison.IntComparison(
-                        propertyName = predicate.property.name,
+                        propertyName = predicate.property.name.removePrefix("property "),
                         operator = predicate.operator,
                         value = predicate.value as Int,
                     )
