@@ -8,7 +8,7 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Order
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query.Many
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query.One
-import org.mobilenativefoundation.trails.xplat.lib.models.query.Type
+import org.mobilenativefoundation.trails.xplat.lib.models.query.PropertyValueType
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Predicate
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
@@ -84,11 +84,11 @@ class PostFetcherFactory(
                     propertyName = predicate.property.name,
                     operator = predicate.operator,
                     value = predicate.value,
-                    type = when (predicate.value) {
-                        is String -> Type.STRING
-                        is Boolean -> Type.BOOLEAN
-                        is Int -> Type.INT
-                        is Long -> Type.LONG
+                    valuePropertyValueType = when (predicate.value) {
+                        is String -> PropertyValueType.STRING
+                        is Boolean -> PropertyValueType.BOOLEAN
+                        is Int -> PropertyValueType.INT
+                        is Long -> PropertyValueType.LONG
                         else -> error("Unsupported type.")
                     }
                 )
@@ -111,7 +111,7 @@ class PostFetcherFactory(
             Order(
                 propertyName = it.property.name,
                 direction = it.direction,
-                type = it.type
+                propertyValueType = it.propertyValueType
             )
         }
     }

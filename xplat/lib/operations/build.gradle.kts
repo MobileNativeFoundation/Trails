@@ -2,6 +2,7 @@
 plugins {
     id("plugin.trails.android.library")
     id("plugin.trails.kotlin.multiplatform")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -12,6 +13,7 @@ kotlin {
                 api(projects.xplat.lib.rest.api)
                 implementation(libs.kotlinx.datetime)
                 api(libs.kotlinx.coroutines.core)
+                api(libs.kotlinx.serialization.core)
             }
         }
     }

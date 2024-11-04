@@ -1,15 +1,17 @@
 package org.mobilenativefoundation.trails.xplat.lib.models.query
 
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Predicate<out T : Any> {
+
+sealed class Predicate< out T : @Contextual Any> {
     @Serializable
     data class Comparison<T : Any>(
         val propertyName: String,
         val operator: ComparisonOperator,
         val value: T,
-        val type: Type
+        val valuePropertyValueType: PropertyValueType
     ) : Predicate<T>()
 
     @Serializable
@@ -19,6 +21,6 @@ sealed class Predicate<out T : Any> {
     ) : Predicate<T>()
 }
 
-enum class Type {
+enum class PropertyValueType {
     STRING, BOOLEAN, INT, LONG
 }

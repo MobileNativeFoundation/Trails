@@ -31,10 +31,10 @@ class PredicateBuilder<T : Any> {
         Predicate.Logical(LogicalOperator.OR, listOf(this, other))
 }
 
-fun <V : Any> valueTypeOf(value: V): Type = when (value) {
-    is String -> Type.STRING
-    is Boolean -> Type.BOOLEAN
-    is Int -> Type.INT
-    is Long -> Type.LONG
+fun <V : Any> valueTypeOf(value: V): PropertyValueType = when (value) {
+    is String -> PropertyValueType.STRING
+    is Boolean -> PropertyValueType.BOOLEAN
+    is Int -> PropertyValueType.INT
+    is Long -> PropertyValueType.LONG
     else -> error("Unsupported value type.")
 }

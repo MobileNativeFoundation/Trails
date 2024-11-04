@@ -86,8 +86,8 @@ class PostRoutes(private val database: TrailsDatabase) {
         return when (predicate) {
             is Predicate.Comparison<*> -> {
 
-                when (predicate.type) {
-                    Type.STRING -> {
+                when (predicate.valuePropertyValueType) {
+                    PropertyValueType.STRING -> {
 
 
                         val propertyValue = getStringProperty(item, predicate.propertyName)
@@ -104,7 +104,7 @@ class PostRoutes(private val database: TrailsDatabase) {
                         }
                     }
 
-                    Type.BOOLEAN -> {
+                    PropertyValueType.BOOLEAN -> {
                         val propertyValue = getBooleanProperty(item, predicate.propertyName)
                         val comparisonValue = predicate.value as Boolean
 
@@ -119,7 +119,7 @@ class PostRoutes(private val database: TrailsDatabase) {
                         }
                     }
 
-                    Type.INT -> {
+                    PropertyValueType.INT -> {
                         val propertyValue = getIntProperty(item, predicate.propertyName)
                         val comparisonValue = predicate.value as Int
 
@@ -134,7 +134,7 @@ class PostRoutes(private val database: TrailsDatabase) {
                         }
                     }
 
-                    Type.LONG -> {
+                    PropertyValueType.LONG -> {
                         val propertyValue = getLongProperty(item, predicate.propertyName)
                         val comparisonValue = predicate.value as Long
 
@@ -164,29 +164,29 @@ class PostRoutes(private val database: TrailsDatabase) {
     private fun compareItems(a: Post.Node, b: Post.Node, order: Order?): Int {
         return if (order != null) {
 
-            return when (order.type) {
-                Type.STRING -> {
+            return when (order.propertyValueType) {
+                PropertyValueType.STRING -> {
                     val valueA = getStringProperty(a, order.propertyName)
                     val valueB = getStringProperty(b, order.propertyName)
                     val comparison = valueA.compareTo(valueB)
                     if (order.direction == Direction.ASC) comparison else -comparison
                 }
 
-                Type.BOOLEAN -> {
+                PropertyValueType.BOOLEAN -> {
                     val valueA = getBooleanProperty(a, order.propertyName)
                     val valueB = getBooleanProperty(b, order.propertyName)
                     val comparison = valueA.compareTo(valueB)
                     if (order.direction == Direction.ASC) comparison else -comparison
                 }
 
-                Type.INT -> {
+                PropertyValueType.INT -> {
                     val valueA = getIntProperty(a, order.propertyName)
                     val valueB = getIntProperty(b, order.propertyName)
                     val comparison = valueA.compareTo(valueB)
                     if (order.direction == Direction.ASC) comparison else -comparison
                 }
 
-                Type.LONG -> {
+                PropertyValueType.LONG -> {
                     val valueA = getLongProperty(a, order.propertyName)
                     val valueB = getLongProperty(b, order.propertyName)
                     val comparison = valueA.compareTo(valueB)

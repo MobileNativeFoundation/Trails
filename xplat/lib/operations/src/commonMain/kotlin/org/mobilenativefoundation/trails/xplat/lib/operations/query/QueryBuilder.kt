@@ -1,7 +1,7 @@
 package org.mobilenativefoundation.trails.xplat.lib.operations.query
 
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Direction
-import org.mobilenativefoundation.trails.xplat.lib.models.query.Type
+import org.mobilenativefoundation.trails.xplat.lib.models.query.PropertyValueType
 import kotlin.reflect.KProperty1
 
 class QueryOneBuilder<T : Any> {
@@ -32,21 +32,21 @@ class QueryOneBuilder<T : Any> {
 class OrderByBuilder<T : Any> {
     private lateinit var property: KProperty1<T, *>
     private var direction: Direction = Direction.ASC
-    private lateinit var type: Type
+    private lateinit var propertyValueType: PropertyValueType
 
     infix fun direction(direction: Direction) {
         this.direction = direction
     }
 
-    infix fun type(type: Type) {
-        this.type = type
+    infix fun type(propertyValueType: PropertyValueType) {
+        this.propertyValueType = propertyValueType
     }
 
     infix fun property(property: KProperty1<T, *>) {
         this.property = property
     }
 
-    internal fun build(): Order<T> = Order(property, direction, type)
+    internal fun build(): Order<T> = Order(property, direction, propertyValueType)
 }
 
 class QueryManyBuilder<T : Any> {
@@ -69,14 +69,14 @@ class QueryManyBuilder<T : Any> {
 
 
     inline fun <reified V : Any> orderBy(property: KProperty1<T, V>, direction: Direction = Direction.ASC) {
-        val type = when (V::class) {
-            String::class -> Type.STRING
-            Int::class -> Type.INT
-            Long::class -> Type.LONG
+        val propertyValueType = when (V::class) {
+            String::class -> PropertyValueType.STRING
+            Int::class -> PropertyValueType.INT
+            Long::class -> PropertyValueType.LONG
             else -> error("Unsupported type: ${V::class}.")
         }
 
-        this.order = Order(property, direction, type = type)
+        this.order = Order(property, direction, propertyValueType = propertyValueType)
     }
 
     fun limit(value: Int) {

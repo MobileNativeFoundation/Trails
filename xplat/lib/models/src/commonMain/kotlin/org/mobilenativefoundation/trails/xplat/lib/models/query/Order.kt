@@ -9,5 +9,5 @@ data class Order(
     @Serializable
     val direction: Direction,
     @Serializable
-    val type: Type
+    val propertyValueType: PropertyValueType
 )
