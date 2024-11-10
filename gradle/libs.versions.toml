@@ -53,6 +53,7 @@ ktor-client-js = {module = "io.ktor:ktor-client-js", version.ref = "ktor"}
 ktor-client-apache5 = { module = "io.ktor:ktor-client-apache5", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-okhttp-jvm = { module = "io.ktor:ktor-client-okhttp-jvm", version.ref = "ktor" }
+ktor-server-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
 native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqljs-driver = { module = "app.cash.sqldelight:sqljs-driver", version.ref = "sqldelight" }

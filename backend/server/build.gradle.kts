@@ -26,6 +26,7 @@ dependencies {
     implementation(libs.jdbc.driver)
     implementation(libs.postgresql)
     implementation(libs.hikaricp)
+    implementation(libs.ktor.server.websockets)
 }
 
 sqldelight {
