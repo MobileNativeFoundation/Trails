@@ -1,0 +1,34 @@
+CREATE TABLE chatSession(
+    id SERIAL PRIMARY KEY
+);
+
+CREATE TABLE chatSessionParticipant(
+    chat_session_id INT NOT NULL REFERENCES chatSession(id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES user(id),
+    PRIMARY KEY (chat_session_id, user_id)
+);
+
+CREATE TABLE chatMessage(
+    id SERIAL PRIMARY KEY,
+    chat_session_id INT NOT NULL REFERENCES chatSession(id) ON DELETE CASCADE,
+    from_user_id INT NOT NULL REFERENCES user(id),
+    content TEXT NOT NULL,
+    timestamp TIMESTAMP NOT NULL
+);
+
+-- Queries
+
+getMessagesByChatSessionId:
+SELECT * FROM chatMessage
+WHERE chat_session_id = ?
+ORDER BY timestamp ASC;
+
+insertChatMessage:
+INSERT INTO chatMessage (chat_session_id, from_user_id, content, timestamp) VALUES (?, ?, ?, ?);
+
+insertChatSessionParticipant:
+INSERT INTO chatSessionParticipant (chat_session_id, user_id) VALUES (?, ?);
+
+getParticipantsByChatSessionId:
+SELECT user_id FROM chatSessionParticipant
+WHERE chat_session_id = ?;
