@@ -8,7 +8,7 @@ Trails is a sample Kotlin Multiplatform app targeting Android, iOS, and web. It'
 
 ### Key Dependencies
 
-- **[Store](https://github.com/MobileNativeFoundation/Store)**: Manages data loading and updating, implementing offline-first patterns. For more information, refer to the [Store docs](https://store.mattramotar.dev).
+- **[Store](https://github.com/MobileNativeFoundation/Store)**: Manages data loading and updating, implementing offline-first patterns. For more information, refer to the [Store docs](https://store.mobilenativefoundation.org).
 - **[Circuit](https://github.com/slackhq/Circuit)**: A Compose-driven unidirectional data flow architecture.
 - **[SQLDelight](https://github.com/cashapp/sqldelight)**: Provides typesafe SQL operations and generates Kotlin models from SQL schema.
 - **[Ktor](https://github.com/ktorio/ktor)**: A framework for building asynchronous servers and clients in connected systems.
@@ -18,7 +18,7 @@ Trails is a sample Kotlin Multiplatform app targeting Android, iOS, and web. It'
 
 ### Data Flow
 
-- **Store**: Centralizes data management, handling caching and synchronization between the local database and remote data sources. For detailed usage, refer to the [Store docs](https://store.mattramotar.dev).
+- **Store**: Centralizes data management, handling caching and synchronization between the local database and remote data sources. For detailed usage, refer to the [Store docs](https://store.mobilenativefoundation.org).
 - **Repositories**: Offer a clean API for data operations, abstracting underlying data sources.
 - **Circuit**: Manages UI state and events in a unidirectional flow.
 
