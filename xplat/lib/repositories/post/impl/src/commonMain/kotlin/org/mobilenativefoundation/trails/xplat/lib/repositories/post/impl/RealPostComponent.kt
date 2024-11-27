@@ -9,6 +9,10 @@ import org.mobilenativefoundation.trails.xplat.lib.repositories.post.api.PostCom
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.api.PostRepository
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostStore
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostStoreFactory
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.RealPostDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.PostFetcherServices
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.RealPostFetcherServices
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.TrailsClientComponent
 
 @OptIn(ExperimentalStoreApi::class)
@@ -18,13 +22,29 @@ abstract class RealPostComponent(
     @Component val trailsClientComponent: TrailsClientComponent
 ) : PostComponent {
 
+    @Provides
+    fun providePostDAO(): PostDAO {
+        return RealPostDAO(database)
+    }
 
     @Provides
-    fun providePostStore(): PostStore {
+    fun providePostFetcherServices(postDAO: PostDAO): PostFetcherServices {
+        return RealPostFetcherServices(
+            trailsClientComponent.trailsClient,
+            postDAO
+        )
+    }
+
+
+    @Provides
+    fun providePostStore(
+        postFetcherServices: PostFetcherServices
+    ): PostStore {
         return PostStoreFactory(
             client = trailsClientComponent.trailsClient,
             trailsDatabase = database,
-            coroutineDispatcher = TrailsDispatchers.io
+            coroutineDispatcher = TrailsDispatchers.io,
+            postFetcherServices = postFetcherServices
         ).create()
     }
 
