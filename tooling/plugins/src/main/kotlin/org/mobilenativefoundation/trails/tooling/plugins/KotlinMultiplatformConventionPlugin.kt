@@ -17,6 +17,7 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         with(pluginManager) {
             apply("org.jetbrains.kotlin.multiplatform")
+            apply("dev.mokkery")
         }
 
         version = libs.findVersion("trails")
@@ -44,6 +45,16 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                         freeCompilerArgs.add("-Xexpect-actual-classes")
                     }
                 }
+            }
+
+            sourceSets.commonTest.dependencies {
+                val coroutinesTest = libs.findLibrary("kotlinx-coroutines-test").get()
+                val kotlinTest = libs.findLibrary("kotlin-test").get()
+                val turbine = libs.findLibrary("turbine").get()
+
+                implementation(coroutinesTest)
+                implementation(kotlinTest)
+                implementation(turbine)
             }
 
             targets.withType<KotlinNativeTarget>().configureEach {
