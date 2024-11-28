@@ -10,9 +10,7 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.bookkeeper.PostBookkeeperFactory
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostSourceOfTruthFactory
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostSourceOfTruthReader
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostSourceOfTruthWriter
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.*
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.PostFetcherFactory
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.PostFetcherServices
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.updater.PostUpdaterFactory
@@ -29,10 +27,13 @@ class PostStoreFactory(
     client: PostOperations,
     trailsDatabase: TrailsDatabase,
     coroutineDispatcher: CoroutineDispatcher,
-    postFetcherServices: PostFetcherServices
+    postFetcherServices: PostFetcherServices,
+    postDAO: PostDAO,
+    predicateEvaluator: PostPredicateEvaluator,
+    comparer: PostComparer
 ) {
 
-    private val sourceOfTruthReader = PostSourceOfTruthReader(trailsDatabase, coroutineDispatcher)
+    private val sourceOfTruthReader = RealPostSourceOfTruthReader(postDAO, predicateEvaluator, comparer, coroutineDispatcher)
     private val sourceOfTruthWriter = PostSourceOfTruthWriter(trailsDatabase, coroutineDispatcher)
     private val sourceOfTruthFactory = PostSourceOfTruthFactory(sourceOfTruthReader, sourceOfTruthWriter)
     private val fetcherFactory = PostFetcherFactory(postFetcherServices)

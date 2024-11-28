@@ -10,11 +10,6 @@ import dev.mokkery.mock
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
-import org.mobilenativefoundation.trails.xplat.lib.models.post.Creator
-import org.mobilenativefoundation.trails.xplat.lib.models.post.Platform
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
@@ -24,6 +19,8 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.query.DataSources
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createCompositePost
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createPost
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -270,43 +267,4 @@ class RealPostFetcherServicesTest {
                 expectNoEvents()
             }
         }
-
-    private fun createPost(id: Int) = Post.Node(
-        key = Post.Key(id),
-        properties = Post.Properties(
-            creatorId = 1,
-            caption = id.toString(),
-            createdAt = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-            likesCount = 0,
-            commentsCount = 0,
-            sharesCount = 0,
-            viewsCount = 0,
-            isSponsored = false,
-            coverURL = "",
-            platform = Platform.Instagram,
-            locationName = null,
-        )
-    )
-
-    private fun createCompositePost(id: Int) = Post.Composite(
-        node = createPost(id),
-        edges = Post.Edges(
-            creator = createCreator(id),
-            hashtags = emptyList(),
-            mentions = emptyList(),
-            media = emptyList()
-        )
-    )
-
-    private fun createCreator(id: Int) = Creator.Node(
-        key = Creator.Key(id),
-        properties = Creator.Properties(
-            username = "",
-            fullName = "",
-            profilePicURL = "",
-            isVerified = false,
-            bio = "",
-            platform = Platform.Instagram
-        )
-    )
 }

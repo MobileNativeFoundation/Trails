@@ -4,6 +4,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
@@ -26,7 +27,7 @@ class PostSourceOfTruthFactory(
                 // We only invoke the SOT on reads
                 require(operation is Operation.Query)
 
-                reader.handleRead(operation) {
+                handleRead(operation) {
                     mutableSharedFlow.emit(it)
                 }
 
@@ -42,54 +43,23 @@ class PostSourceOfTruthFactory(
                 TODO()
             }
         )
-}
 
-// SourceOfTruth.of(
-//            reader = { operation ->
-//
-//                val mutableSharedFlow = MutableSharedFlow<Post?>(
-//                    replay = 8,
-//                    extraBufferCapacity = 20,
-//                    onBufferOverflow = BufferOverflow.DROP_OLDEST
-//                )
-//
-//                // We only invoke the SOT on reads
-//                require(operation is Operation.Query)
-//
-//                when (operation) {
-//                    is PostOperation.Query.FindOne -> {
-//                        val id = operation.key.id
-//                        coroutineScope.launch {
-//                            mutableSharedFlow.emit(trailsDatabase.postQueries.assemblePostModel(id.toLong()))
-//                        }
-//                    }
-//
-//                    is PostOperation.Query.FindOneComposite -> {
-//                        val id = operation.key.id
-//                        coroutineScope.launch {
-//                            mutableSharedFlow.emit(trailsDatabase.postQueries.assembleCompositePost(id.toLong()))
-//                        }
-//                    }
-//
-//                    is PostOperation.Query.ObserveOne -> {
-//                        val id = operation.key.id
-//                        coroutineScope.launch {
-//                            trailsDatabase.postQueries.observePostModel(id.toLong()).collect {
-//                                mutableSharedFlow.emit(it)
-//                            }
-//                        }
-//                    }
-//
-//                    is PostOperation.Query.ObserveOneComposite -> {
-//                        val id = operation.key.id
-//                        coroutineScope.launch {
-//                            trailsDatabase.postQueries.observeCompositePost(id.toLong()).collect {
-//                                mutableSharedFlow.emit(it)
-//                            }
-//                        }
-//                    }
-//
-//                    is PostOperation.Query.QueryOne -> TODO()
-//                }
-//
-//                mutableSharedFlow.asSharedFlow()
+    private fun handleRead(
+        operation: Operation.Query<Post.Key, Post.Properties, Post.Edges, Post.Node>,
+        emit: suspend (PostOutput?) -> Unit
+    ) {
+
+        when (operation) {
+            is Operation.Query.FindAll -> TODO()
+            is Operation.Query.FindMany -> TODO()
+            is Operation.Query.FindOne -> reader.findOne(operation, emit)
+            is Operation.Query.FindOneComposite -> TODO()
+            is Operation.Query.ObserveMany -> TODO()
+            is Operation.Query.ObserveOne -> TODO()
+            is Operation.Query.ObserveOneComposite -> TODO()
+            is Operation.Query.QueryMany -> TODO()
+            is Operation.Query.QueryOne -> TODO()
+            is Operation.Query.QueryManyComposite -> reader.queryManyComposite(operation.query, emit)
+        }
+    }
+}

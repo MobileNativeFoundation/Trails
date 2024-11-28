@@ -5,6 +5,7 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Order
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.OrderExtensions.toDomain
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostPredicateExtensions.toDomain
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostDAO
@@ -88,7 +89,8 @@ class RealPostFetcherServices(
         val post = client.queryOne(
             query = Query.One(
                 operation.query.predicate?.toDomain(),
-                operation.query.order?.let { convertOrder(it) })
+                operation.query.order?.toDomain()
+            )
         ) ?: error(404)
 
         // Save the post
@@ -117,7 +119,7 @@ class RealPostFetcherServices(
         val posts = client.queryMany(
             query = Query.Many(
                 operation.query.predicate?.toDomain(),
-                operation.query.order?.let { convertOrder(it) },
+                operation.query.order?.toDomain(),
                 operation.query.limit
             )
         )
@@ -134,9 +136,7 @@ class RealPostFetcherServices(
         emit: suspend (PostOutput) -> Unit
     ) {
         // Fetch composite post from the network
-        val order = operation.query.order?.let {
-            convertOrder(it)
-        }
+        val order = operation.query.order?.toDomain()
 
         val output = client.queryManyComposite(
             Query.Many(
@@ -154,14 +154,4 @@ class RealPostFetcherServices(
         emit(output)
     }
 
-
-    private fun convertOrder(order: org.mobilenativefoundation.trails.xplat.lib.operations.query.Order<*>?): Order? {
-        return order?.let {
-            Order(
-                propertyName = it.property.name,
-                direction = it.direction,
-                propertyType = it.propertyType
-            )
-        }
-    }
 }
