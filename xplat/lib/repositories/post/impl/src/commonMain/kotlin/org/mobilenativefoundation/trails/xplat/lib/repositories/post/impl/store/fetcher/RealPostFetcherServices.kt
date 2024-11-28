@@ -146,6 +146,11 @@ class RealPostFetcherServices(
             )
         )
 
+        output.values.filterIsInstance<Post.Composite>().forEach { post ->
+            // Save the post and associated entities
+            postDAO.insertOneComposite(post)
+        }
+
         emit(output)
     }
 
