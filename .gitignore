@@ -42,5 +42,12 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+kotlin-js-store/
+
 backend/server/postgres.yaml
 **/backend/server/data/*
+
+# Ignore coverage reports
+**/*/coverage.xml
+**/*/build/kover/
+**/*/build/reports/kover/

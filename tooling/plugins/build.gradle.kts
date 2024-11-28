@@ -17,6 +17,7 @@ dependencies {
     compileOnly(libs.android.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
     implementation(libs.mokkery.gradle)
+    implementation(libs.kover.gradle.plugin)
 }
 
 gradlePlugin {
