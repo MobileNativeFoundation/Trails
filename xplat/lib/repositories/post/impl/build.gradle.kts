@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.testng.reporters.XMLUtils
+
 plugins {
     id("plugin.trails.android.library")
     id("plugin.trails.kotlin.multiplatform")

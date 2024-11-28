@@ -1,5 +1,6 @@
 package org.mobilenativefoundation.trails.tooling.plugins
 
+import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.configurationcache.extensions.capitalized
@@ -12,12 +13,14 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.mobilenativefoundation.trails.tooling.extensions.configureKotlin
 import org.mobilenativefoundation.trails.tooling.extensions.libs
+import java.io.File
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         with(pluginManager) {
             apply("org.jetbrains.kotlin.multiplatform")
             apply("dev.mokkery")
+            apply("org.jetbrains.kotlinx.kover")
         }
 
         version = libs.findVersion("trails")
@@ -77,6 +80,17 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             }
 
             configureKotlin()
+        }
+
+        extensions.configure<KoverProjectExtension> {
+            reports {
+                total {
+                    xml {
+                        onCheck.set(true)
+                        xmlFile.set(target.layout.buildDirectory.file("reports/kover/coverage.xml"))
+                    }
+                }
+            }
         }
     }
 }
