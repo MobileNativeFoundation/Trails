@@ -33,8 +33,9 @@ class PostStoreFactory(
     comparer: PostComparer
 ) {
 
-    private val sourceOfTruthReader = RealPostSourceOfTruthReader(postDAO, predicateEvaluator, comparer, coroutineDispatcher)
-    private val sourceOfTruthWriter = PostSourceOfTruthWriter(trailsDatabase, coroutineDispatcher)
+    private val sourceOfTruthReader =
+        RealPostSourceOfTruthReader(postDAO, predicateEvaluator, comparer, coroutineDispatcher)
+    private val sourceOfTruthWriter = RealPostSourceOfTruthWriter(postDAO)
     private val sourceOfTruthFactory = PostSourceOfTruthFactory(sourceOfTruthReader, sourceOfTruthWriter)
     private val fetcherFactory = PostFetcherFactory(postFetcherServices)
     private val updaterFactory = PostUpdaterFactory(client)
