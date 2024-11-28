@@ -8,12 +8,13 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.PostWriteResponse
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
+import org.mobilenativefoundation.trails.xplat.lib.store.Factory
 
 class PostUpdaterFactory(
     private val client: PostOperations,
-) {
+) : Factory<Updater<PostOperation, PostOutput, PostWriteResponse>> {
 
-    fun create(): Updater<PostOperation, PostOutput, PostWriteResponse> = Updater.by(
+    override fun create(): Updater<PostOperation, PostOutput, PostWriteResponse> = Updater.by(
         post = { operation, post ->
             handleOperation(operation, post)
         },

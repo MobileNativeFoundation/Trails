@@ -8,13 +8,14 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
+import org.mobilenativefoundation.trails.xplat.lib.store.Factory
 
 class PostSourceOfTruthFactory(
     private val reader: PostSourceOfTruthReader,
     private val writer: PostSourceOfTruthWriter
-) {
+): Factory<SourceOfTruth<PostOperation, PostOutput, PostOutput>> {
 
-    fun create(): SourceOfTruth<PostOperation, PostOutput, PostOutput> =
+    override fun create(): SourceOfTruth<PostOperation, PostOutput, PostOutput> =
         SourceOfTruth.of(
             reader = { operation ->
 

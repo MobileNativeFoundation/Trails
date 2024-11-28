@@ -7,12 +7,13 @@ import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
+import org.mobilenativefoundation.trails.xplat.lib.store.Factory
 
 class PostBookkeeperFactory(
     private val trailsDatabase: TrailsDatabase
-) {
+) : Factory<Bookkeeper<PostOperation>> {
 
-    fun create(): Bookkeeper<PostOperation> =
+    override fun create(): Bookkeeper<PostOperation> =
         Bookkeeper.by(
             getLastFailedSync = { operation ->
                 // We only check with the bookkeeper on reads

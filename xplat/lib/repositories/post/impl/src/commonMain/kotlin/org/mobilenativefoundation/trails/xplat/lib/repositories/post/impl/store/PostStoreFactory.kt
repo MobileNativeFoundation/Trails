@@ -15,6 +15,7 @@ import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.PostFetcherServices
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.updater.PostUpdaterFactory
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
+import org.mobilenativefoundation.trails.xplat.lib.store.Factory
 
 
 typealias PostOperation = Operation<Post.Key, Post.Properties, Post.Edges, Post.Node>
@@ -31,7 +32,7 @@ class PostStoreFactory(
     postDAO: PostDAO,
     predicateEvaluator: PostPredicateEvaluator,
     comparer: PostComparer
-) {
+) : Factory<PostStore> {
 
     private val sourceOfTruthReader =
         RealPostSourceOfTruthReader(postDAO, predicateEvaluator, comparer, coroutineDispatcher)
@@ -41,7 +42,7 @@ class PostStoreFactory(
     private val updaterFactory = PostUpdaterFactory(client)
     private val bookkeeperFactory = PostBookkeeperFactory(trailsDatabase)
 
-    fun create(): PostStore {
+    override fun create(): PostStore {
         return MutableStoreBuilder.from(
             fetcher = fetcherFactory.create(),
             sourceOfTruth = sourceOfTruthFactory.create(),

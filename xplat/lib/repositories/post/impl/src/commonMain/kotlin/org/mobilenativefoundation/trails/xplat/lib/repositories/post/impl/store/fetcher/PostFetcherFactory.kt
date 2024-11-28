@@ -5,12 +5,13 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
+import org.mobilenativefoundation.trails.xplat.lib.store.Factory
 
 
 class PostFetcherFactory(
     private val postFetcherServices: PostFetcherServices,
-) {
-    fun create(): Fetcher<PostOperation, PostOutput> = Fetcher.ofFlow { operation ->
+) : Factory<Fetcher<PostOperation, PostOutput>> {
+    override fun create(): Fetcher<PostOperation, PostOutput> = Fetcher.ofFlow { operation ->
         // We never invoke fetcher after local writes
         // We do invoke updater on reads if conflicts might exist
 

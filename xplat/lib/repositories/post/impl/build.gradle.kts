@@ -21,6 +21,7 @@ kotlin {
                 implementation(libs.store)
                 implementation(libs.store.cache)
                 implementation(libs.kotlinx.datetime)
+                implementation(projects.xplat.lib.store)
             }
         }
 
