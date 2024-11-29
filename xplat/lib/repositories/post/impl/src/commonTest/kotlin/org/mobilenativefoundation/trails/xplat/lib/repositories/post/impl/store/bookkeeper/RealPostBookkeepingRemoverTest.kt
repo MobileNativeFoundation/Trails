@@ -9,7 +9,7 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostBookkeepingDAO
 import kotlin.test.Test
 
-class PostBookkeepingRemoverTest {
+class RealPostBookkeepingRemoverTest {
     private val bookkeepingDAO = mock<PostBookkeepingDAO>(MockMode.autoUnit)
     private val bookkeepingRemover = RealPostBookkeepingRemover(bookkeepingDAO)
 
