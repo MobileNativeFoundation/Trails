@@ -1,16 +1,15 @@
 package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.bookkeeper
 
 import org.mobilenativefoundation.store.store5.Bookkeeper
-import org.mobilenativefoundation.trails.xplat.lib.db.PostFailedDelete
-import org.mobilenativefoundation.trails.xplat.lib.db.PostFailedUpdate
-import org.mobilenativefoundation.trails.xplat.lib.db.TrailsDatabase
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostOperation
 import org.mobilenativefoundation.trails.xplat.lib.store.Factory
 
 class PostBookkeeperFactory(
-    private val trailsDatabase: TrailsDatabase
+    private val bookkeepingReader: PostBookkeepingReader,
+    private val bookkeepingWriter: PostBookkeepingWriter,
+    private val bookkeepingRemover: PostBookkeepingRemover
 ) : Factory<Bookkeeper<PostOperation>> {
 
     override fun create(): Bookkeeper<PostOperation> =
@@ -26,152 +25,17 @@ class PostBookkeeperFactory(
                 require(operation is Operation.Mutation)
                 handleSetLastFailedSync(operation, timestamp)
             },
-            clear = { operation ->
-                when (operation) {
-                    is Operation.Mutation.Create.InsertOne -> {
-                        // Creating posts from the client is not supported
-                        false
-                    }
-
-                    is Operation.Mutation.Delete.DeleteAll -> {
-                        trailsDatabase.postBookkeepingQueries.clearAllFailedDeletes()
-                        true
-                    }
-
-                    is Operation.Mutation.Delete.DeleteMany -> {
-                        operation.keys.forEach { key ->
-                            trailsDatabase.postBookkeepingQueries.clearFailedDelete(key.id.toLong())
-                        }
-                        true
-                    }
-
-                    is Operation.Mutation.Delete.DeleteOne -> {
-                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
-                        true
-                    }
-
-                    is Operation.Mutation.Update.ReplaceOne -> {
-                        // Replacing a post is not supported
-                        false
-                    }
-
-                    is Operation.Mutation.Update.UpdateOne -> {
-                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.node.id.toLong())
-                        true
-                    }
-
-                    is Operation.Mutation.Upsert.UpsertOne -> {
-                        // Upserting a post from the client is not supported
-                        false
-                    }
-
-                    is Operation.Query.FindAll -> {
-                        trailsDatabase.postBookkeepingQueries.clearAllFailedUpdates()
-                        trailsDatabase.postBookkeepingQueries.clearAllFailedDeletes()
-                        true
-                    }
-
-                    is Operation.Query.FindMany -> {
-                        operation.keys.forEach { key ->
-                            trailsDatabase.postBookkeepingQueries.clearFailedUpdate(key.id.toLong())
-                            trailsDatabase.postBookkeepingQueries.clearFailedDelete(key.id.toLong())
-                        }
-                        true
-                    }
-
-                    is Operation.Query.FindOne -> {
-                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.key.id.toLong())
-                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
-                        true
-                    }
-
-                    is Operation.Query.FindOneComposite -> {
-                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.key.id.toLong())
-                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
-                        true
-                    }
-
-                    is Operation.Query.ObserveMany -> {
-                        operation.keys.forEach { key ->
-                            trailsDatabase.postBookkeepingQueries.clearFailedUpdate(key.id.toLong())
-                            trailsDatabase.postBookkeepingQueries.clearFailedDelete(key.id.toLong())
-                        }
-                        true
-                    }
-
-                    is Operation.Query.ObserveOne -> {
-                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.key.id.toLong())
-                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
-                        true
-                    }
-
-                    is Operation.Query.ObserveOneComposite -> {
-                        trailsDatabase.postBookkeepingQueries.clearFailedUpdate(operation.key.id.toLong())
-                        trailsDatabase.postBookkeepingQueries.clearFailedDelete(operation.key.id.toLong())
-                        true
-                    }
-
-                    is Operation.Query.QueryMany -> {
-                        // Updating nodes based on a query is not supported
-                        false
-                    }
-
-                    is Operation.Query.QueryManyComposite -> {
-                        // Updating composites based on a query is not supported
-                        false
-                    }
-
-                    is Operation.Query.QueryOne -> {
-                        // Updating a node based on a query is not supported
-                        false
-                    }
-                }
-            },
-            clearAll = {
-                trailsDatabase.postBookkeepingQueries.clearAllFailedUpdates()
-                trailsDatabase.postBookkeepingQueries.clearAllFailedDeletes()
-                true
-            }
+            clear = { handleClear(it) },
+            clearAll = { handleClearAll() }
         )
 
     private fun handleGetLastFailedSync(operation: Operation.Query<Post.Key, Post.Properties, Post.Edges, Post.Node>): Long? {
         return when (operation) {
-            is Operation.Query.FindAll -> {
-                val failedUpdates = trailsDatabase.postBookkeepingQueries.getFailedUpdates().executeAsList()
-                val failedDeletes = trailsDatabase.postBookkeepingQueries.getFailedDeletes().executeAsList()
+            is Operation.Query.FindAll -> bookkeepingReader.findLastFailedUpdate()
 
-                return when {
-                    failedUpdates.isEmpty() && failedDeletes.isEmpty() -> null
-                    failedUpdates.isNotEmpty() -> failedUpdates.first().timestamp
-                    else -> failedDeletes.first().timestamp
-                }
-            }
+            is Operation.Query.FindMany -> bookkeepingReader.findLastFailedUpdate(operation.keys)
 
-            is Operation.Query.FindMany -> {
-                val ids = operation.keys.map { it.id.toLong() }
-
-                val failedUpdates = trailsDatabase.postBookkeepingQueries.getManyFailedUpdates(ids).executeAsList()
-                val failedDeletes = trailsDatabase.postBookkeepingQueries.getManyFailedDeletes(ids).executeAsList()
-
-                return when {
-                    failedUpdates.isEmpty() && failedDeletes.isEmpty() -> null
-                    failedUpdates.isNotEmpty() -> failedUpdates.first().timestamp
-                    else -> failedDeletes.first().timestamp
-                }
-            }
-
-            is Operation.Query.FindOne -> {
-                val failedUpdates = trailsDatabase.postBookkeepingQueries.getOneFailedUpdate(operation.key.id.toLong())
-                    .executeAsOneOrNull()
-                val failedDeletes = trailsDatabase.postBookkeepingQueries.getOneFailedDelete(operation.key.id.toLong())
-                    .executeAsOneOrNull()
-
-                return when {
-                    failedUpdates == null && failedDeletes == null -> null
-                    failedUpdates != null -> failedUpdates.timestamp
-                    else -> failedDeletes?.timestamp
-                }
-            }
+            is Operation.Query.FindOne -> bookkeepingReader.findLastFailedUpdate(operation.key)
 
             is Operation.Query.FindOneComposite -> TODO()
             is Operation.Query.ObserveMany -> {
@@ -209,7 +73,7 @@ class PostBookkeeperFactory(
         }
     }
 
-    private suspend fun handleSetLastFailedSync(
+    private fun handleSetLastFailedSync(
         operation: Operation.Mutation<Post.Key, Post.Properties, Post.Edges, Post.Node>,
         timestamp: Long
     ): Boolean {
@@ -224,15 +88,11 @@ class PostBookkeeperFactory(
             }
 
             is Operation.Mutation.Delete.DeleteMany -> {
-                operation.keys.forEach { key ->
-                    insertOneDeleteFailed(key.id, timestamp)
-                }
-                true
+                bookkeepingWriter.recordFailedDeletes(operation.keys, timestamp)
             }
 
             is Operation.Mutation.Delete.DeleteOne -> {
-                insertOneDeleteFailed(operation.key.id, timestamp)
-                true
+                bookkeepingWriter.recordFailedDelete(operation.key, timestamp)
             }
 
             is Operation.Mutation.Update.ReplaceOne -> {
@@ -241,13 +101,7 @@ class PostBookkeeperFactory(
             }
 
             is Operation.Mutation.Update.UpdateOne -> {
-                trailsDatabase.postBookkeepingQueries.insertFailedUpdate(
-                    PostFailedUpdate(
-                        post_id = operation.node.key.id.toLong(),
-                        timestamp = timestamp.toLong()
-                    )
-                )
-                true
+                bookkeepingWriter.recordFailedUpdate(operation.node.key, timestamp)
             }
 
             is Operation.Mutation.Upsert.UpsertOne -> {
@@ -257,14 +111,103 @@ class PostBookkeeperFactory(
         }
     }
 
-    private suspend fun insertOneDeleteFailed(id: Int, timestamp: Long) {
-        trailsDatabase.postBookkeepingQueries.insertFailedDelete(
-            PostFailedDelete(
-                post_id = id.toLong(),
-                timestamp = timestamp
-            )
-        )
+    private fun handleClear(
+        operation: PostOperation
+    ): Boolean =
+        when (operation) {
+            is Operation.Mutation.Create.InsertOne -> {
+                // Creating posts from the client is not supported
+                false
+            }
+
+            is Operation.Mutation.Delete.DeleteAll -> {
+                bookkeepingRemover.removeAllFailedDeletes()
+            }
+
+            is Operation.Mutation.Delete.DeleteMany -> {
+                bookkeepingRemover.removeFailedDeletes(operation.keys)
+            }
+
+            is Operation.Mutation.Delete.DeleteOne -> {
+                bookkeepingRemover.removeFailedDelete(operation.key)
+
+            }
+
+            is Operation.Mutation.Update.ReplaceOne -> {
+                // Replacing a post is not supported
+                false
+            }
+
+            is Operation.Mutation.Update.UpdateOne -> {
+                bookkeepingRemover.removeFailedUpdate(operation.node.key)
+            }
+
+            is Operation.Mutation.Upsert.UpsertOne -> {
+                // Upserting a post from the client is not supported
+                false
+            }
+
+            is Operation.Query.FindAll -> {
+                val updatesRemoved = bookkeepingRemover.removeAllFailedUpdates()
+                val deletesRemoved = bookkeepingRemover.removeAllFailedDeletes()
+                updatesRemoved && deletesRemoved
+            }
+
+            is Operation.Query.FindMany -> {
+                removeFailedSyncs(operation.keys)
+            }
+
+            is Operation.Query.FindOne -> {
+                removeFailedSyncs(operation.key)
+            }
+
+            is Operation.Query.FindOneComposite -> {
+                removeFailedSyncs(operation.key)
+            }
+
+            is Operation.Query.ObserveMany -> {
+                removeFailedSyncs(operation.keys)
+            }
+
+            is Operation.Query.ObserveOne -> {
+                removeFailedSyncs(operation.key)
+            }
+
+            is Operation.Query.ObserveOneComposite -> {
+                removeFailedSyncs(operation.key)
+            }
+
+            is Operation.Query.QueryMany -> {
+                // Updating nodes based on a query is not supported
+                false
+            }
+
+            is Operation.Query.QueryManyComposite -> {
+                // Updating composites based on a query is not supported
+                false
+            }
+
+            is Operation.Query.QueryOne -> {
+                // Updating a node based on a query is not supported
+                false
+            }
+        }
+
+    private fun removeFailedSyncs(key: Post.Key): Boolean {
+        val updatesRemoved = bookkeepingRemover.removeFailedUpdate(key)
+        val deletesRemoved = bookkeepingRemover.removeFailedDelete(key)
+        return updatesRemoved && deletesRemoved
     }
 
+    private fun removeFailedSyncs(keys: List<Post.Key>): Boolean {
+        val updatesRemoved = bookkeepingRemover.removeFailedUpdates(keys)
+        val deletesRemoved = bookkeepingRemover.removeFailedDeletes(keys)
+        return updatesRemoved && deletesRemoved
+    }
 
+    private fun handleClearAll(): Boolean {
+        val updatesRemoved = bookkeepingRemover.removeAllFailedUpdates()
+        val deletesRemoved = bookkeepingRemover.removeAllFailedDeletes()
+        return updatesRemoved && deletesRemoved
+    }
 }
