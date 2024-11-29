@@ -2,13 +2,12 @@ package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store
 
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
-import org.mobilenativefoundation.trails.xplat.lib.models.query.Order
 import org.mobilenativefoundation.trails.xplat.lib.models.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.OrderExtensions.toDomain
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostPredicateExtensions.toDomain
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostDAO
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
 
 class RealPostFetcherServices(

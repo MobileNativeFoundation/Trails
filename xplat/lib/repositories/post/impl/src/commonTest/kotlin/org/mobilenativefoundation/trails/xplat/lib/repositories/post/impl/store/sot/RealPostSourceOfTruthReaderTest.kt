@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database
+package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.sot
 
 import app.cash.turbine.test
 import dev.mokkery.answering.returns
@@ -15,6 +15,7 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation.Query
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.DataSources
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asNode
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostDAO
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createCompositePost
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createPostEntity
 import kotlin.test.Test
@@ -23,7 +24,7 @@ import kotlin.test.assertEquals
 class RealPostSourceOfTruthReaderTest {
     private val postDAO = mock<PostDAO>()
     private val predicateEvaluator = RealPostPredicateEvaluator()
-    private val comparer = RealPostComparer()
+    private val comparator = RealPostComparator()
 
     private val testDispatcher = StandardTestDispatcher()
     private val testScope = TestScope(testDispatcher)
@@ -31,7 +32,7 @@ class RealPostSourceOfTruthReaderTest {
     private val reader = RealPostSourceOfTruthReader(
         postDAO = postDAO,
         predicateEvaluator = predicateEvaluator,
-        comparer = comparer,
+        comparator = comparator,
         coroutineDispatcher = testDispatcher
     )
 

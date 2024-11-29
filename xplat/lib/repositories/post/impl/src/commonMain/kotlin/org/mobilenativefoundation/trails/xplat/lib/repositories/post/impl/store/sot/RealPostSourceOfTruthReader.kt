@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database
+package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.sot
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -8,12 +8,13 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asNode
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostDAO
 
 
 class RealPostSourceOfTruthReader(
     private val postDAO: PostDAO,
     private val predicateEvaluator: PostPredicateEvaluator,
-    private val comparer: PostComparer,
+    private val comparator: PostComparator,
     coroutineDispatcher: CoroutineDispatcher
 ): PostSourceOfTruthReader {
     private val coroutineScope = CoroutineScope(coroutineDispatcher)
@@ -39,7 +40,7 @@ class RealPostSourceOfTruthReader(
 
             val composites = entities.map { it.asNode() }.asSequence()
                 .filter { item -> query.predicate?.let { predicateEvaluator.evaluate(it, item) } ?: true }
-                .sortedWith { a, b -> comparer.compare(a, b, query.order) }
+                .sortedWith { a, b -> comparator.compare(a, b, query.order) }
                 .let { sequence ->
                     query.limit?.let { sequence.take(it) } ?: sequence
                 }.mapNotNull {

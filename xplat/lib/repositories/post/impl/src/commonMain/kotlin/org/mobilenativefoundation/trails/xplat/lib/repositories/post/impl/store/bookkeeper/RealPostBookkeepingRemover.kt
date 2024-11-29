@@ -1,6 +1,7 @@
 package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.bookkeeper
 
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostBookkeepingDAO
 
 class RealPostBookkeepingRemover(
     private val bookkeepingDAO: PostBookkeepingDAO

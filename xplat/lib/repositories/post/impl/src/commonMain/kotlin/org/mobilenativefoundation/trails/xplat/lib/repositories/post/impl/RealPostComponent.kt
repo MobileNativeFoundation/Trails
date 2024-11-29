@@ -17,7 +17,11 @@ import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostStore
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.PostStoreFactory
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.bookkeeper.*
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.*
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostBookkeepingDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.RealPostBookkeepingDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.RealPostDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.sot.*
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.PostFetcherFactory
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.PostFetcherServices
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.RealPostFetcherServices
@@ -58,18 +62,18 @@ abstract class RealPostComponent(
         PostFetcherFactory(postFetcherServices)
 
     @Provides
-    fun provideComparer(): PostComparer = RealPostComparer()
+    fun provideComparator(): PostComparator = RealPostComparator()
 
     @Provides
     fun providePostSourceOfTruthReader(
         postDAO: PostDAO,
         predicateEvaluator: PostPredicateEvaluator,
-        comparer: PostComparer
+        comparator: PostComparator
     ): PostSourceOfTruthReader =
         RealPostSourceOfTruthReader(
             postDAO,
             predicateEvaluator,
-            comparer,
+            comparator,
             Dispatchers.Default
         )
 

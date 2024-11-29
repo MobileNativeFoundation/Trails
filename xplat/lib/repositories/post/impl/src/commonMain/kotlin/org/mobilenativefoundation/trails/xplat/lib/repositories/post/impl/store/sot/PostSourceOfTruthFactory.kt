@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database
+package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.sot
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

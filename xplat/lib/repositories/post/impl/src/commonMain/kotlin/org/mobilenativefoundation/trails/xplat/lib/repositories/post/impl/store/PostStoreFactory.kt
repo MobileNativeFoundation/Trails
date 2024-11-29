@@ -6,10 +6,6 @@ import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostWriteResponse
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.bookkeeper.PostBookkeeperFactory
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostSourceOfTruthFactory
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.fetcher.PostFetcherFactory
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.updater.PostUpdaterFactory
 import org.mobilenativefoundation.trails.xplat.lib.store.Factory
 
 

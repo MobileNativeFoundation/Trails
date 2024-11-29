@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.bookkeeper
+package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db
 
 import org.mobilenativefoundation.trails.xplat.lib.db.*
 

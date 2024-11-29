@@ -1,8 +1,9 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database
+package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.sot
 
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
 import org.mobilenativefoundation.trails.xplat.lib.models.post.PostOutput
 import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostDAO
 
 class RealPostSourceOfTruthWriter(
     private val postDAO: PostDAO

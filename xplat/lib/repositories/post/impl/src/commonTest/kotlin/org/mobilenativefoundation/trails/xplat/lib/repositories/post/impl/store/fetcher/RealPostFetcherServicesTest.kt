@@ -18,7 +18,7 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation.Query
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.DataSources
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asPostEntity
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.database.PostDAO
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostDAO
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createCompositePost
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createPost
 import org.mobilenativefoundation.trails.xplat.lib.rest.api.post.PostOperations
