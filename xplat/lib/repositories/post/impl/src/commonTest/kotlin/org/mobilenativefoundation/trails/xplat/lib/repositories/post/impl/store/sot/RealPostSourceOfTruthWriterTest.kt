@@ -11,7 +11,7 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.io.Operation.Query
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.DataSources
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostDAO
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createCompositePost
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.test.utils.FakePostFactory.createCompositePost
 import kotlin.test.Test
 
 class RealPostSourceOfTruthWriterTest {

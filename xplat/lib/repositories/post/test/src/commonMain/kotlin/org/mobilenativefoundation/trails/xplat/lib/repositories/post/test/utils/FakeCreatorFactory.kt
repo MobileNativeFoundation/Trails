@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils
+package org.mobilenativefoundation.trails.xplat.lib.repositories.post.test.utils
 
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Creator
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Platform

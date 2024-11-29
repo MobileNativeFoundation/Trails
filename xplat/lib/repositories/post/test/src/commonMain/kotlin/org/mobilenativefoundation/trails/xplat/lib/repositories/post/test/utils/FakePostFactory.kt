@@ -1,4 +1,4 @@
-package org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils
+package org.mobilenativefoundation.trails.xplat.lib.repositories.post.test.utils
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -6,7 +6,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.mobilenativefoundation.trails.xplat.lib.db.PostEntity
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Platform
 import org.mobilenativefoundation.trails.xplat.lib.models.post.Post
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakeCreatorFactory.createCreator
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.test.utils.FakeCreatorFactory.createCreator
 
 object FakePostFactory {
     fun createPost(id: Int) = Post.Node(

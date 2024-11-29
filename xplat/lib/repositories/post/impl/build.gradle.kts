@@ -45,6 +45,12 @@ kotlin {
                 implementation(libs.ktor.client.js)
             }
         }
+
+        commonTest {
+            dependencies {
+                implementation(projects.xplat.lib.repositories.post.test)
+            }
+        }
     }
 }
 

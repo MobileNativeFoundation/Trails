@@ -16,8 +16,8 @@ import org.mobilenativefoundation.trails.xplat.lib.operations.query.DataSources
 import org.mobilenativefoundation.trails.xplat.lib.operations.query.Query
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.extensions.PostExtensions.asNode
 import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.store.db.PostDAO
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createCompositePost
-import org.mobilenativefoundation.trails.xplat.lib.repositories.post.impl.test_utils.FakePostFactory.createPostEntity
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.test.utils.FakePostFactory.createCompositePost
+import org.mobilenativefoundation.trails.xplat.lib.repositories.post.test.utils.FakePostFactory.createPostEntity
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
