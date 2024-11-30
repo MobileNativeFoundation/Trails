@@ -62,16 +62,48 @@ class PostUpdaterFactory(
             // So, before we can pull the latest value for this key from the network, we need to push our latest local value for this key to the network
 
             is Operation.Query -> {
+                // We don't support updating many
+                // So the post must be a single rather than a collection
                 require(post is PostOutput.Single)
-                updateOne(post)
+                updateOne(post, operation)
             }
         }
     }
 
     private suspend fun updateOne(post: PostOutput.Single): UpdaterResult {
         val count = when (val value = post.value) {
-            is Post.Composite -> client.updateOne(value.node)
-            is Post.Node -> client.updateOne(value)
+            is Post.Composite -> {
+                client.updateOne(value.node)
+            }
+
+            is Post.Node -> {
+                client.updateOne(value)
+            }
+
+            is Post.Properties -> {
+                throw UnsupportedOperationException()
+            }
+        }
+
+        return UpdaterResult.Success.Typed(PostWriteResponse.Update(count))
+    }
+
+
+    private suspend fun updateOne(
+        post: PostOutput.Single,
+        operation: Operation.Query<Post.Key, Post.Properties, Post.Edges, Post.Node>
+    ): UpdaterResult {
+        val count = when (val value = post.value) {
+            is Post.Composite -> {
+                require(operation is Operation.Query.FindOneComposite || operation is Operation.Query.ObserveOneComposite)
+                client.updateOne(value.node)
+            }
+
+            is Post.Node -> {
+                require(operation is Operation.Query.FindOne || operation is Operation.Query.ObserveOne || operation is Operation.Query.QueryOne)
+                client.updateOne(value)
+            }
+
             is Post.Properties -> {
                 throw UnsupportedOperationException()
             }
